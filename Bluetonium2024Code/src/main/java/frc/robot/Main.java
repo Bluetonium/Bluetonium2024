@@ -23,9 +23,3 @@ public final class Main {
     RobotBase.startRobot(Robot::new);
   }
 }
-
-
-//DEREK HERE
-//https://software-metadata.revrobotics.com/REVLib-2024.json
-//https://maven.ctr-electronics.com/release/com/ctre/phoenix6/latest/Phoenix6-frc2024-latest.json
-// CTR+P wpi manager vendors-> online install or whatever
