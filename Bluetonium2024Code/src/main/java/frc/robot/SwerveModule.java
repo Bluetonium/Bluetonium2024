@@ -52,6 +52,7 @@ public class SwerveModule {
         angleMotorController.setP(NeoVortexSwerveConstants.angleKP);
         angleMotorController.setI(NeoVortexSwerveConstants.angleKI);
         angleMotorController.setD(NeoVortexSwerveConstants.angleKD);
+
         angleMotorEncoder = mAngleMotor.getEncoder();
         angleMotorEncoder.setPositionConversionFactor(1/Constants.Swerve.angleGearRatio);
  
@@ -69,6 +70,7 @@ public class SwerveModule {
         driveMotorController.setP(Constants.Swerve.driveKP);
         driveMotorController.setI(Constants.Swerve.driveKI);
         driveMotorController.setD(Constants.Swerve.driveKD);
+
         DriveMotorEncoder = mDriveMotor.getEncoder();
     }
 
@@ -81,13 +83,12 @@ public class SwerveModule {
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop){
         if(isOpenLoop){
-            double voltage = (desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed) * 12;//i think so its between 12v
-            mDriveMotor.setVoltage(voltage);
+            double speed = (desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed);
+            driveMotorController.setReference(speed, ControlType.kDutyCycle);
         }
         else {
-            double velocity = Conversions.MPSToRPS(desiredState.speedMetersPerSecond, NeoVortexSwerveConstants.wheelCircumference);
-
-            mDriveMotor.set(velocity);
+            double velocity = Conversions.MPSToRPM(desiredState.speedMetersPerSecond, NeoVortexSwerveConstants.wheelCircumference);
+            driveMotorController.setReference(velocity, ControlType.kSmartVelocity);//TODO test that this is correct
         }
     }
 
@@ -102,7 +103,7 @@ public class SwerveModule {
 
     public SwerveModuleState getState(){
         return new SwerveModuleState(
-            Conversions.RPSToMPS(DriveMotorEncoder.getVelocity()/60, NeoVortexSwerveConstants.wheelCircumference),
+            Conversions.RPMToMPS(DriveMotorEncoder.getVelocity(), NeoVortexSwerveConstants.wheelCircumference),
             Rotation2d.fromRotations(angleMotorEncoder.getPosition())
         );
     }
