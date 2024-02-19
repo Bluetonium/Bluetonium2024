@@ -10,6 +10,7 @@ import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
     public static final double stickDeadband = 0.1;
+    public static final int driverControllerPort = 1;
 
     public static final class Swerve {
         public static final int pigeonID = 1;
@@ -45,11 +46,6 @@ public final class Constants {
         public static final double driveKI = 0.0;
         public static final double driveKD = 0.0;
         public static final double driveKF = 0.0;
-
-        /* Drive Motor Characterization Values From SYSID */
-        public static final double driveKS = 0.32; //TODO: This must be tuned to specific robot
-        public static final double driveKV = 1.51;
-        public static final double driveKA = 0.27;
 
         /* Swerve Profiling Values */
         /** Meters per Second */
