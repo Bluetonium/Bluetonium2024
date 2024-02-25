@@ -28,25 +28,25 @@ public class SwerveModule {
     private RelativeEncoder DriveMotorEncoder;
     private SparkPIDController driveMotorController;
 
-  private CANcoder angleEncoder;
-    
-    public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){        
+    private CANcoder angleEncoder;
+
+    public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
         this.moduleNumber = moduleNumber;
-        this.angleOffset = moduleConstants.angleOffset; 
-       
+        this.angleOffset = moduleConstants.angleOffset;
+
         /* Angle Encoder Config */
         angleEncoder = new CANcoder(moduleConstants.cancoderID);
 
         CANcoderConfiguration config = new CANcoderConfiguration();
         config.MagnetSensor.SensorDirection = NeoVortexSwerveConstants.cancoderInvert;
         angleEncoder.getConfigurator().apply(config);
-        
 
-       
         mAngleMotor = new CANSparkFlex(moduleConstants.angleMotorID, MotorType.kBrushless);
         mAngleMotor.setIdleMode(Constants.Swerve.angleIdleMode);
         mAngleMotor.setSmartCurrentLimit(Constants.Swerve.angleCurrentLimit);
-        //mAngleMotor.burnFlash();//commented because it doesnt allow the position conversation factor
+        mAngleMotor.setInverted(NeoVortexSwerveConstants.angleMotorInvert);
+        // mAngleMotor.burnFlash();//commented because it doesnt allow the position
+        // conversation factor
 
         angleMotorController = mAngleMotor.getPIDController();
         angleMotorController.setP(NeoVortexSwerveConstants.angleKP);
@@ -54,8 +54,8 @@ public class SwerveModule {
         angleMotorController.setD(NeoVortexSwerveConstants.angleKD);
 
         angleMotorEncoder = mAngleMotor.getEncoder();
-        angleMotorEncoder.setPositionConversionFactor(1/Constants.Swerve.angleGearRatio);
- 
+        angleMotorEncoder.setPositionConversionFactor(1 / Constants.Swerve.angleGearRatio);
+
         resetToAbsolute();
 
         /* Drive Motor Config */
@@ -64,7 +64,9 @@ public class SwerveModule {
         mDriveMotor.setSmartCurrentLimit(Constants.Swerve.driveCurrentLimit);
         mDriveMotor.setOpenLoopRampRate(Constants.Swerve.openLoopRamp);
         mDriveMotor.setClosedLoopRampRate(Constants.Swerve.closedLoopRamp);
-        //mDriveMotor.burnFlash();
+        mDriveMotor.setInverted(NeoVortexSwerveConstants.driveMotorInvert);
+
+        // mDriveMotor.burnFlash();
 
         driveMotorController = mDriveMotor.getPIDController();
         driveMotorController.setP(Constants.Swerve.driveKP);
@@ -74,43 +76,44 @@ public class SwerveModule {
         DriveMotorEncoder = mDriveMotor.getEncoder();
     }
 
-    public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
-        desiredState = SwerveModuleState.optimize(desiredState, getState().angle); 
+    public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
+        desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
+
         angleMotorController.setReference(desiredState.angle.getRotations(), ControlType.kPosition);
-        
+
         setSpeed(desiredState, isOpenLoop);
     }
 
-    private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop){
-        if(isOpenLoop){
+    private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
+        if (isOpenLoop) {
             double speed = (desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed);
             driveMotorController.setReference(speed, ControlType.kDutyCycle);
-        }
-        else {
-            double velocity = Conversions.MPSToRPM(desiredState.speedMetersPerSecond, NeoVortexSwerveConstants.wheelCircumference);
-            driveMotorController.setReference(velocity, ControlType.kSmartVelocity);//TODO test that this is correct
+        } else {
+            double velocity = Conversions.MPSToRPM(desiredState.speedMetersPerSecond,
+                    NeoVortexSwerveConstants.wheelCircumference);
+            driveMotorController.setReference(velocity, ControlType.kVelocity);// TODO test that this is correct
         }
     }
 
-    public Rotation2d getCANcoder(){
+    public Rotation2d getCANcoder() {
         return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValue());
     }
 
-    public void resetToAbsolute(){
+    public void resetToAbsolute() {
         double absolutePosition = getCANcoder().getRotations() - angleOffset.getRotations();
         angleMotorEncoder.setPosition(absolutePosition);
     }
 
-    public SwerveModuleState getState(){
+    public SwerveModuleState getState() {
         return new SwerveModuleState(
-            Conversions.RPMToMPS(DriveMotorEncoder.getVelocity(), NeoVortexSwerveConstants.wheelCircumference),
-            Rotation2d.fromRotations(angleMotorEncoder.getPosition())
-        );
+                Conversions.RPMToMPS(DriveMotorEncoder.getVelocity(), NeoVortexSwerveConstants.wheelCircumference),
+                Rotation2d.fromRotations(angleMotorEncoder.getPosition()));
     }
-    public SwerveModulePosition getPosition(){
+
+    public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(
-            Conversions.rotationsToMeters(DriveMotorEncoder.getPosition(), NeoVortexSwerveConstants.wheelCircumference), 
-            Rotation2d.fromRotations(angleMotorEncoder.getPosition())
-        ); 
+                Conversions.rotationsToMeters(DriveMotorEncoder.getPosition(),
+                        NeoVortexSwerveConstants.wheelCircumference),
+                Rotation2d.fromRotations(angleMotorEncoder.getPosition()));
     }
 }
