@@ -47,7 +47,7 @@ public class RobotContainer {
                         s_Swerve,
                         () -> -driverController.getRawAxis(translationAxis),
                         () -> driverController.getRawAxis(strafeAxis),
-                        () -> -driverController.getRawAxis(rotationAxis),
+                        () -> driverController.getRawAxis(rotationAxis),
                         () -> robotCentric.getAsBoolean()));
 
         // Configure the button bindings

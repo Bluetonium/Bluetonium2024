@@ -25,10 +25,10 @@ public final class Constants {
          * rectangular/square 4 module swerve
          */
         public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
-                new Translation2d(wheelBase / 2.0, trackWidth / 2.0), // front left
-                new Translation2d(wheelBase / 2.0, -trackWidth / 2.0), // front right
-                new Translation2d(-wheelBase / 2.0, trackWidth / 2.0), // back left
-                new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));// back right
+                new Translation2d(wheelBase / 2.0, -trackWidth / 2.0), // front left
+                new Translation2d(wheelBase / 2.0, trackWidth / 2.0), // front right
+                new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0), // back left
+                new Translation2d(-wheelBase / 2.0, trackWidth / 2.0));// back right
 
         /* Module Gear Ratios */
         public static final double driveGearRatio = NeoVortexSwerveConstants.ChosenRatio;
