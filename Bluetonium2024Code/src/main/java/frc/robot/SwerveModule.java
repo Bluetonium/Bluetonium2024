@@ -91,7 +91,7 @@ public class SwerveModule {
         } else {
             double velocity = Conversions.MPSToRPM(desiredState.speedMetersPerSecond,
                     NeoVortexSwerveConstants.wheelCircumference);
-            driveMotorController.setReference(velocity, ControlType.kVelocity);// TODO test that this is correct
+            driveMotorController.setReference(velocity, ControlType.kVelocity);
         }
     }
 

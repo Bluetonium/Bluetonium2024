@@ -54,9 +54,9 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 5; // TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 5;
         /** Radians per Second */
-        public static final double maxAngularVelocity = 10.0; // TODO: This must be tuned to specific robot
+        public static final double maxAngularVelocity = 5.0;
 
         /* Idle Modes */
         public static final IdleMode angleIdleMode = IdleMode.kCoast;
