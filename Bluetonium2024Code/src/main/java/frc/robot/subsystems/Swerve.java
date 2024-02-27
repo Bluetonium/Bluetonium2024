@@ -29,9 +29,8 @@ public class Swerve extends SubsystemBase {
     private Pigeon2 gyro;
 
     public Swerve() {
- Path-Planner-Testing
-        gyro = new Pigeon2(Constants.Swerve.PIGEON_ID);
 
+        gyro = new Pigeon2(Constants.Swerve.PIGEON_ID);
 
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
