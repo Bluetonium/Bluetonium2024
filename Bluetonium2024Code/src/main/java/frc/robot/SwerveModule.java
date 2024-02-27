@@ -38,7 +38,7 @@ public class SwerveModule {
         angleEncoder = new CANcoder(moduleConstants.cancoderID);
 
         CANcoderConfiguration config = new CANcoderConfiguration();
-        config.MagnetSensor.SensorDirection = NeoVortexSwerveConstants.cancoderInvert;
+        config.MagnetSensor.SensorDirection = NeoVortexSwerveConstants.CAN_CODER_INVERT;
         angleEncoder.getConfigurator().apply(config);
 
         mAngleMotor = new CANSparkFlex(moduleConstants.angleMotorID, MotorType.kBrushless);
@@ -85,7 +85,7 @@ public class SwerveModule {
             double speed = (desiredState.speedMetersPerSecond / Constants.Swerve.MAX_SPEED);
             driveMotorController.setReference(speed, ControlType.kDutyCycle);
         } else {
-            double velocity = Conversions.MPSToRPM(desiredState.speedMetersPerSecond,
+            double velocity = Conversions.mpsToRpm(desiredState.speedMetersPerSecond,
                     NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE);
             driveMotorController.setReference(velocity, ControlType.kVelocity);
         }
@@ -102,7 +102,7 @@ public class SwerveModule {
 
     public SwerveModuleState getState() {
         return new SwerveModuleState(
-                Conversions.RPMToMPS(driveMotorEncoder.getVelocity(), NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE),
+                Conversions.rpmToMps(driveMotorEncoder.getVelocity(), NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE),
                 Rotation2d.fromRotations(angleMotorEncoder.getPosition()));
     }
 

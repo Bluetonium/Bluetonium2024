@@ -1,15 +1,16 @@
 package frc.lib.math;
 
 public class Conversions {
+    private Conversions() {
+    }
 
     /**
      * @param wheelRPS      Wheel Velocity: (in Rotations per Second)
      * @param circumference Wheel Circumference: (in Meters)
      * @return Wheel Velocity: (in Meters per Second)
      */
-    public static double RPMToMPS(double wheelRPM, double circumference) {
-        double wheelMPS = (wheelRPM / 60) * circumference;
-        return wheelMPS;
+    public static double rpmToMps(double wheelRPM, double circumference) {
+        return (wheelRPM / 60) * circumference;
     }
 
     /**
@@ -17,9 +18,8 @@ public class Conversions {
      * @param circumference Wheel Circumference: (in Meters)
      * @return Wheel Velocity: (in Rotations per Second)
      */
-    public static double MPSToRPM(double wheelMPS, double circumference) {
-        double wheelRPS = (wheelMPS * 60) / circumference;
-        return wheelRPS;
+    public static double mpsToRpm(double wheelMPS, double circumference) {
+        return (wheelMPS * 60) / circumference;
     }
 
     /**
@@ -28,8 +28,7 @@ public class Conversions {
      * @return Wheel Distance: (in Meters)
      */
     public static double rotationsToMeters(double wheelRotations, double circumference) {
-        double wheelMeters = wheelRotations * circumference;
-        return wheelMeters;
+        return wheelRotations * circumference;
     }
 
     /**
@@ -38,7 +37,6 @@ public class Conversions {
      * @return Wheel Position: (in Rotations)
      */
     public static double metersToRotations(double wheelMeters, double circumference) {
-        double wheelRotations = wheelMeters / circumference;
-        return wheelRotations;
+        return wheelMeters / circumference;
     }
 }

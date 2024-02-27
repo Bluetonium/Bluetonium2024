@@ -24,8 +24,8 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Controllers */
-
     private final XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
+
     /* Drive Controls */
     private static final int TRANSLATION_AXIS = XboxController.Axis.kLeftY.value;
     private static final int STRAFE_AXIS = XboxController.Axis.kLeftX.value;
@@ -47,7 +47,6 @@ public class RobotContainer {
                         () -> driverController.getRawAxis(STRAFE_AXIS),
                         () -> driverController.getRawAxis(ROTATION_AXIS)));
 
-        // Configure the button bindings
         configureButtonBindings();
     }
 
@@ -70,7 +69,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
         return new PathPlannerAuto("test");
     }
 }

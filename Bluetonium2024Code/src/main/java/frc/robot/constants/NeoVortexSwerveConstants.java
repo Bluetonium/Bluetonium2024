@@ -5,6 +5,9 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.math.util.Units;
 
 public class NeoVortexSwerveConstants {
+    private NeoVortexSwerveConstants() {
+    }
+
     public static final double L1 = (8.14 / 1.0);
     /** SDS MK4i - (6.75 : 1) */
     public static final double L2 = (6.75 / 1.0);
@@ -22,5 +25,5 @@ public class NeoVortexSwerveConstants {
     public static final double ANGLE_KD = 0.0;
     public static final boolean DRIVE_MOTOR_INVERT = true;
     public static final boolean ANGLE_MOTOR_INVERT = false;
-    public static final SensorDirectionValue cancoderInvert = SensorDirectionValue.Clockwise_Positive;
+    public static final SensorDirectionValue CAN_CODER_INVERT = SensorDirectionValue.Clockwise_Positive;
 }
