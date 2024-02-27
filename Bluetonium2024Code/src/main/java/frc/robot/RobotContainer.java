@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.*;
 import frc.robot.constants.Constants;
+import frc.robot.constants.Constants.ControllerConstants;
 import frc.robot.subsystems.*;
 
 /**
@@ -24,15 +25,11 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Controllers */
-    private final XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
+    private final XboxController driverController = new XboxController(
+            Constants.ControllerConstants.DRIVER_CONTROLLER_PORT);
 
-    /* Drive Controls */
-    private static final int TRANSLATION_AXIS = XboxController.Axis.kLeftY.value;
-    private static final int STRAFE_AXIS = XboxController.Axis.kLeftX.value;
-    private static final int ROTATION_AXIS = XboxController.Axis.kRightX.value;
-
-    /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driverController, XboxController.Button.kY.value);
+    /* Chassis driver Buttons */
+    private final JoystickButton zeroGyro = new JoystickButton(driverController, ControllerConstants.ZERO_GYRO_BUTTON);
     /* Subsystems */
     private final Swerve swerve = new Swerve();
 
@@ -43,9 +40,9 @@ public class RobotContainer {
         swerve.setDefaultCommand(
                 new TeleopSwerve(
                         swerve,
-                        () -> -driverController.getRawAxis(TRANSLATION_AXIS),
-                        () -> driverController.getRawAxis(STRAFE_AXIS),
-                        () -> driverController.getRawAxis(ROTATION_AXIS)));
+                        () -> -driverController.getRawAxis(ControllerConstants.TRANSLATION_AXIS),
+                        () -> driverController.getRawAxis(ControllerConstants.STRAFE_AXIS),
+                        () -> driverController.getRawAxis(ControllerConstants.ROTATION_AXIS)));
 
         configureButtonBindings();
     }

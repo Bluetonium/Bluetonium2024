@@ -5,14 +5,28 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
     private Constants() {
     }
 
-    public static final double STICK_DEADBAND = 0.1;
-    public static final int DRIVER_CONTROLLER_PORT = 0;
+    public static final class ControllerConstants {
+        private ControllerConstants() {
+        }
+
+        /* controller constants */
+        public static final double STICK_DEADBAND = 0.1;
+        public static final int DRIVER_CONTROLLER_PORT = 0;
+
+        /* Chassis controls */
+        public static final int ZERO_GYRO_BUTTON = XboxController.Button.kY.value;
+        public static final int TRANSLATION_AXIS = XboxController.Axis.kLeftY.value;
+        public static final int STRAFE_AXIS = XboxController.Axis.kLeftX.value;
+        public static final int ROTATION_AXIS = XboxController.Axis.kRightX.value;
+
+    }
 
     public static final class Swerve {
         private Swerve() {
