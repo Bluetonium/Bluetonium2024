@@ -73,9 +73,11 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
+        Path-Planner-Testing
         public static final double MAX_SPEED = 5;
         /** Radians per Second */
         public static final double MAX_ANGULAR_VELOCITY = 5.0;
+
 
         /* Idle Modes */
         public static final IdleMode ANGLE_IDLE_MODE = IdleMode.kCoast;

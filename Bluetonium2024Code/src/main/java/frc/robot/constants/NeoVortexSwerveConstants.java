@@ -16,6 +16,7 @@ public class NeoVortexSwerveConstants {
 
     public static final double CHOSEN_RATIO = L2;
 
+
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4.0);
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
     public static final double ANGLE_GEAR_RATIO = ((150.0 / 7.0) / 1.0);
@@ -27,3 +28,4 @@ public class NeoVortexSwerveConstants {
     public static final boolean ANGLE_MOTOR_INVERT = false;
     public static final SensorDirectionValue CAN_CODER_INVERT = SensorDirectionValue.Clockwise_Positive;
 }
+
