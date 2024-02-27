@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.wpilibj.GenericHID;
 
 import edu.wpi.first.wpilibj.XboxController;
@@ -7,9 +9,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.constants.Constants;
+import frc.robot.constants.Constants.ControllerConstants;
 import frc.robot.subsystems.*;
 
 /**
@@ -23,34 +25,25 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Controllers */
-    // private final Joystick driver = new Joystick(0);
-    private final XboxController driverController = new XboxController(Constants.driverControllerPort);
-    /* Drive Controls */
-    private final int translationAxis = XboxController.Axis.kLeftY.value;
-    private final int strafeAxis = XboxController.Axis.kLeftX.value;
-    private final int rotationAxis = XboxController.Axis.kRightX.value;
+    private final XboxController driverController = new XboxController(
+            Constants.ControllerConstants.DRIVER_CONTROLLER_PORT);
 
-    /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driverController, XboxController.Button.kY.value);
-    private final JoystickButton robotCentric = new JoystickButton(driverController,
-            XboxController.Button.kLeftBumper.value);
-
+    /* Chassis driver Buttons */
+    private final JoystickButton zeroGyro = new JoystickButton(driverController, ControllerConstants.ZERO_GYRO_BUTTON);
     /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
+    private final Swerve swerve = new Swerve();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        s_Swerve.setDefaultCommand(
+        swerve.setDefaultCommand(
                 new TeleopSwerve(
-                        s_Swerve,
-                        () -> -driverController.getRawAxis(translationAxis),
-                        () -> driverController.getRawAxis(strafeAxis),
-                        () -> driverController.getRawAxis(rotationAxis),
-                        () -> robotCentric.getAsBoolean()));
+                        swerve,
+                        () -> -driverController.getRawAxis(ControllerConstants.TRANSLATION_AXIS),
+                        () -> driverController.getRawAxis(ControllerConstants.STRAFE_AXIS),
+                        () -> driverController.getRawAxis(ControllerConstants.ROTATION_AXIS)));
 
-        // Configure the button bindings
         configureButtonBindings();
     }
 
@@ -64,7 +57,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+        zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
     }
 
     /**
@@ -73,7 +66,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return new exampleAuto(s_Swerve);
+        return new PathPlannerAuto("test");
     }
 }
