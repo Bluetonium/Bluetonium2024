@@ -28,6 +28,21 @@ public final class Constants {
 
     }
 
+    public static final class ArmConstants {
+        private ArmConstants() {
+        }
+
+        public static final int LEFT_ARM_MOTOR_ID = 99;// TODO change these
+        public static final int RIGHT_ARM_MOTOR_ID = 99;
+
+        public static final double ARM_GEAR_RATIO = 4096 / 14.0;
+
+        public static final int INTAKE_MOTOR_ID = 99;
+
+        public static final int LEFT_SHOOT_MOTOR = 99;
+        public static final int RIGHT_SHOOT_MOTOR = 99;
+    }
+
     public static final class Swerve {
         private Swerve() {
         }

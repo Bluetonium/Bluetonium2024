@@ -53,6 +53,7 @@ public class SwerveModule {
 
         angleMotorEncoder = mAngleMotor.getEncoder();
         angleMotorEncoder.setPositionConversionFactor(1 / Constants.Swerve.ANGLE_GEAR_RATIO);
+        angleMotorEncoder.setVelocityConversionFactor(1 / Constants.Swerve.ANGLE_GEAR_RATIO);
 
         resetToAbsolute();
 
@@ -70,6 +71,8 @@ public class SwerveModule {
         driveMotorController.setD(Constants.Swerve.DRIVE_PD);
 
         driveMotorEncoder = mDriveMotor.getEncoder();
+        driveMotorEncoder.setPositionConversionFactor(1 / Constants.Swerve.DRIVE_GEAR_RATIO);
+        driveMotorEncoder.setVelocityConversionFactor(1 / Constants.Swerve.DRIVE_GEAR_RATIO);
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
