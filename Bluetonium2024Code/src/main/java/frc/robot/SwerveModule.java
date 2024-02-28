@@ -1,15 +1,13 @@
 package frc.robot;
 
-import javax.sound.sampled.Control;
-
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
-
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkFlex;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkBase.ControlType;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -83,17 +81,6 @@ public class SwerveModule {
         setSpeed(desiredState, isOpenLoop);
     }
 
-    private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
-        if (isOpenLoop) {
-            double speed = (desiredState.speedMetersPerSecond / Constants.Swerve.MAX_SPEED);
-            driveMotorController.setReference(speed, ControlType.kDutyCycle);
-        } else {//TODO fix the closed loop not working
-            double velocity = Conversions.mpsToRpm(desiredState.speedMetersPerSecond,
-                    NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE);
-            driveMotorController.setReference(velocity, ControlType.kVelocity);
-        }
-    }
-
     public Rotation2d getCANcoder() {
         return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValue());
     }
@@ -114,5 +101,16 @@ public class SwerveModule {
                 Conversions.rotationsToMeters(driveMotorEncoder.getPosition(),
                         NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE),
                 Rotation2d.fromRotations(angleMotorEncoder.getPosition()));
+    }
+
+    private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
+        if (isOpenLoop) {
+            double speed = (desiredState.speedMetersPerSecond / Constants.Swerve.MAX_SPEED);
+            driveMotorController.setReference(speed, ControlType.kDutyCycle);
+        } else {// TODO fix the closed loop not working
+            double velocity = Conversions.mpsToRpm(desiredState.speedMetersPerSecond,
+                    NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE);
+            driveMotorController.setReference(velocity, ControlType.kVelocity);
+        }
     }
 }

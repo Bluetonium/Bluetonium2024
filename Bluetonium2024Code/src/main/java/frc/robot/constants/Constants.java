@@ -18,6 +18,7 @@ public final class Constants {
 
         /* controller constants */
         public static final double STICK_DEADBAND = 0.1;
+        public static final double TRIGGER_PULL_THRESHOLD = 0.3;
         public static final int DRIVER_CONTROLLER_PORT = 0;
 
         /* Chassis controls */
@@ -25,6 +26,12 @@ public final class Constants {
         public static final int TRANSLATION_AXIS = XboxController.Axis.kLeftY.value;
         public static final int STRAFE_AXIS = XboxController.Axis.kLeftX.value;
         public static final int ROTATION_AXIS = XboxController.Axis.kRightX.value;
+
+        /* Arm controls */
+        public static final int LIFT_ARM_AXIS = XboxController.Axis.kLeftY.value;
+        public static final int REV_SHOOTER_HIGH = XboxController.Button.kY.value;
+        public static final int REV_SHOOTER_LOW = XboxController.Button.kX.value;
+        public static final int SHOOT_NOTE = XboxController.Axis.kRightTrigger.value;
 
     }
 
