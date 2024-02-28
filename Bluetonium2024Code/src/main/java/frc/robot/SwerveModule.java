@@ -1,5 +1,7 @@
 package frc.robot;
 
+import javax.sound.sampled.Control;
+
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
 
@@ -77,9 +79,7 @@ public class SwerveModule {
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
         desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
-
         angleMotorController.setReference(desiredState.angle.getRotations(), ControlType.kPosition);
-
         setSpeed(desiredState, isOpenLoop);
     }
 
@@ -87,7 +87,7 @@ public class SwerveModule {
         if (isOpenLoop) {
             double speed = (desiredState.speedMetersPerSecond / Constants.Swerve.MAX_SPEED);
             driveMotorController.setReference(speed, ControlType.kDutyCycle);
-        } else {
+        } else {//TODO fix the closed loop not working
             double velocity = Conversions.mpsToRpm(desiredState.speedMetersPerSecond,
                     NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE);
             driveMotorController.setReference(velocity, ControlType.kVelocity);
