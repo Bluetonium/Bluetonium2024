@@ -89,9 +89,10 @@ public final class Constants {
         public static final double CLOSED_LOOP_RAMP = 0.0;
 
         /* Drive Motor PID Values */
-        public static final double DRIVE_KP = 0.12; // TO: This must be tuned to specific robot
+        public static final double DRIVE_KP = 6e-5; // TO: This must be tuned to specific robot
         public static final double DRIVE_KI = 0.0;
         public static final double DRIVE_PD = 0.0;
+        public static final double DRIVE_FF = 0.00884433962;
 
         /* Swerve Profiling Values */
         /** Meters per Second */

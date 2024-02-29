@@ -29,15 +29,17 @@ public class TeleopSwerve extends Command {
         /* Get Values, Deadband */
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(),
                 Constants.ControllerConstants.STICK_DEADBAND);
-        double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.ControllerConstants.STICK_DEADBAND);
-        double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.ControllerConstants.STICK_DEADBAND);
+        double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(),
+                Constants.ControllerConstants.STICK_DEADBAND);
+        double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(),
+                Constants.ControllerConstants.STICK_DEADBAND);
 
         /* Drive */
         swerve.drive(
                 new Translation2d(translationVal, strafeVal).times(Constants.Swerve.MAX_SPEED),
                 rotationVal * Constants.Swerve.MAX_ANGULAR_VELOCITY,
                 false,
-                true);
+                false);
 
     }
 

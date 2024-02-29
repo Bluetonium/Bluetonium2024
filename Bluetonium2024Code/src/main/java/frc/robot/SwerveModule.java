@@ -11,6 +11,7 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.math.Conversions;
 import frc.lib.util.SwerveModuleConstants;
 import frc.robot.constants.Constants;
@@ -69,6 +70,7 @@ public class SwerveModule {
         driveMotorController.setP(Constants.Swerve.DRIVE_KP);
         driveMotorController.setI(Constants.Swerve.DRIVE_KI);
         driveMotorController.setD(Constants.Swerve.DRIVE_PD);
+        driveMotorController.setFF(Constants.Swerve.DRIVE_FF);
 
         driveMotorEncoder = mDriveMotor.getEncoder();
         driveMotorEncoder.setPositionConversionFactor(1 / Constants.Swerve.DRIVE_GEAR_RATIO);
@@ -110,6 +112,8 @@ public class SwerveModule {
         } else {// TODO fix the closed loop not working
             double velocity = Conversions.mpsToRpm(desiredState.speedMetersPerSecond,
                     NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE);
+
+            SmartDashboard.putNumber("Module " + moduleNumber + " desired velocity", desiredState.speedMetersPerSecond);
             driveMotorController.setReference(velocity, ControlType.kVelocity);
         }
     }
