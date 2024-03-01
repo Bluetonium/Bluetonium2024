@@ -52,16 +52,22 @@ public final class Constants {
 
         public static final int LEFT_ARM_MOTOR_ID = 99;// TODO change these
         public static final int RIGHT_ARM_MOTOR_ID = 99;
+        public static final int ARM_CURRENT_LIMIT = 30;
+        public static final IdleMode ARM_IDLE_MODE = IdleMode.kBrake;
+        public static final double MAX_ARM_VELOCITY = 20;// RPM
 
         public static final double ARM_GEAR_RATIO = 4096 / 14.0;
 
         public static final int LEFT_INTAKE_MOTOR_ID = 99;
-        public static final int RIGHT_INTAKE_MTOOR_ID = 99;
+        public static final int RIGHT_INTAKE_MOTOR_ID = 99;
+        public static final int INTAKE_CURRENT_LIMIT = 30;
+        public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kBrake;
 
-        public static final int LEFT_SHOOT_MOTOR_ID = 99;
-        public static final int RIGHT_SHOOT_MOTOR_ID = 99;
+        public static final int LEFT_SHOOT_MOTOR_ID = 16;
+        public static final int RIGHT_SHOOT_MOTOR_ID = 17;
+        public static final int SHOOTER_CURRENT_LIMIT = 30;
+        public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kBrake;
 
-        public static final double MAX_ARM_VELOCITY = 20;// RPM
     }
 
     public static final class Swerve {
@@ -175,6 +181,7 @@ public final class Constants {
                     ANGLE_MOTOR_ID,
                     CAN_CODER_ID, angleOffset);
         }
+
     }
 
 }
