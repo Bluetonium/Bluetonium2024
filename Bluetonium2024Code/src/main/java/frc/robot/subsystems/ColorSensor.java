@@ -25,7 +25,7 @@ public class ColorSensor extends SubsystemBase {
      * 
      * @return Returns "true" if the proximity is over the threshold.
      */
-    public boolean ProximityOverThreshold() {
+    public boolean proximityOverThreshold() {
         return getColorSensorProximity()>Constants.ColorSensorConstants.PROXIMITY_THRESHOLD;
     }
 }

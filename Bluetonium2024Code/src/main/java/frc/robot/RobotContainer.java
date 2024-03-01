@@ -62,7 +62,7 @@ public class RobotContainer {
                         shootSpeed = 0.5;
                     }
                     return shootSpeed;
-                }));
+                },armController));
         configureButtonBindings();
     }
 
