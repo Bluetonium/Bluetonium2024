@@ -12,7 +12,11 @@ import frc.lib.util.SwerveModuleConstants;
 public final class Constants {
     private Constants() {
     }
-
+    public static final class ColorSensorConstants {
+        private ColorSensorConstants() {
+        }
+        public static final double PROXIMITY_THRESHOLD = 1; //TODO figure out what the value should be
+    }
     public static final class ControllerConstants {
         private ControllerConstants() {
         }

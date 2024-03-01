@@ -7,12 +7,14 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.ColorSensor;
 
 public class TeleopArm extends Command {
     private Arm arm;
     private DoubleSupplier moveArmAxis;
     private BooleanSupplier intakeButton;
     private DoubleSupplier shootingButton;
+    private ColorSensor colorSensor;
 
     public TeleopArm(Arm arm, DoubleSupplier moveArmAxis, BooleanSupplier intakeButton, DoubleSupplier shootingButton) {
         addRequirements(arm);
