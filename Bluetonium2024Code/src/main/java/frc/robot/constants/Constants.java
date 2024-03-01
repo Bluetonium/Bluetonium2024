@@ -12,11 +12,14 @@ import frc.lib.util.SwerveModuleConstants;
 public final class Constants {
     private Constants() {
     }
+
     public static final class ColorSensorConstants {
         private ColorSensorConstants() {
         }
-        public static final double PROXIMITY_THRESHOLD = 1; //TODO figure out what the value should be
+
+        public static final double PROXIMITY_THRESHOLD = 1; // TODO figure out what the value should be
     }
+
     public static final class ControllerConstants {
         private ControllerConstants() {
         }
@@ -54,16 +57,16 @@ public final class Constants {
         private ArmConstants() {
         }
 
-        public static final int LEFT_ARM_MOTOR_ID = 99;// TODO change these
-        public static final int RIGHT_ARM_MOTOR_ID = 99;
+        public static final int LEFT_ARM_MOTOR_ID = 15;
+        public static final int RIGHT_ARM_MOTOR_ID = 14;
         public static final int ARM_CURRENT_LIMIT = 30;
         public static final IdleMode ARM_IDLE_MODE = IdleMode.kBrake;
         public static final double MAX_ARM_VELOCITY = 20;// RPM
 
         public static final double ARM_GEAR_RATIO = 4096 / 14.0;
 
-        public static final int FORWARD_INTAKE_MOTOR_ID = 99;
-        public static final int BACK_INTAKE_MOTOR_ID = 99;
+        public static final int FORWARD_INTAKE_MOTOR_ID = 18;
+        public static final int BACK_INTAKE_MOTOR_ID = 19;
         public static final int INTAKE_CURRENT_LIMIT = 30;
         public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kBrake;
 
