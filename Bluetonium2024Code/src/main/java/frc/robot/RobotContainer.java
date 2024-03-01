@@ -54,6 +54,7 @@ public class RobotContainer {
         arm.setDefaultCommand(new TeleopArm(arm,
                 () -> armController.getRawAxis(ArmControls.LIFT_ARM_AXIS),
                 () -> armController.getRawAxis(ArmControls.INTAKE) > ControllerConstants.TRIGGER_PULL_THRESHOLD,
+                () -> armController.getRawAxis(ArmControls.SHOOT) > ControllerConstants.TRIGGER_PULL_THRESHOLD,
                 () -> {
                     double shootSpeed = 0;
                     if (armController.getRawButton(ArmControls.REV_SHOOTER_FAST)) {
@@ -62,7 +63,7 @@ public class RobotContainer {
                         shootSpeed = 0.5;
                     }
                     return shootSpeed;
-                },armController));
+                }, armController));
         configureButtonBindings();
     }
 
@@ -86,7 +87,8 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        PathPlannerPath path = PathPlannerPath.fromPathFile("test");
-        return AutoBuilder.followPath(path);
+        // PathPlannerPath path = PathPlannerPath.fromPathFile("test");
+        // return AutoBuilder.followPath(path);
+        return null;
     }
 }

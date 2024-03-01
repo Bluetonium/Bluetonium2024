@@ -61,13 +61,15 @@ public class Arm extends SubsystemBase {
     private void setupIntakeMotors() {
         mainIntakeMotor = new CANSparkMax(ArmConstants.FORWARD_INTAKE_MOTOR_ID,
                 MotorType.kBrushless);
+        mainIntakeMotor.setInverted(true);
+
         mainIntakeMotor.setSmartCurrentLimit(ArmConstants.INTAKE_CURRENT_LIMIT);
         mainIntakeMotor.setIdleMode(ArmConstants.INTAKE_IDLE_MODE);
 
         followerIntakeMotor = new CANSparkMax(ArmConstants.BACK_INTAKE_MOTOR_ID, MotorType.kBrushless);
         followerIntakeMotor.setSmartCurrentLimit(ArmConstants.INTAKE_CURRENT_LIMIT);
         followerIntakeMotor.setIdleMode(ArmConstants.INTAKE_IDLE_MODE);
-        followerIntakeMotor.follow(mainIntakeMotor);
+        followerIntakeMotor.follow(mainIntakeMotor, true);
     }
 
     /**
@@ -75,7 +77,8 @@ public class Arm extends SubsystemBase {
      * @param speed speed of the arm in RPM
      */
     public void setArmSpeed(double speed) {
-        mainArmController.setReference(speed, ControlType.kVelocity);
+        // mainArmController.setReference(speed, ControlType.kVelocity);
+        mainArmMotor.set(speed);
     }
 
     /***
@@ -92,7 +95,7 @@ public class Arm extends SubsystemBase {
      */
     public void setIntakeState(boolean active) {
         if (active) {
-            mainIntakeMotor.set(0.2);
+            mainIntakeMotor.set(1);
         } else {
             mainIntakeMotor.set(0);
         }

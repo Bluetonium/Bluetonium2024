@@ -16,11 +16,13 @@ public class TeleopArm extends Command {
     private DoubleSupplier moveArmAxis;
     private BooleanSupplier intakeButton;
     private DoubleSupplier shootingButton;
-    //private ColorSensor colorSensor;
+    private BooleanSupplier shoot;
+    // private ColorSensor colorSensor;
 
     private GenericHID armController;
 
-    public TeleopArm(Arm arm, DoubleSupplier moveArmAxis, BooleanSupplier intakeButton, DoubleSupplier shootingButton,
+    public TeleopArm(Arm arm, DoubleSupplier moveArmAxis, BooleanSupplier intakeButton, BooleanSupplier shoot,
+            DoubleSupplier shootingButton,
             GenericHID armController) {
         addRequirements(arm);
         this.arm = arm;
@@ -28,25 +30,30 @@ public class TeleopArm extends Command {
         this.intakeButton = intakeButton;
         this.shootingButton = shootingButton; // this aint right
         this.armController = armController;
-        //colorSensor = new ColorSensor();
+        this.shoot = shoot;
+        // colorSensor = new ColorSensor();
     }
 
     @Override
     public void execute() {
-        double armSpeed = MathUtil.applyDeadband(moveArmAxis.getAsDouble(),
+        double armSpeed = MathUtil.applyDeadband(moveArmAxis.getAsDouble() / 2,
                 Constants.ControllerConstants.STICK_DEADBAND);
 
-        armSpeed *= Constants.ArmConstants.MAX_ARM_VELOCITY;
         arm.setArmSpeed(armSpeed);
 
         double shootSpeed = shootingButton.getAsDouble(); // revving idk man
         arm.setShooterVelocity(shootSpeed);
-        //if (!colorSensor.proximityOverThreshold()) {
-        arm.setIntakeState(intakeButton.getAsBoolean());
-        //} else {
-            //armController.setRumble(RumbleType.kBothRumble, 1.0); // this might* work (* this might not work)
-            //arm.setIntakeState(false);
-        //}
+        // if (!colorSensor.proximityOverThreshold()) {
+        if (intakeButton.getAsBoolean() || shoot.getAsBoolean()) {
+            arm.setIntakeState(true);
+        } else {
+            arm.setIntakeState(false);
+        }
+        // } else {
+        // armC
+        // arm.setIntakeState(false);
+        //
+
     }
 
     @Override
