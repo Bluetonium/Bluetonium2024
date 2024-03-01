@@ -19,13 +19,16 @@ public class TeleopArm extends Command {
     private ColorSensor colorSensor;
 
     private GenericHID armController;
-    public TeleopArm(Arm arm, DoubleSupplier moveArmAxis, BooleanSupplier intakeButton, DoubleSupplier shootingButton,GenericHID armController) {
+
+    public TeleopArm(Arm arm, DoubleSupplier moveArmAxis, BooleanSupplier intakeButton, DoubleSupplier shootingButton,
+            GenericHID armController) {
         addRequirements(arm);
         this.arm = arm;
         this.moveArmAxis = moveArmAxis;
         this.intakeButton = intakeButton;
-        this.shootingButton = shootingButton; //this aint right
+        this.shootingButton = shootingButton; // this aint right
         this.armController = armController;
+        colorSensor = new ColorSensor();
     }
 
     @Override
@@ -36,12 +39,13 @@ public class TeleopArm extends Command {
         armSpeed *= Constants.ArmConstants.MAX_ARM_VELOCITY;
         arm.setArmSpeed(armSpeed);
 
-        double shootSpeed = shootingButton.getAsDouble(); //revving idk man
+        double shootSpeed = shootingButton.getAsDouble(); // revving idk man
         arm.setShooterVelocity(shootSpeed);
         if (!colorSensor.proximityOverThreshold()) {
             arm.setIntakeState(intakeButton.getAsBoolean());
         } else {
-            armController.setRumble(RumbleType.kBothRumble,1.0); //this might* work (* this might not work)
+            armController.setRumble(RumbleType.kBothRumble, 1.0); // this might* work (* this might not work)
+            arm.setIntakeState(false);
         }
     }
 

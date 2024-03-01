@@ -8,24 +8,30 @@ import frc.robot.constants.Constants;
 
 public class ColorSensor extends SubsystemBase {
     private ColorSensorV3 colorSensor;
+
     private void setupColorSensor() {
-        colorSensor = new ColorSensorV3(Port.kOnboard); //bdonkers
+        colorSensor = new ColorSensorV3(Port.kOnboard); // bdonkers
     }
+
     public ColorSensor() {
         setupColorSensor();
     }
+
     /**
      * 
-     * @return returns an integer that represents the proximity of an object to the color sensor
+     * @return returns an integer that represents the proximity of an object to the
+     *         color sensor
      */
     private int getColorSensorProximity() {
-        return colorSensor.getProximity(); // yeah i felt like making it its own method despite it only being used once lol
+        return colorSensor.getProximity(); // yeah i felt like making it its own method despite it only being used once
+                                           // lol
     }
+
     /**
      * 
      * @return Returns "true" if the proximity is over the threshold.
      */
     public boolean proximityOverThreshold() {
-        return getColorSensorProximity()>Constants.ColorSensorConstants.PROXIMITY_THRESHOLD;
+        return getColorSensorProximity() > Constants.ColorSensorConstants.PROXIMITY_THRESHOLD;
     }
 }
