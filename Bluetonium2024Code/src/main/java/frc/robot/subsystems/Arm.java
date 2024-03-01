@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants.ArmConstants;
 
@@ -103,5 +104,15 @@ public class Arm extends SubsystemBase {
         mainArmMotor.stopMotor();
         mainShooterMotor.stopMotor();
     }
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Follower shooter velocity",followerShooterMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Main shooter velocity",followerShooterMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Follower intake velocity",followerIntakeMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Main intake velocity",mainIntakeMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Follower arm velocity",followerArmMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Main arm velocity",mainArmEncoder.getVelocity()); //not sure if this is what i should use for this !
 
+
+    }
 }

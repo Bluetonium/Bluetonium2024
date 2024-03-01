@@ -19,7 +19,7 @@ public class TeleopArm extends Command {
         this.arm = arm;
         this.moveArmAxis = moveArmAxis;
         this.intakeButton = intakeButton;
-        this.shootingButton = shootingButton;
+        this.shootingButton = shootingButton; //this aint right
     }
 
     @Override
@@ -30,8 +30,10 @@ public class TeleopArm extends Command {
         armSpeed *= Constants.ArmConstants.MAX_ARM_VELOCITY;
         arm.setArmSpeed(armSpeed);
 
-        double shootSpeed = moveArmAxis.getAsDouble();
+        double shootSpeed = shootingButton.getAsDouble(); //revving idk man
         arm.setShooterVelocity(shootSpeed);
+
+        arm.setIntakeState(intakeButton.getAsBoolean());
     }
 
     @Override
