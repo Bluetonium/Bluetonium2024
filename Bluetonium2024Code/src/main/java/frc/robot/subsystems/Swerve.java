@@ -142,6 +142,12 @@ public class Swerve extends SubsystemBase {
         }
     }
 
+    public void stopAllMotion() {
+        for (SwerveModule mod : mSwerveMods) {
+            mod.stopAllMotion();
+        }
+    }
+
     @Override
     public void periodic() {
         swerveOdometry.update(getGyroYaw(), getModulePositions());

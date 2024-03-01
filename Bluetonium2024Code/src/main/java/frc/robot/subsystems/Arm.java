@@ -8,21 +8,20 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
-    private CANSparkMax followerArmMotor;// left Arm
     private CANSparkMax mainArmMotor; // right Arm
-    private RelativeEncoder mainArmEncoder;
     private SparkPIDController mainArmController;
+    CANSparkMax followerArmMotor; // left Arm
 
-    private CANSparkMax intakeMotor;
+    private CANSparkMax mainIntakeMotor;
+    CANSparkMax followerIntakeMotor;
 
-    private CANSparkMax followerShooterMotor;
     private CANSparkMax mainShooterMotor; // make sure one of these is inverted
     private SparkPIDController mainShooterController;
+    CANSparkMax followerShooterMotor;
 
     public Arm() {
         setupArmMotors();
@@ -31,7 +30,7 @@ public class Arm extends SubsystemBase {
     }
 
     private void setupArmMotors() {
-        followerArmMotor = new CANSparkMax(ArmConstants.LEFT_SHOOT_MOTOR,
+        followerArmMotor = new CANSparkMax(ArmConstants.LEFT_SHOOT_MOTOR_ID,
                 MotorType.kBrushless);
         followerArmMotor.setIdleMode(IdleMode.kBrake);
 
@@ -39,8 +38,8 @@ public class Arm extends SubsystemBase {
                 MotorType.kBrushless);
         mainArmMotor.setIdleMode(IdleMode.kBrake);
 
-        mainArmEncoder = mainArmMotor.getEncoder();
-        mainArmEncoder.setPositionConversionFactor(1 / ArmConstants.ARM_GEAR_RATIO);
+        RelativeEncoder mainArmEncoder = mainArmMotor.getEncoder();
+        mainArmEncoder.setVelocityConversionFactor(1 / ArmConstants.ARM_GEAR_RATIO);
 
         mainArmController = mainArmMotor.getPIDController();
 
@@ -48,45 +47,53 @@ public class Arm extends SubsystemBase {
     }
 
     private void setupShooterMotors() {
-        followerShooterMotor = new CANSparkMax(ArmConstants.LEFT_SHOOT_MOTOR,
+        followerShooterMotor = new CANSparkMax(ArmConstants.LEFT_SHOOT_MOTOR_ID,
                 MotorType.kBrushless);
-        mainShooterMotor = new CANSparkMax(ArmConstants.RIGHT_SHOOT_MOTOR,
+        mainShooterMotor = new CANSparkMax(ArmConstants.RIGHT_SHOOT_MOTOR_ID,
                 MotorType.kBrushless);
         followerShooterMotor.follow(mainArmMotor, true);
         mainShooterController = mainShooterMotor.getPIDController();
     }
 
     private void setupIntakeMotors() {
-        intakeMotor = new CANSparkMax(ArmConstants.INTAKE_MOTOR_ID,
+        mainIntakeMotor = new CANSparkMax(ArmConstants.LEFT_INTAKE_MOTOR_ID,
                 MotorType.kBrushless);
+        followerArmMotor = new CANSparkMax(ArmConstants.RIGHT_ARM_MOTOR_ID, MotorType.kBrushless);
+        followerArmMotor.follow(mainIntakeMotor);
     }
 
-    public void resetArmPosition() {
-        mainArmEncoder.setPosition(0);
+    /**
+     * 
+     * @param speed speed of the arm in RPM
+     */
+    public void setArmSpeed(double speed) {
+        mainArmController.setReference(speed, ControlType.kVelocity);
     }
 
     /***
      * 
-     * @param velocity velocity in RPM to set the shooter to
+     * @param speed speed [-1,1]
      */
-    public void setShooterVelocity(double velocity) {
-        mainShooterController.setReference(velocity, ControlType.kVelocity);
+    public void setShooterVelocity(double speed) {
+        mainShooterMotor.set(speed);
     }
 
     /**
      * 
-     * @param angle angle to set the arm to should only be between [0,110] degrees
+     * @param active if the motor should be spinning or not
      */
-    public void setArmAngle(Rotation2d angle) {
-        mainArmController.setReference(angle.getRotations(), ControlType.kPosition);
+    public void setIntakeState(boolean active) {
+        if (active) {
+            mainIntakeMotor.set(0.2);
+        } else {
+            mainIntakeMotor.set(0);
+        }
     }
 
-    /**
-     * 
-     * @param speed [-1,1] value for motor speed
-     */
-    public void setIntakeSpeed(double speed) {
-        intakeMotor.set(speed);
+    public void stopAllMotion() {
+        mainIntakeMotor.stopMotor();
+        mainArmMotor.stopMotor();
+        mainShooterMotor.stopMotor();
     }
 
 }

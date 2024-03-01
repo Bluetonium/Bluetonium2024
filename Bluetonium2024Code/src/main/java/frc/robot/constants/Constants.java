@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -16,23 +17,33 @@ public final class Constants {
         private ControllerConstants() {
         }
 
-        /* controller constants */
         public static final double STICK_DEADBAND = 0.1;
         public static final double TRIGGER_PULL_THRESHOLD = 0.3;
+
         public static final int DRIVER_CONTROLLER_PORT = 0;
+        public static final int ARM_CONTROLLER_PORT = 1;
 
-        /* Chassis controls */
-        public static final int ZERO_GYRO_BUTTON = XboxController.Button.kY.value;
-        public static final int TRANSLATION_AXIS = XboxController.Axis.kLeftY.value;
-        public static final int STRAFE_AXIS = XboxController.Axis.kLeftX.value;
-        public static final int ROTATION_AXIS = XboxController.Axis.kRightX.value;
+    }
 
-        /* Arm controls */
+    public static final class ArmControls {
+        private ArmControls() {
+        }
+
         public static final int LIFT_ARM_AXIS = XboxController.Axis.kLeftY.value;
-        public static final int REV_SHOOTER_HIGH = XboxController.Button.kY.value;
-        public static final int REV_SHOOTER_LOW = XboxController.Button.kX.value;
-        public static final int SHOOT_NOTE = XboxController.Axis.kRightTrigger.value;
+        public static final int REV_SHOOTER_FAST = XboxController.Button.kY.value;
+        public static final int REV_SHOOTER_SLOW = XboxController.Button.kX.value;
+        public static final int SHOOT = XboxController.Axis.kRightTrigger.value;
+        public static final int INTAKE = XboxController.Axis.kLeftTrigger.value;
+    }
 
+    public static final class ChassisControls {
+        private ChassisControls() {
+        }
+
+        public static final int ZERO_GYRO_BUTTON = PS4Controller.Button.kTriangle.value;
+        public static final int TRANSLATION_AXIS = PS4Controller.Axis.kLeftY.value;
+        public static final int STRAFE_AXIS = PS4Controller.Axis.kLeftX.value;
+        public static final int ROTATION_AXIS = PS4Controller.Axis.kRightX.value;
     }
 
     public static final class ArmConstants {
@@ -44,10 +55,13 @@ public final class Constants {
 
         public static final double ARM_GEAR_RATIO = 4096 / 14.0;
 
-        public static final int INTAKE_MOTOR_ID = 99;
+        public static final int LEFT_INTAKE_MOTOR_ID = 99;
+        public static final int RIGHT_INTAKE_MTOOR_ID = 99;
 
-        public static final int LEFT_SHOOT_MOTOR = 99;
-        public static final int RIGHT_SHOOT_MOTOR = 99;
+        public static final int LEFT_SHOOT_MOTOR_ID = 99;
+        public static final int RIGHT_SHOOT_MOTOR_ID = 99;
+
+        public static final double MAX_ARM_VELOCITY = 20;// RPM
     }
 
     public static final class Swerve {
