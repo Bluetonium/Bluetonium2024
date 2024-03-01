@@ -106,11 +106,8 @@ public class Arm extends SubsystemBase {
     }
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Follower shooter velocity",followerShooterMotor.getEncoder().getVelocity());
         SmartDashboard.putNumber("Main shooter velocity",followerShooterMotor.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Follower intake velocity",followerIntakeMotor.getEncoder().getVelocity());
         SmartDashboard.putNumber("Main intake velocity",mainIntakeMotor.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Follower arm velocity",followerArmMotor.getEncoder().getVelocity());
         SmartDashboard.putNumber("Main arm velocity",mainArmEncoder.getVelocity()); //not sure if this is what i should use for this !
 
 
