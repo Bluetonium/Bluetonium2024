@@ -62,13 +62,13 @@ public final class Constants {
 
         public static final double ARM_GEAR_RATIO = 4096 / 14.0;
 
-        public static final int LEFT_INTAKE_MOTOR_ID = 99;
-        public static final int RIGHT_INTAKE_MOTOR_ID = 99;
+        public static final int FORWARD_INTAKE_MOTOR_ID = 99;
+        public static final int BACK_INTAKE_MOTOR_ID = 99;
         public static final int INTAKE_CURRENT_LIMIT = 30;
         public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kBrake;
 
-        public static final int LEFT_SHOOT_MOTOR_ID = 16;
-        public static final int RIGHT_SHOOT_MOTOR_ID = 17;
+        public static final int FORWARD_SHOOT_MOTOR_ID = 16;
+        public static final int BACK_SHOOT_MOTOR_ID = 17;
         public static final int SHOOTER_CURRENT_LIMIT = 30;
         public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kBrake;
 

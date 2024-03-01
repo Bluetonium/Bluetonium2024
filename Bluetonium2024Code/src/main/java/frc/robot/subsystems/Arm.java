@@ -31,7 +31,7 @@ public class Arm extends SubsystemBase {
     }
 
     private void setupArmMotors() {
-        mainArmMotor = new CANSparkMax(ArmConstants.RIGHT_ARM_MOTOR_ID,
+        mainArmMotor = new CANSparkMax(ArmConstants.LEFT_ARM_MOTOR_ID,
                 MotorType.kBrushless);
         mainArmMotor.setSmartCurrentLimit(ArmConstants.ARM_CURRENT_LIMIT);
         mainArmMotor.setIdleMode(ArmConstants.ARM_IDLE_MODE);
@@ -39,7 +39,7 @@ public class Arm extends SubsystemBase {
         mainArmEncoder.setVelocityConversionFactor(1 / ArmConstants.ARM_GEAR_RATIO);
         mainArmController = mainArmMotor.getPIDController();
 
-        followerArmMotor = new CANSparkMax(ArmConstants.LEFT_SHOOT_MOTOR_ID,
+        followerArmMotor = new CANSparkMax(ArmConstants.RIGHT_ARM_MOTOR_ID,
                 MotorType.kBrushless);
         followerArmMotor.setSmartCurrentLimit(ArmConstants.ARM_CURRENT_LIMIT);
         followerArmMotor.setIdleMode(ArmConstants.ARM_IDLE_MODE);
@@ -47,25 +47,25 @@ public class Arm extends SubsystemBase {
     }
 
     private void setupShooterMotors() {
-        mainShooterMotor = new CANSparkMax(ArmConstants.RIGHT_SHOOT_MOTOR_ID,
+        mainShooterMotor = new CANSparkMax(ArmConstants.FORWARD_SHOOT_MOTOR_ID,
                 MotorType.kBrushless);
         mainShooterMotor.setSmartCurrentLimit(ArmConstants.SHOOTER_CURRENT_LIMIT);
         mainShooterMotor.setIdleMode(ArmConstants.SHOOTER_IDLE_MODE);
 
-        followerShooterMotor = new CANSparkMax(ArmConstants.LEFT_SHOOT_MOTOR_ID,
+        followerShooterMotor = new CANSparkMax(ArmConstants.BACK_SHOOT_MOTOR_ID,
                 MotorType.kBrushless);
         followerShooterMotor.setSmartCurrentLimit(ArmConstants.SHOOTER_CURRENT_LIMIT);
         followerArmMotor.setIdleMode(ArmConstants.SHOOTER_IDLE_MODE);
-        followerShooterMotor.follow(mainArmMotor, true);
+        followerShooterMotor.follow(mainShooterMotor, true);
     }
 
     private void setupIntakeMotors() {
-        mainIntakeMotor = new CANSparkMax(ArmConstants.LEFT_INTAKE_MOTOR_ID,
+        mainIntakeMotor = new CANSparkMax(ArmConstants.FORWARD_INTAKE_MOTOR_ID,
                 MotorType.kBrushless);
         mainIntakeMotor.setSmartCurrentLimit(ArmConstants.INTAKE_CURRENT_LIMIT);
         mainIntakeMotor.setIdleMode(ArmConstants.INTAKE_IDLE_MODE);
 
-        followerIntakeMotor = new CANSparkMax(ArmConstants.RIGHT_INTAKE_MOTOR_ID, MotorType.kBrushless);
+        followerIntakeMotor = new CANSparkMax(ArmConstants.BACK_INTAKE_MOTOR_ID, MotorType.kBrushless);
         followerIntakeMotor.setSmartCurrentLimit(ArmConstants.INTAKE_CURRENT_LIMIT);
         followerIntakeMotor.setIdleMode(ArmConstants.INTAKE_IDLE_MODE);
         followerIntakeMotor.follow(mainIntakeMotor);
@@ -104,12 +104,16 @@ public class Arm extends SubsystemBase {
         mainArmMotor.stopMotor();
         mainShooterMotor.stopMotor();
     }
+
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Main shooter velocity",followerShooterMotor.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Main intake velocity",mainIntakeMotor.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Main arm velocity",mainArmEncoder.getVelocity()); //not sure if this is what i should use for this !
-
+        SmartDashboard.putNumber("Follower shooter velocity", followerShooterMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Main shooter velocity", followerShooterMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Follower intake velocity", followerIntakeMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Main intake velocity", mainIntakeMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Follower arm velocity", followerArmMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Main arm velocity", mainArmEncoder.getVelocity()); // not sure if this is what i
+                                                                                     // should use for this !
 
     }
 }
