@@ -4,9 +4,7 @@ import java.util.Optional;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.ReplanningConfig;
+
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -44,20 +42,7 @@ public class Swerve extends SubsystemBase {
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
 
-        AutoBuilder.configureHolonomic(
-                this::getPose,
-                this::setPose,
-                this::getRobotRelativeSpeeds,
-                this::driveRobotReleative,
-                new HolonomicPathFollowerConfig(Constants.Swerve.MAX_SPEED, Constants.Swerve.BASE_RADIUS,
-                        new ReplanningConfig()),
-                () -> {
-                    Optional<Alliance> alliance = DriverStation.getAlliance();
-                    if (alliance.isPresent()) {
-                        return alliance.get() == DriverStation.Alliance.Red;
-                    }
-                    return false;
-                }, this);
+       
 
     }
 

@@ -1,7 +1,5 @@
 package frc.robot;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PS4Controller;
@@ -89,6 +87,6 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // PathPlannerPath path = PathPlannerPath.fromPathFile("test");
         // return AutoBuilder.followPath(path);
-        return null;
+        return new MoveForward(swerve);
     }
 }

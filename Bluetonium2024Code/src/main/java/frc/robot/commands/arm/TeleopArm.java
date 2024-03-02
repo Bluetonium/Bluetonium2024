@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.ColorSensor;
+
 
 public class TeleopArm extends Command {
     private Arm arm;
