@@ -1,17 +1,17 @@
 package frc.robot;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.GenericHID;
-
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-import frc.robot.commands.*;
+import frc.robot.commands.arm.TeleopArm;
+import frc.robot.commands.chassis.*;
 import frc.robot.constants.Constants;
+import frc.robot.constants.Constants.ArmControls;
+import frc.robot.constants.Constants.ChassisControls;
 import frc.robot.constants.Constants.ControllerConstants;
 import frc.robot.subsystems.*;
 
@@ -26,13 +26,17 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Controllers */
-    private final XboxController driverController = new XboxController(
+    private final PS4Controller driverController = new PS4Controller(
             Constants.ControllerConstants.DRIVER_CONTROLLER_PORT);
+    private final XboxController armController = new XboxController(
+            Constants.ControllerConstants.ARM_CONTROLLER_PORT);
 
     /* Chassis driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driverController, ControllerConstants.ZERO_GYRO_BUTTON);
+    private final JoystickButton zeroGyro = new JoystickButton(driverController, ChassisControls.ZERO_GYRO_BUTTON);
+
     /* Subsystems */
     private final Swerve swerve = new Swerve();
+    private final Arm arm = new Arm();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -41,10 +45,23 @@ public class RobotContainer {
         swerve.setDefaultCommand(
                 new TeleopSwerve(
                         swerve,
-                        () -> -driverController.getRawAxis(ControllerConstants.TRANSLATION_AXIS),
-                        () -> driverController.getRawAxis(ControllerConstants.STRAFE_AXIS),
-                        () -> driverController.getRawAxis(ControllerConstants.ROTATION_AXIS)));
+                        () -> -driverController.getRawAxis(ChassisControls.TRANSLATION_AXIS),
+                        () -> driverController.getRawAxis(ChassisControls.STRAFE_AXIS),
+                        () -> driverController.getRawAxis(ChassisControls.ROTATION_AXIS)));
 
+        arm.setDefaultCommand(new TeleopArm(arm,
+                () -> armController.getRawAxis(ArmControls.LIFT_ARM_AXIS),
+                () -> armController.getRawAxis(ArmControls.INTAKE) > ControllerConstants.TRIGGER_PULL_THRESHOLD,
+                () -> armController.getRawAxis(ArmControls.SHOOT) > ControllerConstants.TRIGGER_PULL_THRESHOLD,
+                () -> {
+                    double shootSpeed = 0;
+                    if (armController.getRawButton(ArmControls.REV_SHOOTER_FAST)) {
+                        shootSpeed = 1.0;
+                    } else if (armController.getRawButton(ArmControls.REV_SHOOTER_SLOW)) {
+                        shootSpeed = 0.5;
+                    }
+                    return shootSpeed;
+                }, armController));
         configureButtonBindings();
     }
 
@@ -59,6 +76,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
+
     }
 
     /**
@@ -67,11 +85,8 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        PathPlannerPath path = PathPlannerPath.fromPathFile("test");
-
-        // Create a path following command using AutoBuilder. This will also trigger
-        // event markers.
-        return AutoBuilder.followPath(path);
-        /// return new PathPlannerAuto("test");
+        // PathPlannerPath path = PathPlannerPath.fromPathFile("test");
+        // return AutoBuilder.followPath(path);
+        return new MoveForward(swerve);
     }
 }

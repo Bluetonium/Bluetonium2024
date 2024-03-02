@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -12,42 +13,68 @@ public final class Constants {
     private Constants() {
     }
 
+    public static final class ColorSensorConstants {
+        private ColorSensorConstants() {
+        }
+
+        public static final double PROXIMITY_THRESHOLD = 1; // TODO figure out what the value should be
+    }
+
     public static final class ControllerConstants {
         private ControllerConstants() {
         }
 
-        /* controller constants */
         public static final double STICK_DEADBAND = 0.1;
         public static final double TRIGGER_PULL_THRESHOLD = 0.3;
+
         public static final int DRIVER_CONTROLLER_PORT = 0;
+        public static final int ARM_CONTROLLER_PORT = 1;
 
-        /* Chassis controls */
-        public static final int ZERO_GYRO_BUTTON = XboxController.Button.kY.value;
-        public static final int TRANSLATION_AXIS = XboxController.Axis.kLeftY.value;
-        public static final int STRAFE_AXIS = XboxController.Axis.kLeftX.value;
-        public static final int ROTATION_AXIS = XboxController.Axis.kRightX.value;
+    }
 
-        /* Arm controls */
+    public static final class ArmControls {
+        private ArmControls() {
+        }
+
         public static final int LIFT_ARM_AXIS = XboxController.Axis.kLeftY.value;
-        public static final int REV_SHOOTER_HIGH = XboxController.Button.kY.value;
-        public static final int REV_SHOOTER_LOW = XboxController.Button.kX.value;
-        public static final int SHOOT_NOTE = XboxController.Axis.kRightTrigger.value;
+        public static final int REV_SHOOTER_FAST = XboxController.Button.kY.value;
+        public static final int REV_SHOOTER_SLOW = XboxController.Button.kX.value;
+        public static final int SHOOT = XboxController.Axis.kRightTrigger.value;
+        public static final int INTAKE = XboxController.Axis.kLeftTrigger.value;
+    }
 
+    public static final class ChassisControls {
+        private ChassisControls() {
+        }
+
+        public static final int ZERO_GYRO_BUTTON = PS4Controller.Button.kTriangle.value;
+        public static final int TRANSLATION_AXIS = PS4Controller.Axis.kLeftY.value;
+        public static final int STRAFE_AXIS = PS4Controller.Axis.kLeftX.value;
+        public static final int ROTATION_AXIS = PS4Controller.Axis.kRightX.value;
     }
 
     public static final class ArmConstants {
         private ArmConstants() {
         }
 
-        public static final int LEFT_ARM_MOTOR_ID = 99;// TODO change these
-        public static final int RIGHT_ARM_MOTOR_ID = 99;
+        public static final int LEFT_ARM_MOTOR_ID = 15;
+        public static final int RIGHT_ARM_MOTOR_ID = 14;
+        public static final int ARM_CURRENT_LIMIT = 30;
+        public static final IdleMode ARM_IDLE_MODE = IdleMode.kBrake;
+        public static final double MAX_ARM_VELOCITY = 20;// RPM
 
         public static final double ARM_GEAR_RATIO = 4096 / 14.0;
 
-        public static final int INTAKE_MOTOR_ID = 99;
+        public static final int FORWARD_INTAKE_MOTOR_ID = 18;
+        public static final int BACK_INTAKE_MOTOR_ID = 19;
+        public static final int INTAKE_CURRENT_LIMIT = 30;
+        public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kBrake;
 
-        public static final int LEFT_SHOOT_MOTOR = 99;
-        public static final int RIGHT_SHOOT_MOTOR = 99;
+        public static final int FORWARD_SHOOT_MOTOR_ID = 16;
+        public static final int BACK_SHOOT_MOTOR_ID = 17;
+        public static final int SHOOTER_CURRENT_LIMIT = 30;
+        public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kBrake;
+
     }
 
     public static final class Swerve {
@@ -161,6 +188,7 @@ public final class Constants {
                     ANGLE_MOTOR_ID,
                     CAN_CODER_ID, angleOffset);
         }
+
     }
 
 }

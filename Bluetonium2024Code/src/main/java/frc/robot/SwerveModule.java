@@ -21,11 +21,11 @@ public class SwerveModule {
     public final int moduleNumber;
     private Rotation2d angleOffset;
 
-    private CANSparkFlex mAngleMotor;
-    public final RelativeEncoder angleMotorEncoder;
+    private CANSparkFlex angleMotor;
+    private final RelativeEncoder angleMotorEncoder;
     private SparkPIDController angleMotorController;
 
-    private CANSparkFlex mDriveMotor;
+    private CANSparkFlex driveMotor;
     private RelativeEncoder driveMotorEncoder;
     private SparkPIDController driveMotorController;
 
@@ -42,37 +42,37 @@ public class SwerveModule {
         config.MagnetSensor.SensorDirection = NeoVortexSwerveConstants.CAN_CODER_INVERT;
         angleEncoder.getConfigurator().apply(config);
 
-        mAngleMotor = new CANSparkFlex(moduleConstants.angleMotorID, MotorType.kBrushless);
-        mAngleMotor.setIdleMode(Constants.Swerve.ANGLE_IDLE_MODE);
-        mAngleMotor.setSmartCurrentLimit(Constants.Swerve.ANGLE_CURRENT_LIMIT);
-        mAngleMotor.setInverted(NeoVortexSwerveConstants.ANGLE_MOTOR_INVERT);
+        angleMotor = new CANSparkFlex(moduleConstants.angleMotorID, MotorType.kBrushless);
+        angleMotor.setIdleMode(Constants.Swerve.ANGLE_IDLE_MODE);
+        angleMotor.setSmartCurrentLimit(Constants.Swerve.ANGLE_CURRENT_LIMIT);
+        angleMotor.setInverted(NeoVortexSwerveConstants.ANGLE_MOTOR_INVERT);
 
-        angleMotorController = mAngleMotor.getPIDController();
+        angleMotorController = angleMotor.getPIDController();
         angleMotorController.setP(NeoVortexSwerveConstants.ANGLE_KP);
         angleMotorController.setI(NeoVortexSwerveConstants.ANGLE_KI);
         angleMotorController.setD(NeoVortexSwerveConstants.ANGLE_KD);
 
-        angleMotorEncoder = mAngleMotor.getEncoder();
+        angleMotorEncoder = angleMotor.getEncoder();
         angleMotorEncoder.setPositionConversionFactor(1 / Constants.Swerve.ANGLE_GEAR_RATIO);
         angleMotorEncoder.setVelocityConversionFactor(1 / Constants.Swerve.ANGLE_GEAR_RATIO);
 
         resetToAbsolute();
 
         /* Drive Motor Config */
-        mDriveMotor = new CANSparkFlex(moduleConstants.driveMotorID, MotorType.kBrushless);
-        mDriveMotor.setIdleMode(Constants.Swerve.DRIVE_IDLE_MODE);
-        mDriveMotor.setSmartCurrentLimit(Constants.Swerve.DRIVE_CURRENT_LIMIT);
-        mDriveMotor.setOpenLoopRampRate(Constants.Swerve.OPEN_LOOP_RAMP);
-        mDriveMotor.setClosedLoopRampRate(Constants.Swerve.CLOSED_LOOP_RAMP);
-        mDriveMotor.setInverted(NeoVortexSwerveConstants.DRIVE_MOTOR_INVERT);
+        driveMotor = new CANSparkFlex(moduleConstants.driveMotorID, MotorType.kBrushless);
+        driveMotor.setIdleMode(Constants.Swerve.DRIVE_IDLE_MODE);
+        driveMotor.setSmartCurrentLimit(Constants.Swerve.DRIVE_CURRENT_LIMIT);
+        driveMotor.setOpenLoopRampRate(Constants.Swerve.OPEN_LOOP_RAMP);
+        driveMotor.setClosedLoopRampRate(Constants.Swerve.CLOSED_LOOP_RAMP);
+        driveMotor.setInverted(NeoVortexSwerveConstants.DRIVE_MOTOR_INVERT);
 
-        driveMotorController = mDriveMotor.getPIDController();
+        driveMotorController = driveMotor.getPIDController();
         driveMotorController.setP(Constants.Swerve.DRIVE_KP);
         driveMotorController.setI(Constants.Swerve.DRIVE_KI);
         driveMotorController.setD(Constants.Swerve.DRIVE_PD);
         driveMotorController.setFF(Constants.Swerve.DRIVE_FF);
 
-        driveMotorEncoder = mDriveMotor.getEncoder();
+        driveMotorEncoder = driveMotor.getEncoder();
         driveMotorEncoder.setPositionConversionFactor(1 / Constants.Swerve.DRIVE_GEAR_RATIO);
         driveMotorEncoder.setVelocityConversionFactor(1 / Constants.Swerve.DRIVE_GEAR_RATIO);
     }
@@ -116,5 +116,10 @@ public class SwerveModule {
             SmartDashboard.putNumber("Module " + moduleNumber + " desired velocity", desiredState.speedMetersPerSecond);
             driveMotorController.setReference(velocity, ControlType.kVelocity);
         }
+    }
+
+    public void stopAllMotion() {
+        angleMotor.stopMotor();
+        driveMotor.stopMotor();
     }
 }

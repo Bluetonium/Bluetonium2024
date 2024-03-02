@@ -1,28 +1,26 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkBase.ControlType;
-import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 
-import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
-    private CANSparkMax followerArmMotor;// left Arm
     private CANSparkMax mainArmMotor; // right Arm
-    private RelativeEncoder mainArmEncoder;
     private SparkPIDController mainArmController;
+    private RelativeEncoder mainArmEncoder;
+    CANSparkMax followerArmMotor; // left Arm
 
-    private CANSparkMax intakeMotor;
+    private CANSparkMax mainIntakeMotor;
+    CANSparkMax followerIntakeMotor;
 
-    private CANSparkMax followerShooterMotor;
     private CANSparkMax mainShooterMotor; // make sure one of these is inverted
-    private SparkPIDController mainShooterController;
+    CANSparkMax followerShooterMotor;
 
     public Arm() {
         setupArmMotors();
@@ -31,62 +29,92 @@ public class Arm extends SubsystemBase {
     }
 
     private void setupArmMotors() {
-        followerArmMotor = new CANSparkMax(ArmConstants.LEFT_SHOOT_MOTOR,
+        mainArmMotor = new CANSparkMax(ArmConstants.LEFT_ARM_MOTOR_ID,
                 MotorType.kBrushless);
-        followerArmMotor.setIdleMode(IdleMode.kBrake);
-
-        mainArmMotor = new CANSparkMax(ArmConstants.RIGHT_ARM_MOTOR_ID,
-                MotorType.kBrushless);
-        mainArmMotor.setIdleMode(IdleMode.kBrake);
-
+        mainArmMotor.setSmartCurrentLimit(ArmConstants.ARM_CURRENT_LIMIT);
+        mainArmMotor.setIdleMode(ArmConstants.ARM_IDLE_MODE);
         mainArmEncoder = mainArmMotor.getEncoder();
-        mainArmEncoder.setPositionConversionFactor(1 / ArmConstants.ARM_GEAR_RATIO);
-
+        mainArmEncoder.setVelocityConversionFactor(1 / ArmConstants.ARM_GEAR_RATIO);
         mainArmController = mainArmMotor.getPIDController();
 
+        followerArmMotor = new CANSparkMax(ArmConstants.RIGHT_ARM_MOTOR_ID,
+                MotorType.kBrushless);
+        followerArmMotor.setSmartCurrentLimit(ArmConstants.ARM_CURRENT_LIMIT);
+        followerArmMotor.setIdleMode(ArmConstants.ARM_IDLE_MODE);
         followerArmMotor.follow(mainArmMotor, true);
     }
 
     private void setupShooterMotors() {
-        followerShooterMotor = new CANSparkMax(ArmConstants.LEFT_SHOOT_MOTOR,
+        mainShooterMotor = new CANSparkMax(ArmConstants.FORWARD_SHOOT_MOTOR_ID,
                 MotorType.kBrushless);
-        mainShooterMotor = new CANSparkMax(ArmConstants.RIGHT_SHOOT_MOTOR,
+        mainShooterMotor.setSmartCurrentLimit(ArmConstants.SHOOTER_CURRENT_LIMIT);
+        mainShooterMotor.setIdleMode(ArmConstants.SHOOTER_IDLE_MODE);
+
+        followerShooterMotor = new CANSparkMax(ArmConstants.BACK_SHOOT_MOTOR_ID,
                 MotorType.kBrushless);
-        followerShooterMotor.follow(mainArmMotor, true);
-        mainShooterController = mainShooterMotor.getPIDController();
+        followerShooterMotor.setSmartCurrentLimit(ArmConstants.SHOOTER_CURRENT_LIMIT);
+        followerArmMotor.setIdleMode(ArmConstants.SHOOTER_IDLE_MODE);
+        followerShooterMotor.follow(mainShooterMotor, true);
     }
 
     private void setupIntakeMotors() {
-        intakeMotor = new CANSparkMax(ArmConstants.INTAKE_MOTOR_ID,
+        mainIntakeMotor = new CANSparkMax(ArmConstants.FORWARD_INTAKE_MOTOR_ID,
                 MotorType.kBrushless);
+        mainIntakeMotor.setInverted(true);
+
+        mainIntakeMotor.setSmartCurrentLimit(ArmConstants.INTAKE_CURRENT_LIMIT);
+        mainIntakeMotor.setIdleMode(ArmConstants.INTAKE_IDLE_MODE);
+
+        followerIntakeMotor = new CANSparkMax(ArmConstants.BACK_INTAKE_MOTOR_ID, MotorType.kBrushless);
+        followerIntakeMotor.setSmartCurrentLimit(ArmConstants.INTAKE_CURRENT_LIMIT);
+        followerIntakeMotor.setIdleMode(ArmConstants.INTAKE_IDLE_MODE);
+        followerIntakeMotor.follow(mainIntakeMotor, true);
     }
 
-    public void resetArmPosition() {
-        mainArmEncoder.setPosition(0);
+    /**
+     * 
+     * @param speed speed of the arm in RPM
+     */
+    public void setArmSpeed(double speed) {
+        // mainArmController.setReference(speed, ControlType.kVelocity);
+        mainArmMotor.set(speed);
     }
 
     /***
      * 
-     * @param velocity velocity in RPM to set the shooter to
+     * @param speed speed [-1,1]
      */
-    public void setShooterVelocity(double velocity) {
-        mainShooterController.setReference(velocity, ControlType.kVelocity);
+    public void setShooterVelocity(double speed) {
+        mainShooterMotor.set(speed);
     }
 
     /**
      * 
-     * @param angle angle to set the arm to should only be between [0,110] degrees
+     * @param active if the motor should be spinning or not
      */
-    public void setArmAngle(Rotation2d angle) {
-        mainArmController.setReference(angle.getRotations(), ControlType.kPosition);
+    public void setIntakeState(boolean active) {
+        if (active) {
+            mainIntakeMotor.set(1);
+        } else {
+            mainIntakeMotor.set(0);
+        }
     }
 
-    /**
-     * 
-     * @param speed [-1,1] value for motor speed
-     */
-    public void setIntakeSpeed(double speed) {
-        intakeMotor.set(speed);
+    public void stopAllMotion() {
+        mainIntakeMotor.stopMotor();
+        mainArmMotor.stopMotor();
+        mainShooterMotor.stopMotor();
     }
 
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Follower shooter velocity", followerShooterMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Main shooter velocity", followerShooterMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Follower intake velocity", followerIntakeMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Main intake velocity", mainIntakeMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Follower arm velocity", followerArmMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Main arm velocity", mainArmEncoder.getVelocity()); // not sure if this is what i
+                                                                                     // should use for this !
+
+    }
 }

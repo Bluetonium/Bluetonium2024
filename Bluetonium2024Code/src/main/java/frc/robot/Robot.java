@@ -4,8 +4,9 @@
 
 package frc.robot;
 
-import org.littletonrobotics.urcl.URCL;
 
+
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -33,8 +34,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    DataLogManager.start();
-    URCL.start();
+    CameraServer.startAutomaticCapture();
     robotContainer = new RobotContainer();
   }
 
