@@ -61,7 +61,7 @@ public class RobotContainer {
                         shootSpeed = 0.5;
                     }
                     return shootSpeed;
-                }, armController));
+                }));
         configureButtonBindings();
     }
 
@@ -87,6 +87,6 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // PathPlannerPath path = PathPlannerPath.fromPathFile("test");
         // return AutoBuilder.followPath(path);
-        return new MoveForward(swerve);
+        return null;
     }
 }

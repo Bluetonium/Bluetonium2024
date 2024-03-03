@@ -5,8 +5,6 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 
@@ -19,17 +17,13 @@ public class TeleopArm extends Command {
     private BooleanSupplier shoot;
     // private ColorSensor colorSensor;
 
-    private GenericHID armController;
-
     public TeleopArm(Arm arm, DoubleSupplier moveArmAxis, BooleanSupplier intakeButton, BooleanSupplier shoot,
-            DoubleSupplier shootingButton,
-            GenericHID armController) {
+            DoubleSupplier shootingButton) {
         addRequirements(arm);
         this.arm = arm;
         this.moveArmAxis = moveArmAxis;
         this.intakeButton = intakeButton;
         this.shootingButton = shootingButton; // this aint right
-        this.armController = armController;
         this.shoot = shoot;
         // colorSensor = new ColorSensor();
     }
