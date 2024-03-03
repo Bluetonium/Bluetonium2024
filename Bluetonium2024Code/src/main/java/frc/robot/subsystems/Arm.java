@@ -4,7 +4,6 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,7 +11,6 @@ import frc.robot.constants.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
     private CANSparkMax mainArmMotor; // right Arm
-    private SparkPIDController mainArmController;
     private RelativeEncoder mainArmEncoder;
     CANSparkMax followerArmMotor; // left Arm
 
@@ -35,7 +33,6 @@ public class Arm extends SubsystemBase {
         mainArmMotor.setIdleMode(ArmConstants.ARM_IDLE_MODE);
         mainArmEncoder = mainArmMotor.getEncoder();
         mainArmEncoder.setVelocityConversionFactor(1 / ArmConstants.ARM_GEAR_RATIO);
-        mainArmController = mainArmMotor.getPIDController();
 
         followerArmMotor = new CANSparkMax(ArmConstants.RIGHT_ARM_MOTOR_ID,
                 MotorType.kBrushless);
@@ -76,7 +73,6 @@ public class Arm extends SubsystemBase {
      * @param speed speed of the arm in RPM
      */
     public void setArmSpeed(double speed) {
-        // mainArmController.setReference(speed, ControlType.kVelocity);
         mainArmMotor.set(speed);
     }
 
@@ -92,12 +88,10 @@ public class Arm extends SubsystemBase {
      * 
      * @param active if the motor should be spinning or not
      */
-    public void setIntakeState(boolean active) {
-        if (active) {
-            mainIntakeMotor.set(1);
-        } else {
-            mainIntakeMotor.set(0);
-        }
+    public void setIntakeState(double speed) {
+
+        mainIntakeMotor.set(speed);
+
     }
 
     public void stopAllMotion() {

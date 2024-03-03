@@ -8,24 +8,24 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 
-
 public class TeleopArm extends Command {
     private Arm arm;
     private DoubleSupplier moveArmAxis;
     private BooleanSupplier intakeButton;
-    private DoubleSupplier shootingButton;
+    private DoubleSupplier shooterSpeed;
     private BooleanSupplier shoot;
-    // private ColorSensor colorSensor;
+    private BooleanSupplier outTake;
 
-    public TeleopArm(Arm arm, DoubleSupplier moveArmAxis, BooleanSupplier intakeButton, BooleanSupplier shoot,
-            DoubleSupplier shootingButton) {
+    public TeleopArm(Arm arm, DoubleSupplier moveArmAxis, BooleanSupplier intakeButton, BooleanSupplier outTake,
+            BooleanSupplier shoot,
+            DoubleSupplier shooterSpeed) {
         addRequirements(arm);
         this.arm = arm;
         this.moveArmAxis = moveArmAxis;
         this.intakeButton = intakeButton;
-        this.shootingButton = shootingButton; // this aint right
+        this.shooterSpeed = shooterSpeed; // this aint right
         this.shoot = shoot;
-        // colorSensor = new ColorSensor();
+        this.outTake = outTake;
     }
 
     @Override
@@ -35,18 +35,14 @@ public class TeleopArm extends Command {
 
         arm.setArmSpeed(armSpeed);
 
-        double shootSpeed = shootingButton.getAsDouble(); // revving idk man
-        arm.setShooterVelocity(shootSpeed);
-        // if (!colorSensor.proximityOverThreshold()) {
+        arm.setShooterVelocity(shooterSpeed.getAsDouble());
         if (intakeButton.getAsBoolean() || shoot.getAsBoolean()) {
-            arm.setIntakeState(true);
+            arm.setIntakeState(1);
+        } else if (outTake.getAsBoolean()) {
+            arm.setIntakeState(-1);
         } else {
-            arm.setIntakeState(false);
+            arm.setIntakeState(0);
         }
-        // } else {
-        // armC
-        // arm.setIntakeState(false);
-        //
 
     }
 

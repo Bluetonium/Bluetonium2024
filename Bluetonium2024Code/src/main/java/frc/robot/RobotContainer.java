@@ -52,6 +52,7 @@ public class RobotContainer {
         arm.setDefaultCommand(new TeleopArm(arm,
                 () -> armController.getRawAxis(ArmControls.LIFT_ARM_AXIS),
                 () -> armController.getRawAxis(ArmControls.INTAKE) > ControllerConstants.TRIGGER_PULL_THRESHOLD,
+                () -> armController.getRawButton(ArmControls.OUTAKE),
                 () -> armController.getRawAxis(ArmControls.SHOOT) > ControllerConstants.TRIGGER_PULL_THRESHOLD,
                 () -> {
                     double shootSpeed = 0;

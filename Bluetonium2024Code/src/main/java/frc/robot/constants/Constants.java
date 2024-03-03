@@ -40,6 +40,7 @@ public final class Constants {
         public static final int REV_SHOOTER_SLOW = XboxController.Button.kX.value;
         public static final int SHOOT = XboxController.Axis.kRightTrigger.value;
         public static final int INTAKE = XboxController.Axis.kLeftTrigger.value;
+        public static final int OUTAKE = XboxController.Button.kLeftBumper.value; // just putting the intake in reverse
     }
 
     public static final class ChassisControls {
