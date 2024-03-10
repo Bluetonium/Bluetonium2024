@@ -13,6 +13,20 @@ public final class Constants {
     private Constants() {
     }
 
+    public static final class AutonConstants {
+        private AutonConstants() {
+        }
+
+        public static final double ALIGNMENT_TOLERACE = 0.3;// in degrees
+    }
+
+    public static final class SensorConstants {
+        private SensorConstants() {
+        }
+
+        public static final String LIMELIGHT_NAME = "limelight";
+    }
+
     public static final class ControllerConstants {
         private ControllerConstants() {
         }
@@ -57,6 +71,9 @@ public final class Constants {
     }
 
     public static final class ShooterConstants {
+        private ShooterConstants() {
+        }
+
         public static final int FORWARD_SHOOT_MOTOR_ID = 16;
         public static final int BACK_SHOOT_MOTOR_ID = 17;
         public static final int SHOOTER_CURRENT_LIMIT = 30;

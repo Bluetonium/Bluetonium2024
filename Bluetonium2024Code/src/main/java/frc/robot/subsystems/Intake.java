@@ -32,7 +32,11 @@ public class Intake extends SubsystemBase {
      * 
      * @param active if the motor should be spinning or not
      */
-    public void setIntakeState(double speed) {
-        mainIntakeMotor.set(speed);
+    public void setState(boolean state) {
+        if (state) {
+            mainIntakeMotor.set(1);
+        } else {
+            mainIntakeMotor.set(0);
+        }
     }
 }

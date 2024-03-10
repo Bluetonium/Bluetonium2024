@@ -1,4 +1,4 @@
-package frc.robot.commands.arm;
+package frc.robot.commands.teleop;
 
 import java.util.function.BooleanSupplier;
 
@@ -17,9 +17,7 @@ public class TeleopShooter extends Command {
 
     @Override
     public void execute() {
-        if (shooterButton.getAsBoolean()) {
-            shooter.setShooterVelocity(1);
-        }
+        shooter.setShooterState(shooterButton.getAsBoolean());
     }
 
     @Override

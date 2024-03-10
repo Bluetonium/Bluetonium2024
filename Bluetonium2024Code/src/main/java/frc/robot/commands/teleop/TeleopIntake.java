@@ -1,4 +1,4 @@
-package frc.robot.commands.arm;
+package frc.robot.commands.teleop;
 
 import java.util.function.BooleanSupplier;
 
@@ -19,11 +19,7 @@ public class TeleopIntake extends Command {
 
     @Override
     public void execute() {
-        if (intakeButton.getAsBoolean() || shootButton.getAsBoolean()) {
-            intake.setIntakeState(1);
-        } else {
-            intake.setIntakeState(0);
-        }
+        intake.setState(intakeButton.getAsBoolean() || shootButton.getAsBoolean());
     }
 
     @Override

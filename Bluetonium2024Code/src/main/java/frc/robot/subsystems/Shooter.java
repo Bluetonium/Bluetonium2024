@@ -32,20 +32,24 @@ public class Shooter extends SubsystemBase {
      * 
      * @param speed speed [-1,1]
      */
-    public void setShooterVelocity(double speed) {
-        mainShooterMotor.set(speed);
+    public void setState(boolean state) {
+        if (state) {
+            mainShooterMotor.set(1);
+        } else {
+            mainShooterMotor.set(0);
+        }
     }
 
     public void stopAllMotion() {
         mainShooterMotor.stopMotor();
     }
 
-    public boolean shooterUpToSpeed() {
+    public boolean readyToShoot() {
         return mainShooterEncoder.getVelocity() >= ShooterConstants.MIN_SHOOTING_VELOCITY;
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putBoolean("Shooter Up to Speed", shooterUpToSpeed());
+        SmartDashboard.putBoolean("Shooter Up to Speed", readyToShoot());
     }
 }

@@ -6,10 +6,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.arm.TeleopArm;
-import frc.robot.commands.arm.TeleopIntake;
-import frc.robot.commands.arm.TeleopShooter;
-import frc.robot.commands.chassis.*;
+import frc.robot.commands.teleop.*;
 import frc.robot.constants.Constants;
 import frc.robot.constants.Constants.ArmControls;
 import frc.robot.constants.Constants.ChassisControls;
@@ -26,66 +23,67 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    /* Controllers */
-    private final PS4Controller driverController = new PS4Controller(
-            Constants.ControllerConstants.DRIVER_CONTROLLER_PORT);
-    private final XboxController armController = new XboxController(
-            Constants.ControllerConstants.ARM_CONTROLLER_PORT);
+        /* Controllers */
+        private final PS4Controller driverController = new PS4Controller(
+                        Constants.ControllerConstants.DRIVER_CONTROLLER_PORT);
+        private final XboxController armController = new XboxController(
+                        Constants.ControllerConstants.ARM_CONTROLLER_PORT);
 
-    /* Chassis driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driverController, ChassisControls.ZERO_GYRO_BUTTON);
+        /* Chassis driver Buttons */
+        private final JoystickButton zeroGyro = new JoystickButton(driverController, ChassisControls.ZERO_GYRO_BUTTON);
 
-    /* Subsystems */
-    private final Swerve swerve = new Swerve();
-    private final Arm arm = new Arm();
-    private final Intake intake = new Intake();
-    private final Shooter shooter = new Shooter();
+        /* Subsystems */
+        private final Swerve swerve = new Swerve();
+        private final Arm arm = new Arm();
+        private final Intake intake = new Intake();
+        private final Shooter shooter = new Shooter();
 
-    /**
-     * The container for the robot. Contains subsystems, OI devices, and commands.
-     */
-    public RobotContainer() {
-        swerve.setDefaultCommand(
-                new TeleopSwerve(
-                        swerve,
-                        () -> -driverController.getRawAxis(ChassisControls.TRANSLATION_AXIS),
-                        () -> -driverController.getRawAxis(ChassisControls.STRAFE_AXIS),
-                        () -> -driverController.getRawAxis(ChassisControls.ROTATION_AXIS)));
+        /**
+         * The container for the robot. Contains subsystems, OI devices, and commands.
+         */
+        public RobotContainer() {
+                swerve.setDefaultCommand(
+                                new TeleopSwerve(
+                                                swerve,
+                                                () -> -driverController.getRawAxis(ChassisControls.TRANSLATION_AXIS),
+                                                () -> -driverController.getRawAxis(ChassisControls.STRAFE_AXIS),
+                                                () -> -driverController.getRawAxis(ChassisControls.ROTATION_AXIS)));
 
-        arm.setDefaultCommand(
-                new TeleopArm(arm,
-                        () -> armController.getRawAxis(ArmControls.LIFT_ARM_AXIS)));
-        intake.setDefaultCommand(
-                new TeleopIntake(intake,
-                        () -> armController.getRawAxis(ArmControls.SHOOT) >= ControllerConstants.TRIGGER_PULL_THRESHOLD,
-                        () -> armController.getRawButton(ArmControls.INTAKE)));
-        shooter.setDefaultCommand(
-                new TeleopShooter(shooter,
-                        () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST)));
+                arm.setDefaultCommand(
+                                new TeleopArm(arm,
+                                                () -> armController.getRawAxis(ArmControls.LIFT_ARM_AXIS)));
+                intake.setDefaultCommand(
+                                new TeleopIntake(intake,
+                                                () -> armController.getRawAxis(
+                                                                ArmControls.SHOOT) >= ControllerConstants.TRIGGER_PULL_THRESHOLD,
+                                                () -> armController.getRawButton(ArmControls.INTAKE)));
+                shooter.setDefaultCommand(
+                                new TeleopShooter(shooter,
+                                                () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST)));
 
-        configureButtonBindings();
-    }
+                configureButtonBindings();
+        }
 
-    /**
-     * Use this method to define your button->command mappings. Buttons can be
-     * created by
-     * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-     * it to a {@link
-     * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-     */
-    private void configureButtonBindings() {
-        /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
+        /**
+         * Use this method to define your button->command mappings. Buttons can be
+         * created by
+         * instantiating a {@link GenericHID} or one of its subclasses ({@link
+         * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+         * it to a {@link
+         * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+         */
+        private void configureButtonBindings() {
+                /* Driver Buttons */
+                zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
 
-    }
+        }
 
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
-    public Command getAutonomousCommand() {
-        return null;
-    }
+        /**
+         * Use this to pass the autonomous command to the main {@link Robot} class.
+         *
+         * @return the command to run in autonomous
+         */
+        public Command getAutonomousCommand() {
+                return null;
+        }
 }
