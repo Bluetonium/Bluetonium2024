@@ -13,13 +13,6 @@ public final class Constants {
     private Constants() {
     }
 
-    public static final class ColorSensorConstants {
-        private ColorSensorConstants() {
-        }
-
-        public static final double PROXIMITY_THRESHOLD = 1; // TODO figure out what the value should be
-    }
-
     public static final class ControllerConstants {
         private ControllerConstants() {
         }
@@ -53,6 +46,25 @@ public final class Constants {
         public static final int ROTATION_AXIS = PS4Controller.Axis.kRightX.value;
     }
 
+    public static final class IntakeConstants {
+        private IntakeConstants() {
+        }
+
+        public static final int FORWARD_INTAKE_MOTOR_ID = 18;
+        public static final int BACK_INTAKE_MOTOR_ID = 19;
+        public static final int INTAKE_CURRENT_LIMIT = 30;
+        public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kBrake;
+    }
+
+    public static final class ShooterConstants {
+        public static final int FORWARD_SHOOT_MOTOR_ID = 16;
+        public static final int BACK_SHOOT_MOTOR_ID = 17;
+        public static final int SHOOTER_CURRENT_LIMIT = 30;
+        public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kBrake;
+
+        public static final int MIN_SHOOTING_VELOCITY = 6000;// TODO figure this out later
+    }
+
     public static final class ArmConstants {
         private ArmConstants() {
         }
@@ -64,17 +76,6 @@ public final class Constants {
         public static final double MAX_ARM_VELOCITY = 20;// RPM
 
         public static final double ARM_GEAR_RATIO = 4096 / 14.0;
-
-        public static final int FORWARD_INTAKE_MOTOR_ID = 18;
-        public static final int BACK_INTAKE_MOTOR_ID = 19;
-        public static final int INTAKE_CURRENT_LIMIT = 30;
-        public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kBrake;
-
-        public static final int FORWARD_SHOOT_MOTOR_ID = 16;
-        public static final int BACK_SHOOT_MOTOR_ID = 17;
-        public static final int SHOOTER_CURRENT_LIMIT = 30;
-        public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kBrake;
-
     }
 
     public static final class Swerve {
@@ -94,18 +95,18 @@ public final class Constants {
          * rectangular/square 4 module swerve
          */
         public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
-                new Translation2d(WHEEL_BASE / 2.0, -TRACK_WIDTH / 2.0), // front left
-                new Translation2d(WHEEL_BASE / 2.0, TRACK_WIDTH / 2.0), // front right
-                new Translation2d(-WHEEL_BASE / 2.0, -TRACK_WIDTH / 2.0), // back left
-                new Translation2d(-WHEEL_BASE / 2.0, TRACK_WIDTH / 2.0));// back right
+                new Translation2d(WHEEL_BASE / 2.0, TRACK_WIDTH / 2.0), // front left
+                new Translation2d(WHEEL_BASE / 2.0, -TRACK_WIDTH / 2.0), // front right
+                new Translation2d(-WHEEL_BASE / 2.0, TRACK_WIDTH / 2.0), // back left
+                new Translation2d(-WHEEL_BASE / 2.0, -TRACK_WIDTH / 2.0));// back right
 
         /* Module Gear Ratios */
         public static final double DRIVE_GEAR_RATIO = NeoVortexSwerveConstants.CHOSEN_RATIO;
         public static final double ANGLE_GEAR_RATIO = NeoVortexSwerveConstants.ANGLE_GEAR_RATIO;
 
         /* Swerve Current Limiting */
-        public static final int ANGLE_CURRENT_LIMIT = 25;
-        public static final int DRIVE_CURRENT_LIMIT = 35;
+        public static final int ANGLE_CURRENT_LIMIT = 40;
+        public static final int DRIVE_CURRENT_LIMIT = 70;
 
         /*
          * These values are used by the drive to ramp in open loop and closed loop

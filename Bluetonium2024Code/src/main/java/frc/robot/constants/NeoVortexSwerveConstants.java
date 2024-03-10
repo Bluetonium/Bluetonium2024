@@ -24,6 +24,6 @@ public class NeoVortexSwerveConstants {
     public static final double ANGLE_KI = 0.0;
     public static final double ANGLE_KD = 0.0;
     public static final boolean DRIVE_MOTOR_INVERT = true;
-    public static final boolean ANGLE_MOTOR_INVERT = false;
-    public static final SensorDirectionValue CAN_CODER_INVERT = SensorDirectionValue.Clockwise_Positive;
+    public static final boolean ANGLE_MOTOR_INVERT = true;
+    public static final SensorDirectionValue CAN_CODER_INVERT = SensorDirectionValue.CounterClockwise_Positive;
 }

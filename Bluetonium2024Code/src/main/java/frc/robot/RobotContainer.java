@@ -1,6 +1,5 @@
 package frc.robot;
 
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
@@ -8,6 +7,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.arm.TeleopArm;
+import frc.robot.commands.arm.TeleopIntake;
+import frc.robot.commands.arm.TeleopShooter;
 import frc.robot.commands.chassis.*;
 import frc.robot.constants.Constants;
 import frc.robot.constants.Constants.ArmControls;
@@ -37,6 +38,8 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve swerve = new Swerve();
     private final Arm arm = new Arm();
+    private final Intake intake = new Intake();
+    private final Shooter shooter = new Shooter();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -46,23 +49,20 @@ public class RobotContainer {
                 new TeleopSwerve(
                         swerve,
                         () -> -driverController.getRawAxis(ChassisControls.TRANSLATION_AXIS),
-                        () -> driverController.getRawAxis(ChassisControls.STRAFE_AXIS),
-                        () -> driverController.getRawAxis(ChassisControls.ROTATION_AXIS)));
+                        () -> -driverController.getRawAxis(ChassisControls.STRAFE_AXIS),
+                        () -> -driverController.getRawAxis(ChassisControls.ROTATION_AXIS)));
 
-        arm.setDefaultCommand(new TeleopArm(arm,
-                () -> armController.getRawAxis(ArmControls.LIFT_ARM_AXIS),
-                () -> armController.getRawAxis(ArmControls.INTAKE) > ControllerConstants.TRIGGER_PULL_THRESHOLD,
-                () -> armController.getRawButton(ArmControls.OUTAKE),
-                () -> armController.getRawAxis(ArmControls.SHOOT) > ControllerConstants.TRIGGER_PULL_THRESHOLD,
-                () -> {
-                    double shootSpeed = 0;
-                    if (armController.getRawButton(ArmControls.REV_SHOOTER_FAST)) {
-                        shootSpeed = 1.0;
-                    } else if (armController.getRawButton(ArmControls.REV_SHOOTER_SLOW)) {
-                        shootSpeed = 0.5;
-                    }
-                    return shootSpeed;
-                }));
+        arm.setDefaultCommand(
+                new TeleopArm(arm,
+                        () -> armController.getRawAxis(ArmControls.LIFT_ARM_AXIS)));
+        intake.setDefaultCommand(
+                new TeleopIntake(intake,
+                        () -> armController.getRawAxis(ArmControls.SHOOT) >= ControllerConstants.TRIGGER_PULL_THRESHOLD,
+                        () -> armController.getRawButton(ArmControls.INTAKE)));
+        shooter.setDefaultCommand(
+                new TeleopShooter(shooter,
+                        () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST)));
+
         configureButtonBindings();
     }
 
@@ -86,8 +86,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // PathPlannerPath path = PathPlannerPath.fromPathFile("test");
-        // return AutoBuilder.followPath(path);
         return null;
     }
 }
