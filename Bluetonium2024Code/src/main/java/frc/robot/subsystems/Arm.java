@@ -42,22 +42,40 @@ public class Arm extends SubsystemBase {
         followerArmMotor.follow(mainArmMotor, true);
     }
 
+    /***
+     * Sets the arm position
+     */
+    public void zeroArm() {
+        mainArmEncoder.setPosition(0);
+    }
+
     /**
      * 
-     * @param speed speed of the arm in RPM
+     * @param speed Speed of the arm in RPM
      */
     public void setArmSpeed(double speed) {
         mainArmMotor.set(speed);
     }
 
+    /**
+     * 
+     * @param angle Rotate to have the arm go in Rotation2d
+     */
     public void setArmAngle(Rotation2d angle) {
         mainArmController.setReference(angle.getRotations(), ControlType.kPosition);
     }
 
+    /**
+     * 
+     * @return Returns the arm position as a Rotation2d
+     */
     public double getArmAngle() {
         return mainArmEncoder.getPosition();
     }
 
+    /**
+     * Stops all the motors
+     */
     public void stopAllMotion() {
         mainArmMotor.stopMotor();
     }

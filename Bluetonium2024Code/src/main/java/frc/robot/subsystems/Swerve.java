@@ -37,6 +37,13 @@ public class Swerve extends SubsystemBase {
 
     }
 
+    /**
+     * 
+     * @param translation   the translational speed of the rboot in m/s
+     * @param rotation      the rotational speed of robot in rad/s
+     * @param fieldRelative wether to be head or headless
+     * @param isOpenLoop    wether to run the wheels open loop or closed loop
+     */
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
@@ -52,16 +59,28 @@ public class Swerve extends SubsystemBase {
         setModuleStates(swerveModuleStates, isOpenLoop);
     }
 
+    /**
+     * 
+     * @return returns the current speed of the robot in ChassisSpeeds
+     */
     public ChassisSpeeds getRobotRelativeSpeeds() {
         return Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates());
     }
 
+    /**
+     * 
+     * @param chassisSpeeds the speeds to drive the robot at in ChassisSpeeds
+     */
     public void driveRobotReleative(ChassisSpeeds chassisSpeeds) {
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
         setModuleStates(swerveModuleStates, true);
     }
 
-    /* Used by SwerveControllerCommand in Auto */
+    /**
+     * 
+     * @param desiredStates Desired swerve module state
+     * @param isOpenLoop    Wether the wheels should be run in open loop mode
+     */
     public void setModuleStates(SwerveModuleState[] desiredStates, boolean isOpenLoop) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.MAX_SPEED);
 
@@ -70,6 +89,10 @@ public class Swerve extends SubsystemBase {
         }
     }
 
+    /**
+     * 
+     * @return Returns the current modules states
+     */
     public SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] states = new SwerveModuleState[4];
         for (SwerveModule mod : mSwerveMods) {
@@ -78,6 +101,10 @@ public class Swerve extends SubsystemBase {
         return states;
     }
 
+    /**
+     * 
+     * @return Returns the current module positions
+     */
     public SwerveModulePosition[] getModulePositions() {
         SwerveModulePosition[] positions = new SwerveModulePosition[4];
         for (SwerveModule mod : mSwerveMods) {
@@ -86,38 +113,67 @@ public class Swerve extends SubsystemBase {
         return positions;
     }
 
+    /**
+     * 
+     * @return Returns the robots positions in meters
+     */
     public Pose2d getPose() {
         return swerveOdometry.getPoseMeters();
     }
 
+    /**
+     * 
+     * @param pose Sets the position of the odometry
+     */
     public void setPose(Pose2d pose) {
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
     }
 
+    /**
+     * 
+     * @return Gets the current heading of the robot
+     */
     public Rotation2d getHeading() {
         return getPose().getRotation();
     }
 
+    /**
+     * 
+     * @param heading Sets the current heading of the robot
+     */
     public void setHeading(Rotation2d heading) {
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(),
                 new Pose2d(getPose().getTranslation(), heading));
     }
 
+    /**
+     * Zeroes the robots heading
+     */
     public void zeroHeading() {
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(),
                 new Pose2d(getPose().getTranslation(), new Rotation2d()));
     }
 
+    /**
+     * 
+     * @return Current yaw of the robot
+     */
     public Rotation2d getGyroYaw() {
         return Rotation2d.fromDegrees(gyro.getYaw().getValue());
     }
 
+    /**
+     * Resets all the modules positions to absolute
+     */
     public void resetModulesToAbsolute() {
         for (SwerveModule mod : mSwerveMods) {
             mod.resetToAbsolute();
         }
     }
 
+    /**
+     * Stops all the motion of the robot
+     */
     public void stopAllMotion() {
         for (SwerveModule mod : mSwerveMods) {
             mod.stopAllMotion();

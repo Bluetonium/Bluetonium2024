@@ -1,4 +1,4 @@
-package frc.robot.commands.auton;
+package frc.robot.commands.auton.speakershoot;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -18,13 +18,13 @@ public class RotateToSpeaker extends Command {
 
     @Override
     public void execute() {// make it a pid later
-        if (!LimelightHelpers.getTV(SensorConstants.LIMELIGHT_NAME))// This may cause an auto that does nothing
+        if (!LimelightHelpers.getTV(SensorConstants.LIMELIGHT_NAME))// This may cause an auto that does nothing, thats a
+                                                                    // later problem
             return;
 
         offsetValue = LimelightHelpers.getTX(SensorConstants.LIMELIGHT_NAME);
         ChassisSpeeds desiredSpeeds = new ChassisSpeeds(0, 0, Math.copySign(1, offsetValue));
         swerve.driveRobotReleative(desiredSpeeds);
-
     }
 
     @Override

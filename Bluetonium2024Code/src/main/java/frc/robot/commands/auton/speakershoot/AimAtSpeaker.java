@@ -1,4 +1,4 @@
-package frc.robot.commands.auton;
+package frc.robot.commands.auton.speakershoot;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -14,10 +14,6 @@ public class AimAtSpeaker extends Command {
         addRequirements(arm);
     }
 
-    private Rotation2d getDesiredArmAngle() {// set this to be the fancy equation
-        return new Rotation2d(0, 0);
-    }
-
     @Override
     public void execute() {
         if (!LimelightHelpers.getTV(SensorConstants.LIMELIGHT_NAME))
@@ -29,6 +25,10 @@ public class AimAtSpeaker extends Command {
     @Override
     public boolean isFinished() {
         return Math.abs(getDesiredArmAngle().getRotations() - arm.getArmAngle()) <= AutonConstants.ALIGNMENT_TOLERACE;
+    }
+
+    private Rotation2d getDesiredArmAngle() {// set this to be the fancy equation
+        return new Rotation2d(0, 0);
     }
 
 }

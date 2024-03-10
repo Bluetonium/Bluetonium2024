@@ -17,7 +17,7 @@ public class TeleopShooter extends Command {
 
     @Override
     public void execute() {
-        shooter.setShooterState(shooterButton.getAsBoolean());
+        shooter.setState(shooterButton.getAsBoolean());
     }
 
     @Override

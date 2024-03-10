@@ -24,6 +24,9 @@ public class Intake extends SubsystemBase {
         followerIntakeMotor.follow(mainIntakeMotor, true);
     }
 
+    /**
+     * Stops all the motors
+     */
     public void stopAllMotion() {
         mainIntakeMotor.stopMotor();
     }

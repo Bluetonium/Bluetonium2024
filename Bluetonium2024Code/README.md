@@ -2,17 +2,10 @@
 
 
 ## TODO 
-* implement arm code Arm 
-
-* test auto
-* learn how to limelight
-
-
+* too much
 
 ## ISSUES
-* none rn thankfully
-
-
+* nothing known
 
 ## INFO FOR ARM
 Arm lifting 2 motors
@@ -33,9 +26,15 @@ Button A for revving low
 * right joystick : rotation
 * A button zeroGyro
 
-### arm controlls **NEED TO IMPLEMENT**
-* left joystick [0,1] = [0,110] for arm angle
+### arm controlls
+* left joystick moves arm up and down
 * left trigger revs up intake
 * right trigger shooting
 * A button revs full speed 
-* Y button revs to half speec
+* Y button revs to half speed
+
+
+## THINGS TO NOTE
+* Postive arm direction it swinging up
+* Positive intake in taking in
+* Positive shooter is shooting out

@@ -1,4 +1,4 @@
-package frc.robot.commands.arm;
+package frc.robot.commands.teleop;
 
 import java.util.function.DoubleSupplier;
 
@@ -8,6 +8,7 @@ import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 
 public class TeleopArm extends Command {
+
     private Arm arm;
     private DoubleSupplier moveArmAxis;
 
@@ -29,5 +30,4 @@ public class TeleopArm extends Command {
     public void end(boolean interrupted) {
         arm.stopAllMotion();
     }
-
 }

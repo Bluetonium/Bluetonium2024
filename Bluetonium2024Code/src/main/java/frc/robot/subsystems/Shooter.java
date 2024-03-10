@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
 
     /**
      * 
-     * @param speed speed [-1,1]
+     * @param speed turns the shoot
      */
     public void setState(boolean state) {
         if (state) {
