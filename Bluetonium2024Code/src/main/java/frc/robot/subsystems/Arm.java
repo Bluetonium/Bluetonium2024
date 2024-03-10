@@ -1,11 +1,11 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkLimitSwitch.Type;
 import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkBase.ControlType;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,10 +21,6 @@ public class Arm extends SubsystemBase {
     CANSparkMax followerArmMotor; // left Arm
 
     public Arm() {
-        setupArmMotors();
-    }
-
-    private void setupArmMotors() {
         mainArmMotor = new CANSparkMax(ArmConstants.LEFT_ARM_MOTOR_ID,
                 MotorType.kBrushless);
         mainArmMotor.setSmartCurrentLimit(ArmConstants.ARM_CURRENT_LIMIT);
@@ -78,6 +74,10 @@ public class Arm extends SubsystemBase {
      */
     public void stopAllMotion() {
         mainArmMotor.stopMotor();
+    }
+
+    public boolean hardLimitReached() {
+        return mainArmMotor.getForwardLimitSwitch(Type.kNormallyOpen).isPressed();
     }
 
     @Override
