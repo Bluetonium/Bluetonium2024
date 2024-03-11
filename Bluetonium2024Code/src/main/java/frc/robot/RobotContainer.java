@@ -78,8 +78,7 @@ public class RobotContainer {
                 NamedCommands.registerCommand("ShootingSequence", new ShootingSequence(swerve, arm, shooter, intake));
 
                 
-                NamedCommands.registerCommand("shootNote", new ShootNote(intake, shooter)); // i think this is how i do
-                                                                                            // it?
+                NamedCommands.registerCommand("shootNote", new ShootNote(intake, shooter));
                 NamedCommands.registerCommand("spinUpShooter", new SpinUpShooter(shooter));
                 NamedCommands.registerCommand("rotateToSpeaker", new RotateToSpeaker(swerve));
                 NamedCommands.registerCommand("prepareToShoot", new PrepareToShoot(swerve, arm, shooter));

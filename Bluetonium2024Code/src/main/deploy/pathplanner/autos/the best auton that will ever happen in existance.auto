@@ -68,10 +68,22 @@
               {
                 "type": "named",
                 "data": {
-                  "name": null
+                  "name": "IntakeNote"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "2"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrepareToShoot"
           }
         }
       ]
