@@ -56,7 +56,8 @@ public class RobotContainer {
                                 new TeleopIntake(intake,
                                                 () -> armController.getRawAxis(
                                                                 ArmControls.SHOOT) >= ControllerConstants.TRIGGER_PULL_THRESHOLD,
-                                                () -> armController.getRawButton(ArmControls.INTAKE)));
+                                                () -> armController.getRawButton(ArmControls.INTAKE),
+                                                shooter::readyToShoot));
                 shooter.setDefaultCommand(
                                 new TeleopShooter(shooter,
                                                 () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST)));

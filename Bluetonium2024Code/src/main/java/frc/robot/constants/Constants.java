@@ -19,6 +19,7 @@ public final class Constants {
 
     public static final class SensorConstants {
         public static final String LIMELIGHT_NAME = "limelight";
+        public static final int PROXIMITY_SENSOR_PORT = 0;
 
         private SensorConstants() {
         }
@@ -31,6 +32,8 @@ public final class Constants {
         public static final int DRIVER_CONTROLLER_PORT = 0;
 
         public static final int ARM_CONTROLLER_PORT = 1;
+
+        public static final double OVERRIDE_TIME = 2;
 
         private ControllerConstants() {
         }

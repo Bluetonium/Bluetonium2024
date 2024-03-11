@@ -22,6 +22,10 @@ public class ZeroArm extends Command {
 
     @Override
     public boolean isFinished() {
-        return false;// TODO figure out how to know when the arm is zeroed
+        if (arm.limitReached()) {
+            arm.zeroArm();
+            return true;
+        }
+        return false;
     }
 }

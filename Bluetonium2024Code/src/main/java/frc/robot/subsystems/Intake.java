@@ -3,11 +3,14 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants.IntakeConstants;
+import frc.robot.constants.Constants.SensorConstants;
 
 public class Intake extends SubsystemBase {
     private CANSparkMax mainIntakeMotor;
+    private DigitalInput proximitySensor;
     CANSparkMax followerIntakeMotor;
 
     public Intake() {
@@ -22,6 +25,8 @@ public class Intake extends SubsystemBase {
         followerIntakeMotor.setSmartCurrentLimit(IntakeConstants.INTAKE_CURRENT_LIMIT);
         followerIntakeMotor.setIdleMode(IntakeConstants.INTAKE_IDLE_MODE);
         followerIntakeMotor.follow(mainIntakeMotor, true);
+
+        proximitySensor = new DigitalInput(SensorConstants.PROXIMITY_SENSOR_PORT);
     }
 
     /**
@@ -41,5 +46,13 @@ public class Intake extends SubsystemBase {
         } else {
             mainIntakeMotor.set(0);
         }
+    }
+
+    /**
+     * 
+     * @return If a note is currently in the intake
+     */
+    public boolean hasNote() {
+        return proximitySensor.get();
     }
 }

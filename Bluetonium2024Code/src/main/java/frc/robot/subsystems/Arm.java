@@ -76,7 +76,7 @@ public class Arm extends SubsystemBase {
         mainArmMotor.stopMotor();
     }
 
-    public boolean hardLimitReached() {
+    public boolean limitReached() {
         return mainArmMotor.getForwardLimitSwitch(Type.kNormallyOpen).isPressed();
     }
 
