@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
@@ -8,6 +10,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.auton.speakershoot.AimAtSpeaker;
+import frc.robot.commands.auton.speakershoot.PrepareToShoot;
+import frc.robot.commands.auton.speakershoot.RotateToSpeaker;
+import frc.robot.commands.auton.speakershoot.ShootNote;
+import frc.robot.commands.auton.speakershoot.SpinUpShooter;
 import frc.robot.commands.teleop.*;
 import frc.robot.constants.Constants;
 import frc.robot.constants.Constants.ArmControls;
@@ -44,7 +51,7 @@ public class RobotContainer {
         // figured out how to add the named command for shootingSequence.java and
         // ZeroArm.java, named them their class names
 
-        private SendableChooser<Command> autoChooser;
+        private SendableChooser<Command> autoChooser; //there it is lol
 
         /**
          * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -72,6 +79,12 @@ public class RobotContainer {
 
                 configureButtonBindings();
                 autoChooser = new SendableChooser<>();
+                NamedCommands.registerCommand("shootNote", new ShootNote(intake, shooter)); //i think this is how i do it?
+                NamedCommands.registerCommand("spinUpShooter", new SpinUpShooter(shooter));
+                NamedCommands.registerCommand("rotateToSpeaker", new RotateToSpeaker(swerve));
+                NamedCommands.registerCommand("prepareToShoot", new PrepareToShoot(swerve, arm, shooter));
+                NamedCommands.registerCommand("spinUpShooter", new AimAtSpeaker(arm));
+
                 SmartDashboard.putData("Auto Chooser", autoChooser);
 
         }
