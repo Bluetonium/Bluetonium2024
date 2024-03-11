@@ -3,6 +3,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -38,6 +40,12 @@ public class RobotContainer {
         private final Intake intake = new Intake();
         private final Shooter shooter = new Shooter();
 
+        /* Named comamnds */
+        // figured out how to add the named command for shootingSequence.java and
+        // ZeroArm.java, named them their class names
+
+        private SendableChooser<Command> autoChooser;
+
         /**
          * The container for the robot. Contains subsystems, OI devices, and commands.
          */
@@ -63,6 +71,9 @@ public class RobotContainer {
                                                 () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST)));
 
                 configureButtonBindings();
+                autoChooser = new SendableChooser<>();
+                SmartDashboard.putData("Auto Chooser", autoChooser);
+
         }
 
         /**
@@ -85,6 +96,6 @@ public class RobotContainer {
          * @return the command to run in autonomous
          */
         public Command getAutonomousCommand() {
-                return null;
+                return autoChooser.getSelected();
         }
 }
