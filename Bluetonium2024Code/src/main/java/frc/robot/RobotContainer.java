@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
@@ -8,6 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.auton.misc.ZeroArm;
+import frc.robot.commands.auton.speakershoot.ShootingSequence;
 import frc.robot.commands.teleop.*;
 import frc.robot.constants.Constants;
 import frc.robot.constants.Constants.ArmControls;
@@ -71,6 +75,9 @@ public class RobotContainer {
                                                 () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST)));
 
                 configureButtonBindings();
+                NamedCommands.registerCommand("ZeroArm", new ZeroArm(arm));
+                NamedCommands.registerCommand("ShootingSequence", new ShootingSequence(swerve, arm, shooter, intake));
+
                 autoChooser = new SendableChooser<>();
                 SmartDashboard.putData("Auto Chooser", autoChooser);
 

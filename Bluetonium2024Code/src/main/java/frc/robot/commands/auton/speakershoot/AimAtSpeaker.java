@@ -18,7 +18,6 @@ public class AimAtSpeaker extends Command {
     public void execute() {
         if (!LimelightHelpers.getTV(SensorConstants.LIMELIGHT_NAME))
             return;
-
         arm.setArmAngle(getDesiredArmAngle());
     }
 

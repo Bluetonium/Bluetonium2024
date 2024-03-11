@@ -95,6 +95,8 @@ public final class Constants {
         public static final double MAX_ARM_VELOCITY = 20;// RPM
         public static final double ARM_GEAR_RATIO = 4096 / 14.0;
 
+        public static final float ARM_REVERSED_LIMIT = -0.5f;// TODO set this up
+
         private ArmConstants() {
         }
     }

@@ -24,6 +24,7 @@ public class ZeroArm extends Command {
     public boolean isFinished() {
         if (arm.limitReached()) {
             arm.zeroArm();
+            arm.setSoftLimitState(true);
             return true;
         }
         return false;
