@@ -10,11 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.auton.speakershoot.AimAtSpeaker;
-import frc.robot.commands.auton.speakershoot.PrepareToShoot;
-import frc.robot.commands.auton.speakershoot.RotateToSpeaker;
-import frc.robot.commands.auton.speakershoot.ShootNote;
-import frc.robot.commands.auton.speakershoot.SpinUpShooter;
+import frc.robot.commands.auton.misc.ZeroArm;
+import frc.robot.commands.auton.speakershoot.*;
 import frc.robot.commands.teleop.*;
 import frc.robot.constants.Constants;
 import frc.robot.constants.Constants.ArmControls;
@@ -81,7 +78,7 @@ public class RobotContainer {
                 NamedCommands.registerCommand("ZeroArm", new ZeroArm(arm));
                 NamedCommands.registerCommand("ShootingSequence", new ShootingSequence(swerve, arm, shooter, intake));
 
-                autoChooser = new SendableChooser<>();
+                
                 NamedCommands.registerCommand("shootNote", new ShootNote(intake, shooter)); // i think this is how i do
                                                                                             // it?
                 NamedCommands.registerCommand("spinUpShooter", new SpinUpShooter(shooter));
@@ -89,6 +86,7 @@ public class RobotContainer {
                 NamedCommands.registerCommand("prepareToShoot", new PrepareToShoot(swerve, arm, shooter));
                 NamedCommands.registerCommand("spinUpShooter", new AimAtSpeaker(arm));
 
+                autoChooser = new SendableChooser<>();
                 SmartDashboard.putData("Auto Chooser", autoChooser);
 
         }
