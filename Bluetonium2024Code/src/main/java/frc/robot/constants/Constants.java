@@ -80,22 +80,23 @@ public final class Constants {
         public static final int BACK_SHOOT_MOTOR_ID = 17;
         public static final int SHOOTER_CURRENT_LIMIT = 30;
         public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kBrake;
-        public static final int MIN_SHOOTING_VELOCITY = 6000;// TODO figure this out later
+        public static final int MIN_SHOOTING_VELOCITY = 6000;// TODO figure this out later, or this is fine
 
         private ShooterConstants() {
         }
     }
 
     public static final class ArmConstants {
-        public static final int LEFT_ARM_MOTOR_ID = 15;
-
-        public static final int RIGHT_ARM_MOTOR_ID = 14;
+        public static final int ARM_MOTOR_ID = 15;
         public static final int ARM_CURRENT_LIMIT = 30;
         public static final IdleMode ARM_IDLE_MODE = IdleMode.kBrake;
         public static final double MAX_ARM_VELOCITY = 20;// RPM
         public static final double ARM_GEAR_RATIO = 4096 / 14.0;
 
-        public static final float ARM_REVERSED_LIMIT = -0.5f;// TODO set this up
+        public static final float ARM_REVERSED_LIMIT = -0.5f;// TODO set all of these up properly
+        public static final float ARM_FORWARD_LIMIT = 0.3f;
+        public static final double ABSOLUTE_ENCODER_CONVERSATION = 1 / 3.0;
+        public static final double ABSOLUTE_ENCODER_OFFSET = 0.2;
 
         private ArmConstants() {
         }
@@ -197,12 +198,12 @@ public final class Constants {
         public static final double OPEN_LOOP_RAMP = 0.25;
         public static final double CLOSED_LOOP_RAMP = 0.0;
         /* Drive Motor PID Values */
-        public static final double DRIVE_KP = 6e-5; // TO: This must be tuned to specific robot
+        public static final double DRIVE_KP = 2e-4; // TO: This must be tuned to specific robot
 
         public static final double DRIVE_KI = 0.0;
         public static final double DRIVE_PD = 0.0;
 
-        public static final double DRIVE_FF = 0.00884433962;
+        public static final double DRIVE_FF = 0.00015;
         /* Swerve Profiling Values */
         /** Meters per Second */
 
