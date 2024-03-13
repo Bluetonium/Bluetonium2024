@@ -81,6 +81,7 @@ public final class Constants {
         public static final int SHOOTER_CURRENT_LIMIT = 30;
         public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kBrake;
         public static final int MIN_SHOOTING_VELOCITY = 6000;// TODO figure this out later, or this is fine
+        public static final int DESIRED_SHOOTING_VELOCITY = 6200;
 
         private ShooterConstants() {
         }

@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -11,6 +13,7 @@ import frc.robot.constants.Constants.ShooterConstants;
 public class Shooter extends SubsystemBase {
     private CANSparkMax mainShooterMotor; // make sure one of these is inverted
     private RelativeEncoder mainShooterEncoder;
+    private SparkPIDController mainShooterController;
     CANSparkMax followerShooterMotor;
 
     public Shooter() {
@@ -20,6 +23,8 @@ public class Shooter extends SubsystemBase {
         mainShooterMotor.setIdleMode(ShooterConstants.SHOOTER_IDLE_MODE);
 
         mainShooterEncoder = mainShooterMotor.getEncoder();
+
+        mainShooterController = mainShooterMotor.getPIDController();
 
         followerShooterMotor = new CANSparkMax(ShooterConstants.BACK_SHOOT_MOTOR_ID,
                 MotorType.kBrushless);
@@ -34,9 +39,9 @@ public class Shooter extends SubsystemBase {
      */
     public void setState(boolean state) {
         if (state) {
-            mainShooterMotor.set(1);
+            mainShooterController.setReference(ShooterConstants.DESIRED_SHOOTING_VELOCITY, ControlType.kVelocity);
         } else {
-            mainShooterMotor.set(0);
+            mainShooterController.setReference(0, ControlType.kVelocity);
         }
     }
 
