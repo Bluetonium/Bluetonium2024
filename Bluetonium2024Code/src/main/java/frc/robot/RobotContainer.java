@@ -76,8 +76,8 @@ public class RobotContainer {
                 configureButtonBindings();
                 NamedCommands.registerCommand("ShootingSequence", new ShootingSequence(swerve, arm, shooter, intake));
 
-
-                
+                NamedCommands.registerCommand("shootNote", new ShootNote(intake, shooter));
+                NamedCommands.registerCommand("spinUpShooter", new SpinUpShooter(shooter));
                 NamedCommands.registerCommand("rotateToSpeaker", new RotateToSpeaker(swerve));
                 NamedCommands.registerCommand("prepareToShoot", new PrepareToShoot(swerve, arm, shooter));
                 NamedCommands.registerCommand("spinUpShooter", new AimAtSpeaker(arm));
