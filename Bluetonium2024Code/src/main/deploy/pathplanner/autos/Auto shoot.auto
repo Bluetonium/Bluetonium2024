@@ -20,12 +20,6 @@
                 "data": {
                   "pathName": "test shooting"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ZeroArm"
-                }
               }
             ]
           }

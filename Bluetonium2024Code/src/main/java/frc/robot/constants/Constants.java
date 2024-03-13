@@ -93,10 +93,12 @@ public final class Constants {
         public static final double MAX_ARM_VELOCITY = 20;// RPM
         public static final double ARM_GEAR_RATIO = 4096 / 14.0;
 
-        public static final float ARM_REVERSED_LIMIT = -0.5f;// TODO set all of these up properly
-        public static final float ARM_FORWARD_LIMIT = 0.3f;
-        public static final double ABSOLUTE_ENCODER_CONVERSATION = 1 / 3.0;
+        public static final float ARM_REVERSED_LIMIT = 0;// TODO set all of these up properly
+        public static final float ARM_FORWARD_LIMIT = 0.5f;
+        public static final double ABSOLUTE_ENCODER_CONVERSATION = 64 / 16.0;
         public static final double ABSOLUTE_ENCODER_OFFSET = 0.2;
+
+        public static final double ARM_IDLE_POSITION = 0.1;
 
         private ArmConstants() {
         }

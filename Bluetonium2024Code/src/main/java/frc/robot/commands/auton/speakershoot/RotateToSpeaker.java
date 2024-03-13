@@ -23,7 +23,7 @@ public class RotateToSpeaker extends Command {
             return;
 
         offsetValue = LimelightHelpers.getTX(SensorConstants.LIMELIGHT_NAME);
-        ChassisSpeeds desiredSpeeds = new ChassisSpeeds(0, 0, Math.copySign(1, offsetValue));
+        ChassisSpeeds desiredSpeeds = new ChassisSpeeds(0, 0, Math.copySign(0.5, offsetValue));
         swerve.driveRobotReleative(desiredSpeeds);
     }
 

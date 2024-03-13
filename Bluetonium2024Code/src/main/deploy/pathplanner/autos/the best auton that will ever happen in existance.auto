@@ -31,34 +31,9 @@
           }
         },
         {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "RotateToSpeaker"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AimAtSpeaker"
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "ShootNote"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 4.0
+            "name": "ShootingSequence"
           }
         },
         {
@@ -83,7 +58,7 @@
         {
           "type": "named",
           "data": {
-            "name": "PrepareToShoot"
+            "name": "ShootingSequence"
           }
         }
       ]

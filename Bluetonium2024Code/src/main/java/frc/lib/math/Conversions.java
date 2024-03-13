@@ -39,4 +39,8 @@ public class Conversions {
     public static double metersToRotations(double wheelMeters, double circumference) {
         return wheelMeters / circumference;
     }
+
+    public static double metersToInches(double meters) {
+        return (meters * 100) / 2.54;
+    }
 }

@@ -6,7 +6,6 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkLimitSwitch.Type;
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -47,7 +46,7 @@ public class Arm extends SubsystemBase {
 
     /**
      * 
-     * @param speed Speed of the arm in RPM
+     * @param speed Speed of the arm in a [-1,1] range
      */
     public void setArmSpeed(double speed) {
         armMotor.set(speed);
@@ -59,6 +58,13 @@ public class Arm extends SubsystemBase {
      */
     public void setArmAngle(Rotation2d angle) {
         armController.setReference(angle.getRotations(), ControlType.kPosition);
+    }
+
+    /**
+     * Sets the arm position to the idle state for movement
+     */
+    public void setIdlePosition() {
+        armController.setReference(Constants.ArmConstants.ARM_IDLE_POSITION, ControlType.kPosition);
     }
 
     /**
@@ -74,10 +80,6 @@ public class Arm extends SubsystemBase {
      */
     public void stopAllMotion() {
         armMotor.stopMotor();
-    }
-
-    public boolean limitReached() {
-        return armMotor.getForwardLimitSwitch(Type.kNormallyOpen).isPressed();
     }
 
     @Override
