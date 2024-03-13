@@ -20,7 +20,7 @@ public class NeoVortexSwerveConstants {
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
     public static final double ANGLE_GEAR_RATIO = ((150.0 / 7.0) / 1.0);
     public static final double DRIVE_GEAR_RATIO = CHOSEN_RATIO;
-    public static final double ANGLE_KP = 2.0;
+    public static final double ANGLE_KP = 100.0;
     public static final double ANGLE_KI = 0.0;
     public static final double ANGLE_KD = 0.0;
     public static final boolean DRIVE_MOTOR_INVERT = true;

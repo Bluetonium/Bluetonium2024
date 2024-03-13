@@ -48,8 +48,10 @@ public class TeleopIntake extends Command {
         if (intakeButton.getAsBoolean()) {
             intake.setState(!intake.hasNote());
         } else if (shootButton.getAsBoolean()) {
-            boolean ampInView = LimelightHelpers.getFiducialID(SensorConstants.LIMELIGHT_NAME) == 5
-                    || LimelightHelpers.getFiducialID(SensorConstants.LIMELIGHT_NAME) == 6;
+
+            boolean ampInView = (LimelightHelpers.getTV(SensorConstants.LIMELIGHT_NAME))
+                    && (LimelightHelpers.getFiducialID(SensorConstants.LIMELIGHT_NAME) == 5
+                            || LimelightHelpers.getFiducialID(SensorConstants.LIMELIGHT_NAME) == 6);
             if (shooterReady.getAsBoolean() || ampInView) {
                 intake.setState(true);
             } else {

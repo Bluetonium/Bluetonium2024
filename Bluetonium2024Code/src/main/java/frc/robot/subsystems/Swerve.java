@@ -29,7 +29,7 @@ public class Swerve extends SubsystemBase {
     private Pigeon2 gyro;
 
     public Swerve() {
-        gyro = new Pigeon2(Constants.Swerve.PIGEON_ID);
+        gyro = new Pigeon2(Constants.Swerve.PIGEON_ID, "CANTivore");
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
 
@@ -93,7 +93,7 @@ public class Swerve extends SubsystemBase {
      */
     public void driveRobotReleative(ChassisSpeeds chassisSpeeds) {
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
-        setModuleStates(swerveModuleStates, true);
+        setModuleStates(swerveModuleStates, false);
     }
 
     /**

@@ -36,7 +36,7 @@ public class SwerveModule {
         this.angleOffset = moduleConstants.angleOffset;
 
         /* Angle Encoder Config */
-        angleEncoder = new CANcoder(moduleConstants.cancoderID);
+        angleEncoder = new CANcoder(moduleConstants.cancoderID, "CANTivore");
 
         CANcoderConfiguration config = new CANcoderConfiguration();
         config.MagnetSensor.SensorDirection = NeoVortexSwerveConstants.CAN_CODER_INVERT;
