@@ -1,6 +1,7 @@
 package frc.robot;
 
-import com.pathplanner.lib.auto.AutoBuilder;
+import com.ctre.phoenix6.configs.Pigeon2Configuration;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -18,6 +19,7 @@ import frc.robot.constants.Constants;
 import frc.robot.constants.Constants.ArmControls;
 import frc.robot.constants.Constants.ChassisControls;
 import frc.robot.constants.Constants.ControllerConstants;
+import frc.robot.constants.Constants.MiscConstants;
 import frc.robot.subsystems.*;
 
 /**
@@ -40,21 +42,28 @@ public class RobotContainer {
         private final JoystickButton zeroGyro = new JoystickButton(driverController, ChassisControls.ZERO_GYRO_BUTTON);
 
         /* Subsystems */
-        private final Swerve swerve = new Swerve();
-        private final Arm arm = new Arm();
-        private final Intake intake = new Intake();
-        private final Shooter shooter = new Shooter();
+        private final Swerve swerve;
+        private final Arm arm;
+        private final Intake intake;
+        private final Shooter shooter;
 
-        /* Named comamnds */
-        // figured out how to add the named command for shootingSequence.java and
-        // ZeroArm.java, named them their class names
-
+        /* Other Stuff */
         private SendableChooser<Command> autoChooser; // there it is lol
+        private Pigeon2 gyro;
 
         /**
          * The container for the robot. Contains subsystems, OI devices, and commands.
          */
         public RobotContainer() {
+                gyro = new Pigeon2(MiscConstants.PIGEON_ID, MiscConstants.CANIVORE_NAME);
+                gyro.getConfigurator().apply(new Pigeon2Configuration());
+                gyro.setYaw(0);
+
+                swerve = new Swerve(gyro);
+                arm = new Arm();
+                intake = new Intake();
+                shooter = new Shooter();
+
                 swerve.setDefaultCommand(
                                 new TeleopSwerve(
                                                 swerve,
@@ -70,7 +79,8 @@ public class RobotContainer {
                                                 () -> armController.getRawAxis(
                                                                 ArmControls.SHOOT) >= ControllerConstants.TRIGGER_PULL_THRESHOLD,
                                                 () -> armController.getRawButton(ArmControls.INTAKE),
-                                                shooter::readyToShoot));
+                                                shooter::readyToShoot,
+                                                () -> gyro.getYaw().getValue()));
                 shooter.setDefaultCommand(
                                 new TeleopShooter(shooter,
                                                 () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST)));

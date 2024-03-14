@@ -1,13 +1,10 @@
 package frc.robot.commands.auton.speakershoot;
 
-import javax.sound.midi.SysexMessage;
-
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.util.LimelightHelpers;
-import frc.robot.constants.Constants.AutonConstants;
-import frc.robot.constants.Constants.SensorConstants;
+import frc.robot.constants.Constants.MiscConstants;
 import frc.robot.subsystems.Swerve;
 
 public class RotateToSpeaker extends Command {
@@ -22,16 +19,14 @@ public class RotateToSpeaker extends Command {
     @Override
     public void execute() {// TODO make it a pid later, maybe
         SmartDashboard.putString("Status1", "Target found");
-
-        offsetValue = LimelightHelpers.getTX(SensorConstants.LIMELIGHT_NAME);
+        offsetValue = LimelightHelpers.getTX(MiscConstants.LIMELIGHT_NAME);
         ChassisSpeeds desiredSpeeds = new ChassisSpeeds(0, 0, Math.copySign(0.5, offsetValue));
         swerve.driveRobotReleative(desiredSpeeds);
     }
 
     @Override
     public boolean isFinished() {
-        return true;
-        // return Math.abs(offsetValue) <= AutonConstants.ALIGNMENT_TOLERACE;
+        return Math.abs(offsetValue) <= 0.5;
     }
 
     @Override

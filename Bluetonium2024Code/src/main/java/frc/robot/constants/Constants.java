@@ -11,17 +11,19 @@ import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
     public static final class AutonConstants {
-        public static final double ALIGNMENT_TOLERACE = 0.3;// in degrees
+        public static final double ALIGNMENT_TOLERACE = 0.05;// in percent error
 
         private AutonConstants() {
         }
     }
 
-    public static final class SensorConstants {
+    public static final class MiscConstants {
         public static final String LIMELIGHT_NAME = "limelight";
         public static final int PROXIMITY_SENSOR_PORT = 0;
+        public static final int PIGEON_ID = 14;
+        public static final String CANIVORE_NAME = "CANTivore";
 
-        private SensorConstants() {
+        private MiscConstants() {
         }
     }
 
@@ -170,8 +172,6 @@ public final class Constants {
             private Mod3() {
             }
         }
-
-        public static final int PIGEON_ID = 14;
 
         /* Drivetrain Constants */
         public static final double TRACK_WIDTH = Units.inchesToMeters(23.5);

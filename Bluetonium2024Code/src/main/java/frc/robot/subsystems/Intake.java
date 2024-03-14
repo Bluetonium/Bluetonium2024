@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants.IntakeConstants;
-import frc.robot.constants.Constants.SensorConstants;
+import frc.robot.constants.Constants.MiscConstants;
 
 public class Intake extends SubsystemBase {
     private CANSparkMax mainIntakeMotor;
@@ -16,18 +16,20 @@ public class Intake extends SubsystemBase {
     public Intake() {
         mainIntakeMotor = new CANSparkMax(IntakeConstants.FORWARD_INTAKE_MOTOR_ID,
                 MotorType.kBrushless);
+        mainIntakeMotor.restoreFactoryDefaults();
         mainIntakeMotor.setInverted(true);
 
         mainIntakeMotor.setSmartCurrentLimit(IntakeConstants.INTAKE_CURRENT_LIMIT);
         mainIntakeMotor.setIdleMode(IntakeConstants.INTAKE_IDLE_MODE);
 
         CANSparkMax followerIntakeMotor = new CANSparkMax(IntakeConstants.BACK_INTAKE_MOTOR_ID, MotorType.kBrushless);
+        followerIntakeMotor.restoreFactoryDefaults();
         followerIntakeMotor.setSmartCurrentLimit(IntakeConstants.INTAKE_CURRENT_LIMIT);
         followerIntakeMotor.setIdleMode(IntakeConstants.INTAKE_IDLE_MODE);
         followerIntakeMotor.follow(mainIntakeMotor, true);
         followerIntakeMotor.close();
 
-        proximitySensor = new DigitalInput(SensorConstants.PROXIMITY_SENSOR_PORT);
+        proximitySensor = new DigitalInput(MiscConstants.PROXIMITY_SENSOR_PORT);
     }
 
     /**

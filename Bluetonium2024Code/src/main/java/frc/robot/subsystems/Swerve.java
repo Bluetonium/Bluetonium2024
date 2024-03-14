@@ -1,8 +1,6 @@
 package frc.robot.subsystems;
 
 import java.util.Optional;
-
-import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
@@ -28,11 +26,8 @@ public class Swerve extends SubsystemBase {
     private SwerveModule[] mSwerveMods;
     private Pigeon2 gyro;
 
-    public Swerve() {
-        gyro = new Pigeon2(Constants.Swerve.PIGEON_ID, "CANTivore");
-        gyro.getConfigurator().apply(new Pigeon2Configuration());
-        gyro.setYaw(0);
-
+    public Swerve(Pigeon2 gyro) {
+        this.gyro = gyro;
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, Constants.Swerve.Mod0.constants),
                 new SwerveModule(1, Constants.Swerve.Mod1.constants),

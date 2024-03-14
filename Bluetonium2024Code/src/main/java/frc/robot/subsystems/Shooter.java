@@ -11,13 +11,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
-    private CANSparkFlex mainShooterMotor; // make sure one of these is inverted
+    private CANSparkFlex mainShooterMotor;
     private RelativeEncoder mainShooterEncoder;
     private SparkPIDController mainShooterController;
 
     public Shooter() {
         mainShooterMotor = new CANSparkFlex(ShooterConstants.FORWARD_SHOOT_MOTOR_ID,
                 MotorType.kBrushless);
+        mainShooterMotor.restoreFactoryDefaults();
         mainShooterMotor.setSmartCurrentLimit(ShooterConstants.SHOOTER_CURRENT_LIMIT);
         mainShooterMotor.setIdleMode(ShooterConstants.SHOOTER_IDLE_MODE);
         mainShooterMotor.setInverted(false);
@@ -28,6 +29,7 @@ public class Shooter extends SubsystemBase {
 
         CANSparkFlex followerShooterMotor = new CANSparkFlex(ShooterConstants.BACK_SHOOT_MOTOR_ID,
                 MotorType.kBrushless);
+        followerShooterMotor.restoreFactoryDefaults();
         followerShooterMotor.setSmartCurrentLimit(ShooterConstants.SHOOTER_CURRENT_LIMIT);
         followerShooterMotor.setIdleMode(ShooterConstants.SHOOTER_IDLE_MODE);
         followerShooterMotor.follow(mainShooterMotor, true);
@@ -39,19 +41,15 @@ public class Shooter extends SubsystemBase {
      * @param speed turns the shoot
      */
     public void setState(boolean state) {
-        SmartDashboard.putBoolean("Shoooot", state);
         if (state) {
-            mainShooterMotor.set(1);
-            // mainShooterController.setReference(ShooterConstants.DESIRED_SHOOTING_VELOCITY,
-            // ControlType.kVelocity);
+            mainShooterController.setReference(ShooterConstants.DESIRED_SHOOTING_VELOCITY, ControlType.kVelocity);
         } else {
-            mainShooterMotor.set(0);
-            // mainShooterController.setReference(0, ControlType.kVelocity);
+            mainShooterController.setReference(0, ControlType.kVelocity);
         }
     }
 
     public void stopAllMotion() {
-        // mainShooterMotor.stopMotor();
+        mainShooterMotor.stopMotor();
     }
 
     public boolean readyToShoot() {

@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.math.Conversions;
 import frc.lib.util.LimelightHelpers;
 import frc.robot.constants.Constants.AutonConstants;
-import frc.robot.constants.Constants.SensorConstants;
+import frc.robot.constants.Constants.MiscConstants;
 import frc.robot.subsystems.Arm;
 
 public class AimAtSpeaker extends Command {
@@ -21,7 +21,6 @@ public class AimAtSpeaker extends Command {
 
     @Override
     public void execute() {
-
         SmartDashboard.putString("Status2", "Target found");
         Rotation2d angle = getDesiredArmAngle();
         SmartDashboard.putNumber("desired Angle", angle.getRotations());
@@ -31,8 +30,7 @@ public class AimAtSpeaker extends Command {
 
     @Override
     public boolean isFinished() {
-        return Math.abs(desiredAngle - arm.getArmAngle()) <= 0.05;// TODO have it check within a certian percent error
-
+        return Math.abs((desiredAngle - arm.getArmAngle()) / desiredAngle) <= AutonConstants.ALIGNMENT_TOLERACE;
     }
 
     @Override
@@ -41,7 +39,7 @@ public class AimAtSpeaker extends Command {
     }
 
     private Rotation2d getDesiredArmAngle() {// set this to be the fancy equation
-        Pose3d targetLocation = LimelightHelpers.getTargetPose3d_RobotSpace(SensorConstants.LIMELIGHT_NAME);
+        Pose3d targetLocation = LimelightHelpers.getTargetPose3d_RobotSpace(MiscConstants.LIMELIGHT_NAME);
         double distance = Conversions.metersToInches(targetLocation.getZ());
         return Rotation2d
                 .fromDegrees(-0.0021 * Math.pow(distance, 2) + 0.6573 * distance - 7.7554);
