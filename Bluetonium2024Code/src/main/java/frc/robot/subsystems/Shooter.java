@@ -20,7 +20,7 @@ public class Shooter extends SubsystemBase {
                 MotorType.kBrushless);
         mainShooterMotor.setSmartCurrentLimit(ShooterConstants.SHOOTER_CURRENT_LIMIT);
         mainShooterMotor.setIdleMode(ShooterConstants.SHOOTER_IDLE_MODE);
-        mainShooterMotor.setInverted(true);
+        mainShooterMotor.setInverted(false);
 
         mainShooterEncoder = mainShooterMotor.getEncoder();
 
@@ -39,15 +39,19 @@ public class Shooter extends SubsystemBase {
      * @param speed turns the shoot
      */
     public void setState(boolean state) {
+        SmartDashboard.putBoolean("Shoooot", state);
         if (state) {
-            mainShooterController.setReference(ShooterConstants.DESIRED_SHOOTING_VELOCITY, ControlType.kVelocity);
+            mainShooterMotor.set(1);
+            // mainShooterController.setReference(ShooterConstants.DESIRED_SHOOTING_VELOCITY,
+            // ControlType.kVelocity);
         } else {
-            mainShooterController.setReference(0, ControlType.kVelocity);
+            mainShooterMotor.set(0);
+            // mainShooterController.setReference(0, ControlType.kVelocity);
         }
     }
 
     public void stopAllMotion() {
-        mainShooterMotor.stopMotor();
+        // mainShooterMotor.stopMotor();
     }
 
     public boolean readyToShoot() {

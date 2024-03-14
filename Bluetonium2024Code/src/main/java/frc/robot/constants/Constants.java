@@ -67,7 +67,7 @@ public final class Constants {
         public static final int FORWARD_INTAKE_MOTOR_ID = 18;
 
         public static final int BACK_INTAKE_MOTOR_ID = 19;
-        public static final int INTAKE_CURRENT_LIMIT = 30;
+        public static final int INTAKE_CURRENT_LIMIT = 40;
         public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kBrake;
 
         private IntakeConstants() {
@@ -78,9 +78,9 @@ public final class Constants {
         public static final int FORWARD_SHOOT_MOTOR_ID = 16;
 
         public static final int BACK_SHOOT_MOTOR_ID = 17;
-        public static final int SHOOTER_CURRENT_LIMIT = 30;
-        public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kBrake;
-        public static final int MIN_SHOOTING_VELOCITY = 6000;// TODO figure this out later, or this is fine
+        public static final int SHOOTER_CURRENT_LIMIT = 40;
+        public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kCoast;
+        public static final int MIN_SHOOTING_VELOCITY = 3000;// TODO figure this out later, or this is fine
         public static final int DESIRED_SHOOTING_VELOCITY = 6200;
 
         private ShooterConstants() {
@@ -89,14 +89,18 @@ public final class Constants {
 
     public static final class ArmConstants {
         public static final int ARM_MOTOR_ID = 15;
-        public static final int ARM_CURRENT_LIMIT = 30;
+        public static final int ARM_CURRENT_LIMIT = 40;
         public static final IdleMode ARM_IDLE_MODE = IdleMode.kBrake;
         public static final double MAX_ARM_VELOCITY = 20;// RPM
         public static final double ARM_GEAR_RATIO = 4096 / 14.0;
 
+        public static final double ARM_KP = 0.1;
+        public static final double ARM_KI = 0;
+        public static final double ARM_KD = 0.01;
+
         public static final float ARM_REVERSED_LIMIT = 0;// TODO set all of these up properly
         public static final float ARM_FORWARD_LIMIT = 0.5f;
-        public static final double ABSOLUTE_ENCODER_CONVERSATION = 64 / 16.0;
+        public static final double ABSOLUTE_ENCODER_CONVERSATION = 16 / 64.0;
         public static final double ABSOLUTE_ENCODER_OFFSET = 0;
 
         public static final double ARM_IDLE_POSITION = 0.1;

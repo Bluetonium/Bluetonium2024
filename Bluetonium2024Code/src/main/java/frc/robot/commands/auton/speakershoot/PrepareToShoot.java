@@ -17,7 +17,7 @@ public class PrepareToShoot extends ParallelCommandGroup {
         if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
             LimelightHelpers.setPriorityTagID(SensorConstants.LIMELIGHT_NAME, 3);
         } else {
-            LimelightHelpers.setPriorityTagID(SensorConstants.LIMELIGHT_NAME, 7);
+            LimelightHelpers.setPriorityTagID(SensorConstants.LIMELIGHT_NAME, 8);
         }
 
         addCommands(new AimAtSpeaker(arm),

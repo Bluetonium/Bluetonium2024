@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
 import frc.robot.constants.Constants.ArmConstants;
+import frc.robot.constants.Constants.ArmControls;
 
 public class Arm extends SubsystemBase {
     private CANSparkMax armMotor; // right Arm
@@ -27,10 +28,13 @@ public class Arm extends SubsystemBase {
                 MotorType.kBrushless);
         armMotor.setSmartCurrentLimit(ArmConstants.ARM_CURRENT_LIMIT);
         armMotor.setIdleMode(ArmConstants.ARM_IDLE_MODE);
-        armMotor.setSoftLimit(SoftLimitDirection.kForward,
-                (float) (Constants.ArmConstants.ARM_FORWARD_LIMIT * (1 / Constants.ArmConstants.ARM_GEAR_RATIO)));
-        armMotor.setSoftLimit(SoftLimitDirection.kReverse,
-                (float) (Constants.ArmConstants.ARM_REVERSED_LIMIT * (1 / Constants.ArmConstants.ARM_GEAR_RATIO)));
+        armMotor.setInverted(true);
+        // armMotor.setSoftLimit(SoftLimitDirection.kForward,
+        // (float) (Constants.ArmConstants.ARM_FORWARD_LIMIT * (1 /
+        // Constants.ArmConstants.ARM_GEAR_RATIO)));
+        // armMotor.setSoftLimit(SoftLimitDirection.kReverse,
+        // (float) (Constants.ArmConstants.ARM_REVERSED_LIMIT * (1 /
+        // Constants.ArmConstants.ARM_GEAR_RATIO)));
 
         armEncoder = armMotor.getEncoder();
         armEncoder.setVelocityConversionFactor(1 / ArmConstants.ARM_GEAR_RATIO);
@@ -42,6 +46,9 @@ public class Arm extends SubsystemBase {
         armEncoder.setPosition(armAbsoluteEncoder.getPosition() - ArmConstants.ABSOLUTE_ENCODER_OFFSET);
 
         armController = armMotor.getPIDController();
+        armController.setP(ArmConstants.ARM_KP);
+        armController.setI(ArmConstants.ARM_KI);
+        armController.setD(ArmConstants.ARM_KD);
     }
 
     /**
@@ -56,8 +63,8 @@ public class Arm extends SubsystemBase {
      * 
      * @param angle Rotate to have the arm go in Rotation2d
      */
-    public void setArmAngle(Rotation2d angle) {
-        armController.setReference(angle.getRotations(), ControlType.kPosition);
+    public void setArmAngle(double angle) {
+        armController.setReference(angle, ControlType.kPosition);
     }
 
     /**

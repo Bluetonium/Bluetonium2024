@@ -1,6 +1,9 @@
 package frc.robot.commands.auton.speakershoot;
 
+import javax.sound.midi.SysexMessage;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.util.LimelightHelpers;
 import frc.robot.constants.Constants.AutonConstants;
@@ -18,9 +21,7 @@ public class RotateToSpeaker extends Command {
 
     @Override
     public void execute() {// TODO make it a pid later, maybe
-        if (!LimelightHelpers.getTV(SensorConstants.LIMELIGHT_NAME))// This may cause an auto that does nothing, thats a
-                                                                    // later problem
-            return;
+        SmartDashboard.putString("Status1", "Target found");
 
         offsetValue = LimelightHelpers.getTX(SensorConstants.LIMELIGHT_NAME);
         ChassisSpeeds desiredSpeeds = new ChassisSpeeds(0, 0, Math.copySign(0.5, offsetValue));
@@ -29,7 +30,8 @@ public class RotateToSpeaker extends Command {
 
     @Override
     public boolean isFinished() {
-        return Math.abs(offsetValue) <= AutonConstants.ALIGNMENT_TOLERACE;
+        return true;
+        // return Math.abs(offsetValue) <= AutonConstants.ALIGNMENT_TOLERACE;
     }
 
     @Override
