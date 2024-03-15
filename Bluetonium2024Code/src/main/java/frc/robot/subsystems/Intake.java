@@ -11,7 +11,8 @@ import frc.robot.constants.Constants.MiscConstants;
 
 public class Intake extends SubsystemBase {
     private CANSparkMax mainIntakeMotor;
-    private DigitalInput proximitySensor;
+    private DigitalInput beamBreak;
+    CANSparkMax followerIntakeMotor;
 
     public Intake() {
         mainIntakeMotor = new CANSparkMax(IntakeConstants.FORWARD_INTAKE_MOTOR_ID,
@@ -22,14 +23,13 @@ public class Intake extends SubsystemBase {
         mainIntakeMotor.setSmartCurrentLimit(IntakeConstants.INTAKE_CURRENT_LIMIT);
         mainIntakeMotor.setIdleMode(IntakeConstants.INTAKE_IDLE_MODE);
 
-        CANSparkMax followerIntakeMotor = new CANSparkMax(IntakeConstants.BACK_INTAKE_MOTOR_ID, MotorType.kBrushless);
+        followerIntakeMotor = new CANSparkMax(IntakeConstants.BACK_INTAKE_MOTOR_ID, MotorType.kBrushless);
         followerIntakeMotor.restoreFactoryDefaults();
         followerIntakeMotor.setSmartCurrentLimit(IntakeConstants.INTAKE_CURRENT_LIMIT);
         followerIntakeMotor.setIdleMode(IntakeConstants.INTAKE_IDLE_MODE);
         followerIntakeMotor.follow(mainIntakeMotor, true);
-        followerIntakeMotor.close();
 
-        proximitySensor = new DigitalInput(MiscConstants.PROXIMITY_SENSOR_PORT);
+        beamBreak = new DigitalInput(MiscConstants.PROXIMITY_SENSOR_PORT);
     }
 
     /**
@@ -43,12 +43,16 @@ public class Intake extends SubsystemBase {
      * 
      * @param active if the motor should be spinning or not
      */
-    public void setState(boolean state) {
-        if (state) {
-            mainIntakeMotor.set(1);
-        } else {
-            mainIntakeMotor.set(0);
-        }
+    public void turnOnIntake() {
+        mainIntakeMotor.set(0.25);
+    }
+
+    public void turnOffIntake() {
+        mainIntakeMotor.set(0);
+    }
+
+    public void shoot() {
+        mainIntakeMotor.set(1);
     }
 
     /**
@@ -56,7 +60,7 @@ public class Intake extends SubsystemBase {
      * @return If a note is currently in the intake
      */
     public boolean hasNote() {
-        return proximitySensor.get();
+        return !beamBreak.get();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.SoftLimitDirection;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
 import frc.robot.constants.Constants.ArmConstants;
+import frc.robot.constants.Constants.AutonConstants;
 
 public class Arm extends SubsystemBase {
     private CANSparkMax armMotor; // right Arm
@@ -25,13 +27,13 @@ public class Arm extends SubsystemBase {
                 MotorType.kBrushless);
         armMotor.setSmartCurrentLimit(ArmConstants.ARM_CURRENT_LIMIT);
         armMotor.setIdleMode(ArmConstants.ARM_IDLE_MODE);
-        armMotor.setInverted(true);
-        // armMotor.setSoftLimit(SoftLimitDirection.kForward,
-        // (float) (Constants.ArmConstants.ARM_FORWARD_LIMIT * (1 /
-        // Constants.ArmConstants.ARM_GEAR_RATIO)));
-        // armMotor.setSoftLimit(SoftLimitDirection.kReverse,
-        // (float) (Constants.ArmConstants.ARM_REVERSED_LIMIT * (1 /
-        // Constants.ArmConstants.ARM_GEAR_RATIO)));
+        armMotor.setInverted(false);
+        armMotor.setSoftLimit(SoftLimitDirection.kForward,
+                (float) (Constants.ArmConstants.ARM_FORWARD_LIMIT * (1 /
+                        Constants.ArmConstants.ARM_GEAR_RATIO)));
+        armMotor.setSoftLimit(SoftLimitDirection.kReverse,
+                (float) (Constants.ArmConstants.ARM_REVERSED_LIMIT * (1 /
+                        Constants.ArmConstants.ARM_GEAR_RATIO)));
 
         armEncoder = armMotor.getEncoder();
         armEncoder.setVelocityConversionFactor(1 / ArmConstants.ARM_GEAR_RATIO);
@@ -89,5 +91,9 @@ public class Arm extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Arm angle", getArmAngle());
+    }
+
+    public boolean isAtAngle(double angle) {
+        return Math.abs((angle - getArmAngle()) / angle) <= AutonConstants.ALIGNMENT_TOLERACE;
     }
 }

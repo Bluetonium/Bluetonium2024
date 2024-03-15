@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.math.Conversions;
 import frc.lib.util.LimelightHelpers;
-import frc.robot.constants.Constants.AutonConstants;
 import frc.robot.constants.Constants.MiscConstants;
 import frc.robot.subsystems.Arm;
 
@@ -30,7 +29,7 @@ public class AimAtSpeaker extends Command {
 
     @Override
     public boolean isFinished() {
-        return Math.abs((desiredAngle - arm.getArmAngle()) / desiredAngle) <= AutonConstants.ALIGNMENT_TOLERACE;
+        return arm.isAtAngle(desiredAngle);
     }
 
     @Override

@@ -30,7 +30,7 @@ public class ShootNote extends Command {
 
     @Override
     public void execute() {
-        intake.setState(true);
+        intake.shoot();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ShootNote extends Command {
 
     @Override
     public void end(boolean isInterupted) {
-        intake.setState(false);
+        intake.turnOffIntake();
         shooter.setState(false);
 
         if (!isInterupted) {

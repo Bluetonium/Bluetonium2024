@@ -30,23 +30,19 @@ public class TeleopIntake extends Command {
     @Override
     public void execute() {
         if (intakeButton.getAsBoolean()) {
-            intake.setState(!intake.hasNote());
+            intake.turnOnIntake();
         } else if (shootButton.getAsBoolean()) {
-
-            boolean ampInView = Math.abs(180 - ((robotYaw.getAsDouble() + 90) % 180)) < 45;// TODO check this math and
-                                                                                           // then check it
-            // again
-
+            boolean ampInView = Math.abs(180 - ((robotYaw.getAsDouble() + 90) % 180)) < 45;// TODO check this math
             if (shooterReady.getAsBoolean() || ampInView) {
-                intake.setState(true);
+                intake.turnOnIntake();
             } else {
                 shootOverrideTimer.start();
                 if (checkAndStopTimer(shootOverrideTimer, ControllerConstants.OVERRIDE_TIME)) {
-                    intake.setState(true);
+                    intake.turnOnIntake();
                 }
             }
         } else {
-            intake.setState(false);
+            intake.turnOffIntake();
         }
     }
 

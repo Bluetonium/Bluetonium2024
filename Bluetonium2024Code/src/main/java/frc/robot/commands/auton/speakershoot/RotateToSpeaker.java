@@ -17,7 +17,7 @@ public class RotateToSpeaker extends Command {
     }
 
     @Override
-    public void execute() {// TODO make it a pid later, maybe
+    public void execute() {
         SmartDashboard.putString("Status1", "Target found");
         offsetValue = LimelightHelpers.getTX(MiscConstants.LIMELIGHT_NAME);
         ChassisSpeeds desiredSpeeds = new ChassisSpeeds(0, 0, Math.copySign(0.5, offsetValue));

@@ -3,7 +3,6 @@ package frc.robot;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PS4Controller;
@@ -13,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.auton.intake.IntakeNoteSequence;
 import frc.robot.commands.auton.speakershoot.*;
 import frc.robot.commands.teleop.*;
 import frc.robot.constants.Constants;
@@ -77,8 +77,9 @@ public class RobotContainer {
                 intake.setDefaultCommand(
                                 new TeleopIntake(intake,
                                                 () -> armController.getRawAxis(
+                                                                ArmControls.INTAKE) > ControllerConstants.TRIGGER_PULL_THRESHOLD,
+                                                () -> armController.getRawAxis(
                                                                 ArmControls.SHOOT) >= ControllerConstants.TRIGGER_PULL_THRESHOLD,
-                                                () -> armController.getRawButton(ArmControls.INTAKE),
                                                 shooter::readyToShoot,
                                                 () -> gyro.getYaw().getValue()));
                 shooter.setDefaultCommand(
@@ -92,6 +93,7 @@ public class RobotContainer {
                 NamedCommands.registerCommand("rotateToSpeaker", new RotateToSpeaker(swerve));
                 NamedCommands.registerCommand("prepareToShoot", new PrepareToShoot(swerve, arm, shooter));
                 NamedCommands.registerCommand("spinUpShooter", new AimAtSpeaker(arm));
+                NamedCommands.registerCommand("IntakeNoteSequence", new IntakeNoteSequence(arm, swerve, intake));
 
                 autoChooser = new SendableChooser<>();
                 SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -119,6 +121,6 @@ public class RobotContainer {
          * @return the command to run in autonomous
          */
         public Command getAutonomousCommand() {
-                return new PathPlannerAuto("Auto shoot");
+                return autoChooser.getSelected();
         }
 }

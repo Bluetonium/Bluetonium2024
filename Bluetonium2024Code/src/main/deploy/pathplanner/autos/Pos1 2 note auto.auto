@@ -1,0 +1,55 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.5411044202972841,
+      "y": 7.260718658384535
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "pos1 drive to shoot 1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootingSequence"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Pos1 drive to note"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeNoteSequence"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "pos 1 return to shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootingSequence"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

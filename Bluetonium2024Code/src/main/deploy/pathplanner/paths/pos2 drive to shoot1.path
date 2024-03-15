@@ -1,0 +1,68 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.4028643441902284,
+        "y": 4.509192864539576
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.4028643441902284,
+        "y": 4.509192864539576
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.8927727086223416,
+        "y": 4.913737519782733
+      },
+      "prevControl": {
+        "x": 1.8931806221616505,
+        "y": 4.94229729368161
+      },
+      "nextControl": {
+        "x": 3.5834587053789506,
+        "y": 4.894003634161115
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.254410816513942,
+        "y": 6.008968171782498
+      },
+      "prevControl": {
+        "x": 3.553857876946524,
+        "y": 5.002540005080012
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "pos2 shoot location"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 9.309940174986107,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Pos2 2 note auto",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
