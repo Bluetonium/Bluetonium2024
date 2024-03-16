@@ -2,7 +2,6 @@ package frc.robot.commands.auton.speakershoot;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.math.Conversions;
 import frc.lib.util.LimelightHelpers;
@@ -20,9 +19,7 @@ public class AimAtSpeaker extends Command {
 
     @Override
     public void execute() {
-        SmartDashboard.putString("Status2", "Target found");
         Rotation2d angle = getDesiredArmAngle();
-        SmartDashboard.putNumber("desired Angle", angle.getRotations());
         desiredAngle = angle.getRotations();
         arm.setArmAngle(angle.getRotations());
     }

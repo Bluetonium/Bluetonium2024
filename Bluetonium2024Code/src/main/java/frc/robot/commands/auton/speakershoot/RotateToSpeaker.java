@@ -1,7 +1,6 @@
 package frc.robot.commands.auton.speakershoot;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.util.LimelightHelpers;
 import frc.robot.constants.Constants.MiscConstants;
@@ -18,7 +17,6 @@ public class RotateToSpeaker extends Command {
 
     @Override
     public void execute() {
-        SmartDashboard.putString("Status1", "Target found");
         offsetValue = LimelightHelpers.getTX(MiscConstants.LIMELIGHT_NAME);
         ChassisSpeeds desiredSpeeds = new ChassisSpeeds(0, 0, Math.copySign(0.5, offsetValue));
         swerve.driveRobotReleative(desiredSpeeds);
