@@ -1,9 +1,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkBase.ControlType;
-import com.revrobotics.CANSparkBase.SoftLimitDirection;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -26,23 +25,12 @@ public class Arm extends SubsystemBase {
         armMotor = new CANSparkMax(ArmConstants.ARM_MOTOR_ID,
                 MotorType.kBrushless);
         armMotor.setSmartCurrentLimit(ArmConstants.ARM_CURRENT_LIMIT);
-        armMotor.setIdleMode(ArmConstants.ARM_IDLE_MODE);
+        armMotor.setIdleMode(IdleMode.kCoast);
         armMotor.setInverted(false);
-        armMotor.setSoftLimit(SoftLimitDirection.kForward,
-                (float) (Constants.ArmConstants.ARM_FORWARD_LIMIT * (1 /
-                        Constants.ArmConstants.ARM_GEAR_RATIO)));
-        armMotor.setSoftLimit(SoftLimitDirection.kReverse,
-                (float) (Constants.ArmConstants.ARM_REVERSED_LIMIT * (1 /
-                        Constants.ArmConstants.ARM_GEAR_RATIO)));
 
         armEncoder = armMotor.getEncoder();
         armEncoder.setVelocityConversionFactor(1 / ArmConstants.ARM_GEAR_RATIO);
         armEncoder.setPositionConversionFactor(1 / ArmConstants.ARM_GEAR_RATIO);
-
-        AbsoluteEncoder armAbsoluteEncoder = armMotor
-                .getAbsoluteEncoder(com.revrobotics.SparkAbsoluteEncoder.Type.kDutyCycle);
-        armAbsoluteEncoder.setPositionConversionFactor(ArmConstants.ABSOLUTE_ENCODER_CONVERSATION);
-        armEncoder.setPosition(armAbsoluteEncoder.getPosition() - ArmConstants.ABSOLUTE_ENCODER_OFFSET);
 
         armController = armMotor.getPIDController();
         armController.setP(ArmConstants.ARM_KP);
@@ -56,6 +44,10 @@ public class Arm extends SubsystemBase {
      */
     public void setArmSpeed(double speed) {
         armMotor.set(speed);
+    }
+
+    public void switchToBreak() {
+        armMotor.setIdleMode(IdleMode.kBrake);
     }
 
     /**

@@ -19,7 +19,7 @@ public final class Constants {
 
     public static final class MiscConstants {
         public static final String LIMELIGHT_NAME = "limelight";
-        public static final int PROXIMITY_SENSOR_PORT = 0;
+        public static final int PROXIMITY_SENSOR_PORT = 1;
         public static final int PIGEON_ID = 14;
         public static final String CANIVORE_NAME = "CANTivore";
 
@@ -82,8 +82,13 @@ public final class Constants {
         public static final int BACK_SHOOT_MOTOR_ID = 17;
         public static final int SHOOTER_CURRENT_LIMIT = 40;
         public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kCoast;
-        public static final int MIN_SHOOTING_VELOCITY = 4000;// TODO figure this out later, or this is fine
+        public static final int MIN_SHOOTING_VELOCITY = 5000;
         public static final int DESIRED_SHOOTING_VELOCITY = 6200;
+
+        public static final double SHOOTER_KP = 0;
+        public static final double SHOOTER_KI = 0;
+        public static final double SHOOTER_PD = 0;
+        public static final double SHOOTER_FF = 0;
 
         private ShooterConstants() {
         }
@@ -102,9 +107,10 @@ public final class Constants {
         public static final double ARM_FF = 0.01;
 
         public static final float ARM_REVERSED_LIMIT = 0;// TODO set all of these up properly
-        public static final float ARM_FORWARD_LIMIT = 0.5f;
+        public static final float ARM_FORWARD_LIMIT = 0.7f;
         public static final double ABSOLUTE_ENCODER_CONVERSATION = 14 / 64.0;
-        public static final double ABSOLUTE_ENCODER_OFFSET = 0;
+        public static final double ABSOLUTE_ENCODER_OFFSET = 0.1239;
+        public static final int ARM_ABSOLUTE_ENCODER_PORT = 0;
 
         public static final double ARM_IDLE_POSITION = 0.1;
 

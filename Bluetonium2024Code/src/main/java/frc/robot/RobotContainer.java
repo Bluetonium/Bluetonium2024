@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -95,7 +96,7 @@ public class RobotContainer {
                 NamedCommands.registerCommand("spinUpShooter", new AimAtSpeaker(arm));
                 NamedCommands.registerCommand("IntakeNoteSequence", new IntakeNoteSequence(arm, swerve, intake));
 
-                autoChooser = new SendableChooser<>();
+                autoChooser = AutoBuilder.buildAutoChooser();
                 SmartDashboard.putData("Auto Chooser", autoChooser);
                 SmartDashboard.updateValues();
 
@@ -121,6 +122,7 @@ public class RobotContainer {
          * @return the command to run in autonomous
          */
         public Command getAutonomousCommand() {
+                arm.switchToBreak();
                 return autoChooser.getSelected();
         }
 }

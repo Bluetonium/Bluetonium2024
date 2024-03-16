@@ -32,7 +32,8 @@ public class TeleopIntake extends Command {
         if (intakeButton.getAsBoolean()) {
             intake.turnOnIntake();
         } else if (shootButton.getAsBoolean()) {
-            boolean ampInView = Math.abs(180 - ((robotYaw.getAsDouble() + 90) % 180)) < 45;// TODO check this math
+            double value = ((Math.abs(robotYaw.getAsDouble()) + 90) % 180);
+            boolean ampInView = 180 - ((Math.abs(robotYaw.getAsDouble()) + 90) % 180) < 45 || value < 45;
             if (shooterReady.getAsBoolean() || ampInView) {
                 intake.turnOnIntake();
             } else {
