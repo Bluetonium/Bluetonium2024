@@ -35,11 +35,11 @@ public class TeleopIntake extends Command {
             double value = ((Math.abs(robotYaw.getAsDouble()) + 90) % 180);
             boolean ampInView = 180 - ((Math.abs(robotYaw.getAsDouble()) + 90) % 180) < 45 || value < 45;
             if (shooterReady.getAsBoolean() || ampInView) {
-                intake.turnOnIntake();
+                intake.shoot();
             } else {
                 shootOverrideTimer.start();
                 if (checkAndStopTimer(shootOverrideTimer, ControllerConstants.OVERRIDE_TIME)) {
-                    intake.turnOnIntake();
+                    intake.shoot();
                 }
             }
         } else {

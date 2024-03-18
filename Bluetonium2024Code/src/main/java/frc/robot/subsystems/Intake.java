@@ -52,7 +52,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void shoot() {
-        mainIntakeMotor.set(1);
+        mainIntakeMotor.set(0.5);
     }
 
     /**
