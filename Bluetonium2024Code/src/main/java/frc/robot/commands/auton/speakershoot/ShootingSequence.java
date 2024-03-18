@@ -10,6 +10,6 @@ public class ShootingSequence extends SequentialCommandGroup {
     public ShootingSequence(Swerve swerve, Arm arm, Shooter shooter, Intake intake) {
         addCommands(
                 new PrepareToShoot(swerve, arm, shooter),
-                new ShootNote(intake, shooter));
+                new ShootNote(intake, shooter, arm));
     }
 }

@@ -11,17 +11,19 @@ import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
     public static final class AutonConstants {
-        public static final double ALIGNMENT_TOLERACE = 0.3;// in degrees
+        public static final double ALIGNMENT_TOLERACE = 0.05;// in percent error
 
         private AutonConstants() {
         }
     }
 
-    public static final class SensorConstants {
+    public static final class MiscConstants {
         public static final String LIMELIGHT_NAME = "limelight";
-        public static final int PROXIMITY_SENSOR_PORT = 0;
+        public static final int PROXIMITY_SENSOR_PORT = 1;
+        public static final int PIGEON_ID = 14;
+        public static final String CANIVORE_NAME = "CANTivore";
 
-        private SensorConstants() {
+        private MiscConstants() {
         }
     }
 
@@ -67,7 +69,7 @@ public final class Constants {
         public static final int FORWARD_INTAKE_MOTOR_ID = 18;
 
         public static final int BACK_INTAKE_MOTOR_ID = 19;
-        public static final int INTAKE_CURRENT_LIMIT = 30;
+        public static final int INTAKE_CURRENT_LIMIT = 40;
         public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kBrake;
 
         private IntakeConstants() {
@@ -78,22 +80,39 @@ public final class Constants {
         public static final int FORWARD_SHOOT_MOTOR_ID = 16;
 
         public static final int BACK_SHOOT_MOTOR_ID = 17;
-        public static final int SHOOTER_CURRENT_LIMIT = 30;
-        public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kBrake;
-        public static final int MIN_SHOOTING_VELOCITY = 6000;// TODO figure this out later
+        public static final int SHOOTER_CURRENT_LIMIT = 40;
+        public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kCoast;
+        public static final int MIN_SHOOTING_VELOCITY = 5000;
+        public static final int DESIRED_SHOOTING_VELOCITY = 6200;
+
+        public static final double SHOOTER_KP = 0;
+        public static final double SHOOTER_KI = 0;
+        public static final double SHOOTER_PD = 0;
+        public static final double SHOOTER_FF = 0;
 
         private ShooterConstants() {
         }
     }
 
     public static final class ArmConstants {
-        public static final int LEFT_ARM_MOTOR_ID = 15;
-
-        public static final int RIGHT_ARM_MOTOR_ID = 14;
-        public static final int ARM_CURRENT_LIMIT = 30;
+        public static final int ARM_MOTOR_ID = 15;
+        public static final int ARM_CURRENT_LIMIT = 40;
         public static final IdleMode ARM_IDLE_MODE = IdleMode.kBrake;
         public static final double MAX_ARM_VELOCITY = 20;// RPM
         public static final double ARM_GEAR_RATIO = 4096 / 14.0;
+
+        public static final double ARM_KP = 0.1;
+        public static final double ARM_KI = 0;
+        public static final double ARM_KD = 0;
+        public static final double ARM_FF = 0.01;
+
+        public static final float ARM_REVERSED_LIMIT = 0;// TODO set all of these up properly
+        public static final float ARM_FORWARD_LIMIT = 0.7f;
+        public static final double ABSOLUTE_ENCODER_CONVERSATION = 14 / 64.0;
+        public static final double ABSOLUTE_ENCODER_OFFSET = 0.1239;
+        public static final int ARM_ABSOLUTE_ENCODER_PORT = 0;
+
+        public static final double ARM_IDLE_POSITION = 0.1;
 
         private ArmConstants() {
         }
@@ -107,7 +126,7 @@ public final class Constants {
 
             public static final int ANGLE_MOTOR_ID = 3;
             public static final int CAN_CODER_ID = 4;
-            public static final Rotation2d angleOffset = Rotation2d.fromRotations(-0.123779296875);
+            public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.123046875);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID,
                     CAN_CODER_ID, angleOffset);
@@ -122,7 +141,7 @@ public final class Constants {
 
             public static final int ANGLE_MOTOR_ID = 6;
             public static final int CAN_CODER_ID = 7;
-            public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.430908203125);
+            public static final Rotation2d angleOffset = Rotation2d.fromRotations(-0.4189453125);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID,
                     CAN_CODER_ID, angleOffset);
@@ -137,7 +156,7 @@ public final class Constants {
 
             public static final int ANGLE_MOTOR_ID = 9;
             public static final int CAN_CODER_ID = 10;
-            public static final Rotation2d angleOffset = Rotation2d.fromRotations(-0.273193359375);
+            public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.268310546875);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID,
                     CAN_CODER_ID, angleOffset);
@@ -149,10 +168,9 @@ public final class Constants {
         /* Back Right Module - Module 3 */
         public static final class Mod3 {
             public static final int DRIVE_MOTOR_ID = 11;
-
             public static final int ANGLE_MOTOR_ID = 12;
             public static final int CAN_CODER_ID = 13;
-            public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.38818359375);
+            public static final Rotation2d angleOffset = Rotation2d.fromRotations(-0.38623046875);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID,
                     CAN_CODER_ID, angleOffset);
@@ -160,8 +178,6 @@ public final class Constants {
             private Mod3() {
             }
         }
-
-        public static final int PIGEON_ID = 14;
 
         /* Drivetrain Constants */
         public static final double TRACK_WIDTH = Units.inchesToMeters(23.5);
@@ -186,7 +202,7 @@ public final class Constants {
         /* Swerve Current Limiting */
         public static final int ANGLE_CURRENT_LIMIT = 40;
 
-        public static final int DRIVE_CURRENT_LIMIT = 70;
+        public static final int DRIVE_CURRENT_LIMIT = 65;
         /*
          * These values are used by the drive to ramp in open loop and closed loop
          * driving.
@@ -195,12 +211,12 @@ public final class Constants {
         public static final double OPEN_LOOP_RAMP = 0.25;
         public static final double CLOSED_LOOP_RAMP = 0.0;
         /* Drive Motor PID Values */
-        public static final double DRIVE_KP = 6e-5; // TO: This must be tuned to specific robot
+        public static final double DRIVE_KP = 2e-4; // TO: This must be tuned to specific robot
 
         public static final double DRIVE_KI = 0.0;
         public static final double DRIVE_PD = 0.0;
 
-        public static final double DRIVE_FF = 0.00884433962;
+        public static final double DRIVE_FF = 0.00015;
         /* Swerve Profiling Values */
         /** Meters per Second */
 

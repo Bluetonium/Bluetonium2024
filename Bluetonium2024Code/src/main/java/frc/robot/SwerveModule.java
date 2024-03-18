@@ -16,6 +16,7 @@ import frc.lib.math.Conversions;
 import frc.lib.util.SwerveModuleConstants;
 import frc.robot.constants.Constants;
 import frc.robot.constants.NeoVortexSwerveConstants;
+import frc.robot.constants.Constants.MiscConstants;
 
 public class SwerveModule {
     public final int moduleNumber;
@@ -36,7 +37,7 @@ public class SwerveModule {
         this.angleOffset = moduleConstants.angleOffset;
 
         /* Angle Encoder Config */
-        angleEncoder = new CANcoder(moduleConstants.cancoderID);
+        angleEncoder = new CANcoder(moduleConstants.cancoderID, MiscConstants.CANIVORE_NAME);
 
         CANcoderConfiguration config = new CANcoderConfiguration();
         config.MagnetSensor.SensorDirection = NeoVortexSwerveConstants.CAN_CODER_INVERT;
@@ -109,7 +110,7 @@ public class SwerveModule {
         if (isOpenLoop) {
             double speed = (desiredState.speedMetersPerSecond / Constants.Swerve.MAX_SPEED);
             driveMotorController.setReference(speed, ControlType.kDutyCycle);
-        } else {// TODO fix the closed loop not working
+        } else {
             double velocity = Conversions.mpsToRpm(desiredState.speedMetersPerSecond,
                     NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE);
 

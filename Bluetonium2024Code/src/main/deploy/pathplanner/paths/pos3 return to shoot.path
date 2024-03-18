@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.559836658134857,
+        "y": 0.7400207108106523
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.119263007756786,
+        "y": 0.828823196107932
+      },
+      "isLocked": false,
+      "linkedName": "pos3 note intake"
+    },
+    {
+      "anchor": {
+        "x": 3.3071843066763065,
+        "y": 2.693675387350775
+      },
+      "prevControl": {
+        "x": 3.9090678181356378,
+        "y": 1.6477794494050535
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "pos3 shoot location"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -36.3843518158358,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Pos3 2 note auto",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

@@ -3,50 +3,50 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 7.0
+        "x": 4.254410816513942,
+        "y": 6.008968171782498
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0,
-        "y": 7.0
+        "x": 5.260838983216429,
+        "y": 6.679920282917489
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "pos2 shoot location"
     },
     {
       "anchor": {
-        "x": 4.246379583993516,
-        "y": 6.535128633763529
+        "x": 7.509052165037283,
+        "y": 5.7500207439787205
       },
       "prevControl": {
-        "x": 2.749238906284951,
-        "y": 6.535128633763529
+        "x": 6.433555398659135,
+        "y": 6.973521652519
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "pos2 note intake"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 0.5,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -3.6626866425238407,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Pos2 2 note auto",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

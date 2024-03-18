@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.7511967331626983,
+        "y": 6.314843398917567
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.751196733162699,
+        "y": 6.314843398917567
+      },
+      "isLocked": false,
+      "linkedName": "pos1 drive to shoot1 end"
+    },
+    {
+      "anchor": {
+        "x": 7.628905257810516,
+        "y": 7.390340165295715
+      },
+      "prevControl": {
+        "x": 6.628905257810516,
+        "y": 7.390340165295715
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "pos1 pick up note location"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Pos1 2 note auto",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

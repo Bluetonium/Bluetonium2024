@@ -1,0 +1,55 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.383130458568611,
+      "y": 1.6083116781618176
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "pos3 go to shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootingSequence"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "pos3 intake note"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeNoteSequence"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "pos3 return to shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootingSequence"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
