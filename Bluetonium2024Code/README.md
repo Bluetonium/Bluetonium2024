@@ -10,6 +10,7 @@
 * create an auto route that can score amp
 * convert to using feild orientated driving with a button to switch mid match
 * PID tune the shooter
+* add trapizodal motion profile to intake shooting to prevent hard and destructive stops
 
 
 ## ISSUES
