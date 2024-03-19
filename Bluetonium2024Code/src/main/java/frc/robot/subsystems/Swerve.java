@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveModule;
-import frc.robot.constants.Constants;
+import frc.robot.constants.Constants.SwerveConstants;
 
 public class Swerve extends SubsystemBase {
     private SwerveDriveOdometry swerveOdometry;
@@ -29,20 +29,20 @@ public class Swerve extends SubsystemBase {
     public Swerve(Pigeon2 gyro) {
         this.gyro = gyro;
         mSwerveMods = new SwerveModule[] {
-                new SwerveModule(0, Constants.Swerve.Mod0.constants),
-                new SwerveModule(1, Constants.Swerve.Mod1.constants),
-                new SwerveModule(2, Constants.Swerve.Mod2.constants),
-                new SwerveModule(3, Constants.Swerve.Mod3.constants)
+                new SwerveModule(0, SwerveConstants.Mod0.constants),
+                new SwerveModule(1, SwerveConstants.Mod1.constants),
+                new SwerveModule(2, SwerveConstants.Mod2.constants),
+                new SwerveModule(3, SwerveConstants.Mod3.constants)
         };
 
-        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
+        swerveOdometry = new SwerveDriveOdometry(SwerveConstants.swerveKinematics, getGyroYaw(), getModulePositions());
 
         AutoBuilder.configureHolonomic(
                 this::getPose,
                 this::setPose,
                 this::getRobotRelativeSpeeds,
-                this::driveRobotReleative, new HolonomicPathFollowerConfig(Constants.Swerve.MAX_SPEED,
-                        Constants.Swerve.BASE_RADIUS, new ReplanningConfig()),
+                this::driveRobotReleative, new HolonomicPathFollowerConfig(SwerveConstants.MAX_SPEED,
+                        SwerveConstants.BASE_RADIUS, new ReplanningConfig()),
                 () -> {
                     Optional<Alliance> alliance = DriverStation.getAlliance();
                     if (alliance.isPresent()) {
@@ -60,7 +60,7 @@ public class Swerve extends SubsystemBase {
      * @param isOpenLoop    wether to run the wheels open loop or closed loop
      */
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
-        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+        SwerveModuleState[] swerveModuleStates = SwerveConstants.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
                         translation.getX(),
                         translation.getY(),
@@ -79,7 +79,7 @@ public class Swerve extends SubsystemBase {
      * @return returns the current speed of the robot in ChassisSpeeds
      */
     public ChassisSpeeds getRobotRelativeSpeeds() {
-        return Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates());
+        return SwerveConstants.swerveKinematics.toChassisSpeeds(getModuleStates());
     }
 
     /**
@@ -87,7 +87,7 @@ public class Swerve extends SubsystemBase {
      * @param chassisSpeeds the speeds to drive the robot at in ChassisSpeeds
      */
     public void driveRobotReleative(ChassisSpeeds chassisSpeeds) {
-        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
+        SwerveModuleState[] swerveModuleStates = SwerveConstants.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
         setModuleStates(swerveModuleStates, false);
     }
 
@@ -97,7 +97,7 @@ public class Swerve extends SubsystemBase {
      * @param isOpenLoop    Wether the wheels should be run in open loop mode
      */
     public void setModuleStates(SwerveModuleState[] desiredStates, boolean isOpenLoop) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.MAX_SPEED);
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, SwerveConstants.MAX_SPEED);
 
         for (SwerveModule mod : mSwerveMods) {
             mod.setDesiredState(desiredStates[mod.moduleNumber], isOpenLoop);

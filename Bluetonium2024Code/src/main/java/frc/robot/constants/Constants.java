@@ -23,6 +23,9 @@ public final class Constants {
         public static final int PIGEON_ID = 14;
         public static final String CANIVORE_NAME = "CANTivore";
 
+        public static final int AMP_PIPELINE = 0;
+        public static final int CENTER_SPEAKER_PIPELINE = 1;
+
         private MiscConstants() {
         }
     }
@@ -56,6 +59,7 @@ public final class Constants {
 
     public static final class ChassisControls {
         public static final int ZERO_GYRO_BUTTON = PS4Controller.Button.kTriangle.value;
+        public static final int ALIGN_TO_AMP_BUTTON = PS4Controller.Button.kSquare.value;
 
         public static final int TRANSLATION_AXIS = PS4Controller.Axis.kLeftY.value;
         public static final int STRAFE_AXIS = PS4Controller.Axis.kLeftX.value;
@@ -118,7 +122,7 @@ public final class Constants {
         }
     }
 
-    public static final class Swerve {
+    public static final class SwerveConstants {
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
         public static final class Mod0 {
@@ -230,7 +234,7 @@ public final class Constants {
 
         public static final IdleMode DRIVE_IDLE_MODE = IdleMode.kBrake;
 
-        private Swerve() {
+        private SwerveConstants() {
         }
 
     }
