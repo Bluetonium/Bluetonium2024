@@ -90,6 +90,8 @@ public class RobotContainer {
                 configureButtonBindings();
                 NamedCommands.registerCommand("ShootingSequence", new ShootingSequence(swerve, arm, shooter, intake));
                 NamedCommands.registerCommand("IntakeNoteSequence", new IntakeNoteSequence(arm, swerve, intake));
+                NamedCommands.registerCommand("Deposit", new Deposit(shooter, intake));
+
 
                 autoChooser = AutoBuilder.buildAutoChooser();
                 SmartDashboard.putData("Auto Chooser", autoChooser);

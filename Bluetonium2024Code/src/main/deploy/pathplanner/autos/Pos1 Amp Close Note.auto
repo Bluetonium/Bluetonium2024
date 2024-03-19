@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.8455861704876034,
+      "y": 6.862550215827963
+    },
+    "rotation": 58.642914775990086
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "pos1amp1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Deposit"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "pos2closeamp1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeNoteSequence"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "pos2closeamp2"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
