@@ -1,27 +1,17 @@
 package frc.robot.constants;
 
 import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.PS4Controller;
-import edu.wpi.first.wpilibj.XboxController;
 import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
-    public static final class AutonConstants {
-        public static final double ALIGNMENT_TOLERACE = 0.05;// in percent error
-
-        private AutonConstants() {
-        }
-    }
-
     public static final class MiscConstants {
-        public static final String LIMELIGHT_NAME = "limelight";
-        public static final int PROXIMITY_SENSOR_PORT = 1;
         public static final int PIGEON_ID = 14;
-        public static final String CANIVORE_NAME = "CANTivore";
 
         private MiscConstants() {
         }
@@ -29,28 +19,9 @@ public final class Constants {
 
     public static final class ControllerConstants {
         public static final double STICK_DEADBAND = 0.1;
-
-        public static final double TRIGGER_PULL_THRESHOLD = 0.3;
         public static final int DRIVER_CONTROLLER_PORT = 0;
 
-        public static final int ARM_CONTROLLER_PORT = 1;
-
-        public static final double OVERRIDE_TIME = 2;
-
         private ControllerConstants() {
-        }
-    }
-
-    public static final class ArmControls {
-        public static final int LIFT_ARM_AXIS = XboxController.Axis.kLeftY.value;
-
-        public static final int REV_SHOOTER_FAST = XboxController.Button.kY.value;
-        public static final int REV_SHOOTER_SLOW = XboxController.Button.kX.value;
-        public static final int SHOOT = XboxController.Axis.kRightTrigger.value;
-        public static final int INTAKE = XboxController.Axis.kLeftTrigger.value;
-        public static final int OUTAKE = XboxController.Button.kLeftBumper.value; // just putting the intake in reverse
-
-        private ArmControls() {
         }
     }
 
@@ -62,59 +33,6 @@ public final class Constants {
         public static final int ROTATION_AXIS = PS4Controller.Axis.kRightX.value;
 
         private ChassisControls() {
-        }
-    }
-
-    public static final class IntakeConstants {
-        public static final int FORWARD_INTAKE_MOTOR_ID = 18;
-
-        public static final int BACK_INTAKE_MOTOR_ID = 19;
-        public static final int INTAKE_CURRENT_LIMIT = 40;
-        public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kBrake;
-
-        private IntakeConstants() {
-        }
-    }
-
-    public static final class ShooterConstants {
-        public static final int FORWARD_SHOOT_MOTOR_ID = 16;
-
-        public static final int BACK_SHOOT_MOTOR_ID = 17;
-        public static final int SHOOTER_CURRENT_LIMIT = 40;
-        public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kCoast;
-        public static final int MIN_SHOOTING_VELOCITY = 5000;
-        public static final int DESIRED_SHOOTING_VELOCITY = 6200;
-
-        public static final double SHOOTER_KP = 0;
-        public static final double SHOOTER_KI = 0;
-        public static final double SHOOTER_PD = 0;
-        public static final double SHOOTER_FF = 0;
-
-        private ShooterConstants() {
-        }
-    }
-
-    public static final class ArmConstants {
-        public static final int ARM_MOTOR_ID = 15;
-        public static final int ARM_CURRENT_LIMIT = 40;
-        public static final IdleMode ARM_IDLE_MODE = IdleMode.kBrake;
-        public static final double MAX_ARM_VELOCITY = 20;// RPM
-        public static final double ARM_GEAR_RATIO = 4096 / 14.0;
-
-        public static final double ARM_KP = 0.1;
-        public static final double ARM_KI = 0;
-        public static final double ARM_KD = 0;
-        public static final double ARM_FF = 0.01;
-
-        public static final float ARM_REVERSED_LIMIT = 0;// TODO set all of these up properly
-        public static final float ARM_FORWARD_LIMIT = 0.7f;
-        public static final double ABSOLUTE_ENCODER_CONVERSATION = 14 / 64.0;
-        public static final double ABSOLUTE_ENCODER_OFFSET = 0.1239;
-        public static final int ARM_ABSOLUTE_ENCODER_PORT = 0;
-
-        public static final double ARM_IDLE_POSITION = 0.1;
-
-        private ArmConstants() {
         }
     }
 

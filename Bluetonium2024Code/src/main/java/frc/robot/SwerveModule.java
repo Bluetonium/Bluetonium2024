@@ -16,7 +16,6 @@ import frc.lib.math.Conversions;
 import frc.lib.util.SwerveModuleConstants;
 import frc.robot.constants.Constants;
 import frc.robot.constants.NeoVortexSwerveConstants;
-import frc.robot.constants.Constants.MiscConstants;
 
 public class SwerveModule {
     public final int moduleNumber;
@@ -37,7 +36,7 @@ public class SwerveModule {
         this.angleOffset = moduleConstants.angleOffset;
 
         /* Angle Encoder Config */
-        angleEncoder = new CANcoder(moduleConstants.cancoderID, MiscConstants.CANIVORE_NAME);
+        angleEncoder = new CANcoder(moduleConstants.cancoderID);
 
         CANcoderConfiguration config = new CANcoderConfiguration();
         config.MagnetSensor.SensorDirection = NeoVortexSwerveConstants.CAN_CODER_INVERT;
