@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.auton.deposit.Deposit;
 import frc.robot.commands.auton.intake.IntakeNoteSequence;
 import frc.robot.commands.auton.speakershoot.*;
 import frc.robot.commands.teleop.*;
@@ -100,10 +101,8 @@ public class RobotContainer {
                 NamedCommands.registerCommand("IntakeNoteSequence", new IntakeNoteSequence(arm, swerve, intake));
                 NamedCommands.registerCommand("Deposit", new Deposit(shooter, intake));
 
-
                 autoChooser = AutoBuilder.buildAutoChooser();
                 SmartDashboard.putData("Auto Chooser", autoChooser);
-
         }
 
         /**

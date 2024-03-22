@@ -1,13 +1,13 @@
 package frc.robot.constants;
 
 import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
     public static final class AutonConstants {
@@ -25,6 +25,7 @@ public final class Constants {
 
         public static final int AMP_PIPELINE = 0;
         public static final int CENTER_SPEAKER_PIPELINE = 1;
+        public static final int LOCALIZATION_PIPELINE = 2;
 
         private MiscConstants() {
         }
