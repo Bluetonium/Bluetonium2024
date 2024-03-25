@@ -13,8 +13,8 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.math.Conversions;
-import frc.lib.util.SwerveModuleConstants;
 import frc.robot.constants.NeoVortexSwerveConstants;
+import frc.robot.constants.SwerveModuleConstants;
 import frc.robot.constants.Constants.MiscConstants;
 import frc.robot.constants.Constants.SwerveConstants;
 

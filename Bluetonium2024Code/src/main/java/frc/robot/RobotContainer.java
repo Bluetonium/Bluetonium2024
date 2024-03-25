@@ -45,7 +45,7 @@ public class RobotContainer {
 
         /* Chassis driver Buttons */
         private final JoystickButton zeroGyro = new JoystickButton(driverController, ChassisControls.ZERO_GYRO_BUTTON);
-private final JoystickButton alignToAmp = new JoystickButton(driverController,
+        private final JoystickButton alignToAmp = new JoystickButton(driverController,
                         ChassisControls.ALIGN_TO_AMP_BUTTON);
 
         /* Subsystems */
@@ -57,7 +57,7 @@ private final JoystickButton alignToAmp = new JoystickButton(driverController,
         /* Other Stuff */
         private SendableChooser<Command> autoChooser; // there it is lol
         private Pigeon2 gyro;
-private NetworkTable limelight;
+        private NetworkTable limelight;
 
         /**
          * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -66,7 +66,7 @@ private NetworkTable limelight;
                 gyro = new Pigeon2(MiscConstants.PIGEON_ID, MiscConstants.CANIVORE_NAME);
                 gyro.getConfigurator().apply(new Pigeon2Configuration());
                 gyro.setYaw(0);
-limelight = NetworkTableInstance.getDefault().getTable(MiscConstants.LIMELIGHT_NAME);
+                limelight = NetworkTableInstance.getDefault().getTable(MiscConstants.LIMELIGHT_NAME);
 
                 swerve = new Swerve(gyro);
                 arm = new Arm();
@@ -101,11 +101,8 @@ limelight = NetworkTableInstance.getDefault().getTable(MiscConstants.LIMELIGHT_N
                 NamedCommands.registerCommand("IntakeNoteSequence", new IntakeNoteSequence(arm, swerve, intake));
                 NamedCommands.registerCommand("Deposit", new Deposit(shooter, intake));
 
-
                 autoChooser = AutoBuilder.buildAutoChooser();
                 SmartDashboard.putData("Auto Chooser", autoChooser);
-                SmartDashboard.updateValues();
-
         }
 
         /**
@@ -119,7 +116,7 @@ limelight = NetworkTableInstance.getDefault().getTable(MiscConstants.LIMELIGHT_N
         private void configureButtonBindings() {
                 /* Driver Buttons */
                 zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
-alignToAmp.whileTrue(new AlignToAmp(limelight, swerve,
+                alignToAmp.whileTrue(new AlignToAmp(limelight, swerve,
                                 () -> -driverController.getRawAxis(ChassisControls.STRAFE_AXIS),
                                 (double amount) -> driverController.setRumble(RumbleType.kBothRumble, amount)));
 

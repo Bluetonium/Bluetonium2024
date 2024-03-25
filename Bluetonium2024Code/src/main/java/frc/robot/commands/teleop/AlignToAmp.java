@@ -9,10 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.Constants.MiscConstants;
 import frc.robot.subsystems.Swerve;
 
-/*//TODO implement this
- * make account for being angled eventually or not, we shall see how much of an issue it is
- *
- */
+//make account for being angled eventually or not, we shall see how much of an issue it is
 public class AlignToAmp extends Command {
     private static final double P_VALUE = 0.05;
     private NetworkTable limelight;
