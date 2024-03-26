@@ -6,8 +6,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.PS4Controller;
-import frc.lib.util.SwerveModuleConstants;
+import edu.wpi.first.wpilibj.XboxController;
 
 public final class Constants {
     public static final class MiscConstants {
@@ -26,11 +25,11 @@ public final class Constants {
     }
 
     public static final class ChassisControls {
-        public static final int ZERO_GYRO_BUTTON = PS4Controller.Button.kTriangle.value;
+        public static final int ZERO_GYRO_BUTTON = XboxController.Button.kA.value;
 
-        public static final int TRANSLATION_AXIS = PS4Controller.Axis.kLeftY.value;
-        public static final int STRAFE_AXIS = PS4Controller.Axis.kLeftX.value;
-        public static final int ROTATION_AXIS = PS4Controller.Axis.kRightX.value;
+        public static final int TRANSLATION_AXIS = XboxController.Axis.kLeftY.value;
+        public static final int STRAFE_AXIS = XboxController.Axis.kLeftX.value;
+        public static final int ROTATION_AXIS = XboxController.Axis.kRightX.value;
 
         private ChassisControls() {
         }

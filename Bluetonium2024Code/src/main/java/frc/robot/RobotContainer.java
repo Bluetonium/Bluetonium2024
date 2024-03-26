@@ -3,7 +3,6 @@ package frc.robot;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -25,7 +24,7 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
         /* Controllers */
-        private final PS4Controller driverController = new PS4Controller(
+        private final XboxController driverController = new XboxController(
                         Constants.ControllerConstants.DRIVER_CONTROLLER_PORT);
 
         /* Chassis driver Buttons */
