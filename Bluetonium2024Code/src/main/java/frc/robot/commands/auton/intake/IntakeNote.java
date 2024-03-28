@@ -40,7 +40,7 @@ public class IntakeNote extends Command {
     // hasNote()
     @Override
     public boolean isFinished() {
-        return intake.hasNote();
+        return true;// cant determine if this works anymore
     }
 
     @Override
