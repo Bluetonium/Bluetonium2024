@@ -26,7 +26,7 @@ public class Arm extends SubsystemBase {
         armMotor = new CANSparkMax(ArmConstants.ARM_MOTOR_ID,
                 MotorType.kBrushless);
         armMotor.setSmartCurrentLimit(ArmConstants.ARM_CURRENT_LIMIT);
-        armMotor.setIdleMode(IdleMode.kCoast);
+        armMotor.setIdleMode(ArmConstants.ARM_IDLE_MODE);
         armMotor.setInverted(false);
 
         armEncoder = armMotor.getEncoder();
