@@ -13,7 +13,7 @@ public class Shooter extends SubsystemBase {
     private RelativeEncoder mainShooterEncoder;
 
     public Shooter() {
-        mainShooterMotor = new CANSparkFlex(ShooterConstants.FORWARD_SHOOT_MOTOR_ID,
+        mainShooterMotor = new CANSparkFlex(ShooterConstants.SHOOT_MOTOR_ID,
                 MotorType.kBrushless);
         mainShooterMotor.restoreFactoryDefaults();
         mainShooterMotor.setSmartCurrentLimit(ShooterConstants.SHOOTER_CURRENT_LIMIT);

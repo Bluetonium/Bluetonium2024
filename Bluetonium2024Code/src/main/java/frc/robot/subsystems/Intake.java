@@ -14,7 +14,7 @@ public class Intake extends SubsystemBase {
     private DigitalInput beamBreak;
 
     public Intake() {
-        mainIntakeMotor = new CANSparkFlex(IntakeConstants.FORWARD_INTAKE_MOTOR_ID,
+        mainIntakeMotor = new CANSparkFlex(IntakeConstants.INTAKE_MOTOR_ID,
                 MotorType.kBrushless);
         mainIntakeMotor.restoreFactoryDefaults();
         mainIntakeMotor.setInverted(true);

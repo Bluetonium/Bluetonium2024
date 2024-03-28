@@ -71,9 +71,7 @@ public final class Constants {
     }
 
     public static final class IntakeConstants {
-        public static final int FORWARD_INTAKE_MOTOR_ID = 18;
-
-        public static final int BACK_INTAKE_MOTOR_ID = 19;
+        public static final int INTAKE_MOTOR_ID = 15;
         public static final int INTAKE_CURRENT_LIMIT = 40;
         public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kBrake;
 
@@ -82,9 +80,7 @@ public final class Constants {
     }
 
     public static final class ShooterConstants {
-        public static final int FORWARD_SHOOT_MOTOR_ID = 16;
-
-        public static final int BACK_SHOOT_MOTOR_ID = 17;
+        public static final int SHOOT_MOTOR_ID = 14;
         public static final int SHOOTER_CURRENT_LIMIT = 40;
         public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kCoast;
         public static final int MIN_SHOOTING_VELOCITY = 5000;

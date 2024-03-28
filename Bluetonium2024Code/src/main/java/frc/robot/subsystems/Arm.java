@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkBase.ControlType;
-import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -25,7 +24,7 @@ public class Arm extends SubsystemBase {
         armMotor = new CANSparkMax(ArmConstants.ARM_MOTOR_ID,
                 MotorType.kBrushless);
         armMotor.setSmartCurrentLimit(ArmConstants.ARM_CURRENT_LIMIT);
-        armMotor.setIdleMode(IdleMode.kCoast);
+        armMotor.setIdleMode(ArmConstants.ARM_IDLE_MODE);
         armMotor.setInverted(false);
 
         armEncoder = armMotor.getEncoder();
@@ -44,10 +43,6 @@ public class Arm extends SubsystemBase {
      */
     public void setArmSpeed(double speed) {
         armMotor.set(speed);
-    }
-
-    public void switchToBreak() {
-        armMotor.setIdleMode(IdleMode.kBrake);
     }
 
     /**
