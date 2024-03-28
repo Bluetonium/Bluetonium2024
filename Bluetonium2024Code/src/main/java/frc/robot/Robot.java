@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    // TODO use april tags to figure out the yaw of the robot here
+    /// nothing rn
   }
 
   /**

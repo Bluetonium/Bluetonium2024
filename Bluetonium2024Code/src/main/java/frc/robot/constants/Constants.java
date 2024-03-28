@@ -203,7 +203,7 @@ public final class Constants {
         /* Swerve Current Limiting */
         public static final int ANGLE_CURRENT_LIMIT = 40;
 
-        public static final int DRIVE_CURRENT_LIMIT = 65;
+        public static final int DRIVE_CURRENT_LIMIT = 70;
         /*
          * These values are used by the drive to ramp in open loop and closed loop
          * driving.

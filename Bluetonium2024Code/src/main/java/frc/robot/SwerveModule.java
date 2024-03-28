@@ -109,11 +109,10 @@ public class SwerveModule {
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
         if (isOpenLoop) {
             double speed = (desiredState.speedMetersPerSecond / SwerveConstants.MAX_SPEED);
-            driveMotorController.setReference(speed, ControlType.kDutyCycle);
+            driveMotor.set(speed);// TODO check to see if this works better than the garbage i was doing before
         } else {
             double velocity = Conversions.mpsToRpm(desiredState.speedMetersPerSecond,
                     NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE);
-
             SmartDashboard.putNumber("Module " + moduleNumber + " desired velocity", desiredState.speedMetersPerSecond);
             driveMotorController.setReference(velocity, ControlType.kVelocity);
         }
