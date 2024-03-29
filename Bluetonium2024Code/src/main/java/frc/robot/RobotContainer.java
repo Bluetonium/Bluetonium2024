@@ -10,7 +10,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,8 +44,6 @@ public class RobotContainer {
 
         /* Chassis driver Buttons */
         private final JoystickButton zeroGyro = new JoystickButton(driverController, ChassisControls.ZERO_GYRO_BUTTON);
-        private final JoystickButton alignToAmp = new JoystickButton(driverController,
-                        ChassisControls.ALIGN_TO_AMP_BUTTON);
 
         /* Subsystems */
         private final Swerve swerve;
@@ -90,7 +87,8 @@ public class RobotContainer {
                                                 () -> armController.getRawAxis(
                                                                 ArmControls.SHOOT) >= ControllerConstants.TRIGGER_PULL_THRESHOLD,
                                                 shooter::readyToShoot,
-                                                () -> gyro.getYaw().getValue()));
+                                                () -> gyro.getYaw().getValue(),
+                                                () -> armController.getRawButton(ArmControls.OUTAKE_WITH_INTAKE)));
                 shooter.setDefaultCommand(
                                 new TeleopShooter(shooter,
                                                 () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST)));
@@ -116,9 +114,7 @@ public class RobotContainer {
         private void configureButtonBindings() {
                 /* Driver Buttons */
                 zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
-                alignToAmp.whileTrue(new AlignToAmp(limelight, swerve,
-                                () -> -driverController.getRawAxis(ChassisControls.STRAFE_AXIS),
-                                (double amount) -> driverController.setRumble(RumbleType.kBothRumble, amount)));
+               
 
         }
 

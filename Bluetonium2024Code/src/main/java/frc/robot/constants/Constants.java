@@ -53,6 +53,7 @@ public final class Constants {
         public static final int SHOOT = XboxController.Axis.kRightTrigger.value;
         public static final int INTAKE = XboxController.Axis.kLeftTrigger.value;
         public static final int OUTAKE = XboxController.Button.kLeftBumper.value; // just putting the intake in reverse
+        public static final int OUTAKE_WITH_INTAKE = XboxController.Button.kB.value;
 
         private ArmControls() {
         }
@@ -72,8 +73,9 @@ public final class Constants {
 
     public static final class IntakeConstants {
         public static final int INTAKE_MOTOR_ID = 15;
-        public static final int INTAKE_CURRENT_LIMIT = 40;
+        public static final int INTAKE_CURRENT_LIMIT = 55;
         public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kBrake;
+        
 
         private IntakeConstants() {
         }
@@ -81,7 +83,7 @@ public final class Constants {
 
     public static final class ShooterConstants {
         public static final int SHOOT_MOTOR_ID = 14;
-        public static final int SHOOTER_CURRENT_LIMIT = 40;
+        public static final int SHOOTER_CURRENT_LIMIT = 55;
         public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kCoast;
         public static final int MIN_SHOOTING_VELOCITY = 5000;
         public static final int DESIRED_SHOOTING_VELOCITY = 6200;
