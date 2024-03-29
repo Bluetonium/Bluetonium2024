@@ -57,7 +57,7 @@ public class RobotContainer {
         /* Other Stuff */
         private SendableChooser<Command> autoChooser; // there it is lol
         private Pigeon2 gyro;
-        private NetworkTable limelight;
+        //private NetworkTable limelight;
 
         /**
          * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -66,7 +66,7 @@ public class RobotContainer {
                 gyro = new Pigeon2(MiscConstants.PIGEON_ID, MiscConstants.CANIVORE_NAME);
                 gyro.getConfigurator().apply(new Pigeon2Configuration());
                 gyro.setYaw(0);
-                limelight = NetworkTableInstance.getDefault().getTable(MiscConstants.LIMELIGHT_NAME);
+                //limelight = NetworkTableInstance.getDefault().getTable(MiscConstants.LIMELIGHT_NAME);
 
                 swerve = new Swerve(gyro);
                 arm = new Arm();
@@ -97,7 +97,7 @@ public class RobotContainer {
 
                 configureButtonBindings();
                 NamedCommands.registerCommand("ShootingSequence",
-                                new ShootingSequence(swerve, arm, shooter, intake, limelight));
+                                new ShootingSequence(swerve, arm, shooter, intake));
                 NamedCommands.registerCommand("IntakeNoteSequence", new IntakeNoteSequence(arm, swerve, intake));
                 NamedCommands.registerCommand("Deposit", new Deposit(shooter, intake));
 
@@ -116,7 +116,7 @@ public class RobotContainer {
         private void configureButtonBindings() {
                 /* Driver Buttons */
                 zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
-                alignToAmp.whileTrue(new AlignToAmp(limelight, swerve,
+                alignToAmp.whileTrue(new AlignToAmp(swerve,
                                 () -> -driverController.getRawAxis(ChassisControls.STRAFE_AXIS),
                                 (double amount) -> driverController.setRumble(RumbleType.kBothRumble, amount)));
 
