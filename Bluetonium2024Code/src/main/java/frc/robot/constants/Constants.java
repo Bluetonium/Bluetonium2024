@@ -107,14 +107,6 @@ public final class Constants {
         public static final double ARM_KD = 0;
         public static final double ARM_FF = 0.01;
 
-        public static final float ARM_REVERSED_LIMIT = 0;// TODO set all of these up properly
-        public static final float ARM_FORWARD_LIMIT = 0.7f;
-        public static final double ABSOLUTE_ENCODER_CONVERSATION = 14 / 64.0;
-        public static final double ABSOLUTE_ENCODER_OFFSET = 0.1239;
-        public static final int ARM_ABSOLUTE_ENCODER_PORT = 0;
-
-        public static final double ARM_IDLE_POSITION = 0.1;
-
         private ArmConstants() {
         }
     }
