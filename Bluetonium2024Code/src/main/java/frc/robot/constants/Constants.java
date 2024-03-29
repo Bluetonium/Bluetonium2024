@@ -96,7 +96,7 @@ public final class Constants {
     }
 
     public static final class ArmConstants {
-        public static final int ARM_MOTOR_ID = 15;
+        public static final int ARM_MOTOR_ID = 13;
         public static final int ARM_CURRENT_LIMIT = 40;
         public static final IdleMode ARM_IDLE_MODE = IdleMode.kBrake;
         public static final double MAX_ARM_VELOCITY = 20;// RPM
