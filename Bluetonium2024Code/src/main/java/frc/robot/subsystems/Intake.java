@@ -45,4 +45,8 @@ public class Intake extends SubsystemBase {
     public void shoot() {
         mainIntakeMotor.set(0.5);
     }
+
+    @Override
+    public void periodic() {
+    }
 }

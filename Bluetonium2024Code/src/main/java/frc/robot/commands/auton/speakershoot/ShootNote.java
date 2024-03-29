@@ -42,7 +42,11 @@ public class ShootNote extends Command {
     public void end(boolean isInterupted) {
         intake.turnOffIntake();
         shooter.setState(false);
-        arm.setArmSpeed(0);
+
+        if (!isInterupted) {
+            arm.setIdlePosition();
+        }
+
     }
 
 }
