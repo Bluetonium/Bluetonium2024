@@ -3,6 +3,7 @@ package frc.robot.commands.teleop;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
@@ -24,6 +25,8 @@ public class TeleopArm extends Command {
                 Constants.ControllerConstants.STICK_DEADBAND);
 
         arm.setArmSpeed(armSpeed);
+        SmartDashboard.putNumber("rhe rucking aspedd", armSpeed);
+
     }
 
     @Override

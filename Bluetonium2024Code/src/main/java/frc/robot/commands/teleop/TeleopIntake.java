@@ -36,7 +36,7 @@ public class TeleopIntake extends Command {
             if (!previousIntakeState) {
                 intakeTimer.restart();
             }
-            if (!intakeTimer.hasElapsed(0.25) || intake.getOutputCurrentDifference()<1)
+            //if (!intakeTimer.hasElapsed(0.25) || intake.getOutputCurrentDifference()<1)
             intake.turnOnIntake();
         } else if (shootButton.getAsBoolean()) {
             double value = ((Math.abs(robotYaw.getAsDouble()) + 90) % 180);

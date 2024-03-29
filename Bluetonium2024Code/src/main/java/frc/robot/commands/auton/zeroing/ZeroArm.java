@@ -15,11 +15,11 @@ public class ZeroArm extends Command {
     }
     @Override
     public boolean isFinished() {
-        return arm.hardLimitReached();
+        return false;
     }
     @Override
     public void end(boolean isInterupted) {
-        arm.zeroArm();
+        arm.setArmSpeed(0);
         arm.setArmSpeed(0);
     }
 }

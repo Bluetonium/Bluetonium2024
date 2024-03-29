@@ -46,27 +46,6 @@ public class Arm extends SubsystemBase {
         armMotor.set(speed);
     }
 
-    /**
-     * 
-     * Resets the encoder back to zero
-     */
-
-    public void zeroArm() {
-        armEncoder.setPosition(0.0);
-    }
-
-    /**
-     * 
-     * @return Returns whether or not the hard limit is being pressed down
-     */
-
-    public boolean hardLimitReached() {
-        return armMotor.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen).isPressed();
-    }
-
-    public void switchToBreak() {
-        armMotor.setIdleMode(IdleMode.kBrake);
-    }
 
     /**
      * 
