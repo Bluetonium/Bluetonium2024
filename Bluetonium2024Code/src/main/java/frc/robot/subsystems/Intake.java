@@ -32,7 +32,9 @@ public class Intake extends SubsystemBase {
     public void turnOnIntake() {
         mainIntakeMotor.set(0.25);
     }
-
+    public double getOutputCurrent() {
+        return mainIntakeMotor.getOutputCurrent();
+    }
     public void turnOffIntake() {
         mainIntakeMotor.set(0);
     }

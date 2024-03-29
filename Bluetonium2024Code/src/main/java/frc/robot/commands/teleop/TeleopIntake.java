@@ -13,9 +13,10 @@ public class TeleopIntake extends Command {
     private BooleanSupplier intakeButton;
     private BooleanSupplier shootButton;
     private Timer shootOverrideTimer;
+    private Timer intakeTimer;
     private BooleanSupplier shooterReady;
     private DoubleSupplier robotYaw;
-
+    private boolean previousIntakeState = false;
     public TeleopIntake(Intake intake, BooleanSupplier intakeButton, BooleanSupplier shootButton,
             BooleanSupplier shooterReady, DoubleSupplier robotYaw) {
         addRequirements(intake);
@@ -25,11 +26,17 @@ public class TeleopIntake extends Command {
         this.shooterReady = shooterReady;
         this.robotYaw = robotYaw;
         shootOverrideTimer = new Timer();
+        intakeTimer = new Timer();
+        intakeTimer.start();
     }
 
     @Override
     public void execute() {
         if (intakeButton.getAsBoolean()) {
+            if (!previousIntakeState) {
+                intakeTimer.restart();
+            }
+            if (!intakeTimer.hasElapsed(0.25) || intake.getOutputCurrentDifference()<1)
             intake.turnOnIntake();
         } else if (shootButton.getAsBoolean()) {
             double value = ((Math.abs(robotYaw.getAsDouble()) + 90) % 180);
@@ -45,6 +52,7 @@ public class TeleopIntake extends Command {
         } else {
             intake.turnOffIntake();
         }
+        previousIntakeState = intakeButton.getAsBoolean();
     }
 
     @Override
