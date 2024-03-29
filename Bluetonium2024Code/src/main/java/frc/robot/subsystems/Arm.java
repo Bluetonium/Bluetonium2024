@@ -8,9 +8,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkLimitSwitch;
 import com.revrobotics.SparkPIDController;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.constants.Constants;
 import frc.robot.constants.Constants.ArmConstants;
 import frc.robot.constants.Constants.AutonConstants;
 
@@ -77,13 +75,7 @@ public class Arm extends SubsystemBase {
         armController.setReference(angle, ControlType.kPosition);
     }
 
-    /**
-     * Sets the arm position to the idle state for movement
-     */
-    public void setIdlePosition() {
-        armController.setReference(Constants.ArmConstants.ARM_IDLE_POSITION, ControlType.kPosition);
-    }
-
+ 
     /**
      * 
      * @return Returns the arm position as a Rotation2d
@@ -97,11 +89,6 @@ public class Arm extends SubsystemBase {
      */
     public void stopAllMotion() {
         armMotor.stopMotor();
-    }
-
-    @Override
-    public void periodic() {
-        SmartDashboard.putNumber("Arm angle", getArmAngle());
     }
 
     public boolean isAtAngle(double angle) {
