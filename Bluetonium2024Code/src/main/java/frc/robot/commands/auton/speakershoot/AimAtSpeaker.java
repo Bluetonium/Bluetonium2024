@@ -10,19 +10,19 @@ import frc.robot.subsystems.Arm;
 public class AimAtSpeaker extends Command {// This isnt work rewrite all of it
     private Arm arm;
     private double desiredAngle = Double.MAX_VALUE;
-    private NetworkTable limelight;
+    //private NetworkTable limelight;
 
     private static final Double[] defaultValue = new Double[3];
 
-    public AimAtSpeaker(Arm arm, NetworkTable limelight) {
+    public AimAtSpeaker(Arm arm) {
         addRequirements(arm);
         this.arm = arm;
-        this.limelight = limelight;
+        //this.limelight = limelight;
     }
 
     @Override
     public void initialize() {
-        limelight.getEntry("pipeline").setNumber(MiscConstants.CENTER_SPEAKER_PIPELINE);
+        //limelight.getEntry("pipeline").setNumber(MiscConstants.CENTER_SPEAKER_PIPELINE);
     }
 
     @Override
@@ -43,10 +43,14 @@ public class AimAtSpeaker extends Command {// This isnt work rewrite all of it
     }
 
     private Rotation2d getDesiredArmAngle() {// set this to be the fancy equation
+        /*
         Double[] targetLocation = limelight.getEntry("targetpose_robotspace").getDoubleArray(defaultValue);
         double distance = Conversions.metersToInches(targetLocation[2]);
         return Rotation2d
                 .fromDegrees(-0.0021 * Math.pow(distance, 2) + 0.6573 * distance - 7.7554);
+        
+                */
+        return Rotation2d.fromDegrees(1.0);
     }
 
 }

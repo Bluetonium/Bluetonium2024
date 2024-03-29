@@ -18,7 +18,7 @@ public final class Constants {
     }
 
     public static final class MiscConstants {
-        public static final String LIMELIGHT_NAME = "limelight";
+        //public static final String LIMELIGHT_NAME = "limelight";
         public static final int PROXIMITY_SENSOR_PORT = 1;
         public static final int PIGEON_ID = 14;
         public static final String CANIVORE_NAME = "CANTivore";

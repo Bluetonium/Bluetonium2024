@@ -9,24 +9,24 @@ import frc.robot.subsystems.Swerve;
 public class RotateToSpeaker extends Command {
     private Swerve swerve;
     private double offsetValue = Double.MAX_VALUE;
-    private NetworkTable limelight;
+    //private NetworkTable limelight;
 
-    public RotateToSpeaker(Swerve swerve, NetworkTable limelight) {
+    public RotateToSpeaker(Swerve swerve) {
         addRequirements(swerve);
         this.swerve = swerve;
-        this.limelight = limelight;
+        //this.limelight = limelight;
     }
 
     @Override
     public void initialize() {
-        limelight.getEntry("pipeline").setNumber(MiscConstants.CENTER_SPEAKER_PIPELINE);
+        //limelight.getEntry("pipeline").setNumber(MiscConstants.CENTER_SPEAKER_PIPELINE);
     }
 
     @Override
     public void execute() {
-        offsetValue = limelight.getEntry("tx").getDouble(0);
-        ChassisSpeeds desiredSpeeds = new ChassisSpeeds(0, 0, Math.copySign(0.5, offsetValue));
-        swerve.driveRobotReleative(desiredSpeeds);
+        //offsetValue = limelight.getEntry("tx").getDouble(0);
+        //ChassisSpeeds desiredSpeeds = new ChassisSpeeds(0, 0, Math.copySign(0.5, offsetValue));
+        //swerve.driveRobotReleative(desiredSpeeds);
     }
 
     @Override
