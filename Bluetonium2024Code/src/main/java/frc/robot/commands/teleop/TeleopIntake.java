@@ -14,12 +14,14 @@ public class TeleopIntake extends Command {
     private BooleanSupplier shootButton;
     private Timer shootOverrideTimer;
     private Timer intakeTimer;
+    private Timer turboTimer;
     private BooleanSupplier shooterReady;
     private DoubleSupplier robotYaw;
     private boolean previousIntakeState = false;
     private BooleanSupplier outakeWithIntake;
+    private BooleanSupplier turboButton;
     public TeleopIntake(Intake intake, BooleanSupplier intakeButton, BooleanSupplier shootButton,
-            BooleanSupplier shooterReady, DoubleSupplier robotYaw, BooleanSupplier outakeWithIntakeButton) {
+            BooleanSupplier shooterReady, DoubleSupplier robotYaw, BooleanSupplier outakeWithIntakeButton, BooleanSupplier turboButton) {
         addRequirements(intake);
         this.intake = intake;
         this.intakeButton = intakeButton;
@@ -27,13 +29,25 @@ public class TeleopIntake extends Command {
         this.shooterReady = shooterReady;
         this.robotYaw = robotYaw;
         this.outakeWithIntake = outakeWithIntakeButton;
+        this.turboButton = turboButton;
         shootOverrideTimer = new Timer();
         intakeTimer = new Timer();
         intakeTimer.start();
+        turboTimer = new Timer();
+        intakeTimer.start();
+
     }
 
     @Override
     public void execute() {
+        //if (turboButton.getAsBoolean()) {
+        //    if (turboTimer.hasElapsed(0.1)) {
+        //        turboTimer.restart();
+        //        intake.turnOffIntake();
+        //    } else if (turboTimer.hasElapsed(0.05)) {
+        //        intake.shoot();
+        //    }
+        //} else 
         if (intakeButton.getAsBoolean()) {
             if (!previousIntakeState) {
                 intakeTimer.restart();

@@ -88,10 +88,12 @@ public class RobotContainer {
                                                                 ArmControls.SHOOT) >= ControllerConstants.TRIGGER_PULL_THRESHOLD,
                                                 shooter::readyToShoot,
                                                 () -> gyro.getYaw().getValue(),
-                                                () -> armController.getRawButton(ArmControls.OUTAKE_WITH_INTAKE)));
+                                                () -> armController.getRawButton(ArmControls.OUTAKE_WITH_INTAKE),
+                                                () -> armController.getRawButton(ArmControls.TURBO_SHOOT)));
                 shooter.setDefaultCommand(
                                 new TeleopShooter(shooter,
-                                                () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST)));
+                                                () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST),
+                                                () -> armController.getRawButton(ArmControls.TURBO_SHOOT)));
 
                 configureButtonBindings();
                 NamedCommands.registerCommand("ShootingSequence",

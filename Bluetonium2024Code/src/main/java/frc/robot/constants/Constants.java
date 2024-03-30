@@ -48,15 +48,14 @@ public final class Constants {
         public static final int LIFT_ARM_AXIS = XboxController.Axis.kLeftY.value;
 
         public static final int REV_SHOOTER_FAST = XboxController.Button.kY.value;
-        public static final int REV_SHOOTER_SLOW = XboxController.Button.kX.value;
         public static final int SHOOT = XboxController.Axis.kRightTrigger.value;
         public static final int INTAKE = XboxController.Axis.kLeftTrigger.value;
-        public static final int OUTAKE_WITH_INTAKE = XboxController.Button.kB.value;
+        public static final int OUTAKE_WITH_INTAKE = XboxController.Button.kLeftBumper.value;
+        public static final int TURBO_SHOOT = XboxController.Button.kRightBumper.value;
 
-
-        public static final int ZERO_ARM_POSITION = XboxController.Button.kA.value;
+        public static final int ZERO_ARM_POSITION = XboxController.Button.kX.value; //TODO make this not a dogshit control scheme
         public static final int STOW_ARM = XboxController.Button.kA.value;
-        public static final int GO_TO_AMP_POSITION= XboxController.Button.kA.value;
+        public static final int GO_TO_AMP_POSITION= XboxController.Button.kB.value;
 
         private ArmControls() {
         }
