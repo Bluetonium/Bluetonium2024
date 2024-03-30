@@ -14,6 +14,7 @@ import frc.robot.constants.Constants.AutonConstants;
 public class Arm extends SubsystemBase {
     private CANSparkMax armMotor; // right Arm
     private RelativeEncoder armEncoder;
+    private boolean isZeroed = false;
 
     private SparkPIDController armController;
 
@@ -60,6 +61,15 @@ public class Arm extends SubsystemBase {
      */
     public double getArmAngle() {
         return armEncoder.getPosition();
+    }
+
+    public void zeroArm() {
+        isZeroed = true;
+        armEncoder.setPosition(0);
+    }
+
+    public boolean isArmZeroed() {
+        return isZeroed;
     }
 
     /**

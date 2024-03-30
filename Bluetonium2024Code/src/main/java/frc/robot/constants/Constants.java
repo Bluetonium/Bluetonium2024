@@ -18,7 +18,6 @@ public final class Constants {
     }
 
     public static final class MiscConstants {
-        //public static final String LIMELIGHT_NAME = "limelight";
         public static final int PROXIMITY_SENSOR_PORT = 1;
         public static final int PIGEON_ID = 14;
         public static final String CANIVORE_NAME = "CANTivore";
@@ -52,8 +51,12 @@ public final class Constants {
         public static final int REV_SHOOTER_SLOW = XboxController.Button.kX.value;
         public static final int SHOOT = XboxController.Axis.kRightTrigger.value;
         public static final int INTAKE = XboxController.Axis.kLeftTrigger.value;
-        public static final int OUTAKE = XboxController.Button.kLeftBumper.value; // just putting the intake in reverse
         public static final int OUTAKE_WITH_INTAKE = XboxController.Button.kB.value;
+
+
+        public static final int ZERO_ARM_POSITION = XboxController.Button.kA.value;
+        public static final int STOW_ARM = XboxController.Button.kA.value;
+        public static final int GO_TO_AMP_POSITION= XboxController.Button.kA.value;
 
         private ArmControls() {
         }
@@ -103,6 +106,8 @@ public final class Constants {
         public static final IdleMode ARM_IDLE_MODE = IdleMode.kBrake;
         public static final double MAX_ARM_VELOCITY = 20;// RPM
         public static final double ARM_GEAR_RATIO = 4096 / 14.0;
+
+        public static final double AMP_SCORING_POSOTION = 0.2;
 
         public static final double ARM_KP = 0.1;
         public static final double ARM_KI = 0;
