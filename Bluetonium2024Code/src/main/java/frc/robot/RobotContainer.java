@@ -4,9 +4,6 @@ import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
@@ -45,8 +42,6 @@ public class RobotContainer {
 
         /* Chassis driver Buttons */
         private final JoystickButton zeroGyro = new JoystickButton(driverController, ChassisControls.ZERO_GYRO_BUTTON);
-        private final JoystickButton alignToAmp = new JoystickButton(driverController,
-                        ChassisControls.ALIGN_TO_AMP_BUTTON);
 
         /* Subsystems */
         private final Swerve swerve;
@@ -57,7 +52,6 @@ public class RobotContainer {
         /* Other Stuff */
         private SendableChooser<Command> autoChooser; // there it is lol
         private Pigeon2 gyro;
-        private NetworkTable limelight;
 
         /**
          * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -66,7 +60,6 @@ public class RobotContainer {
                 gyro = new Pigeon2(MiscConstants.PIGEON_ID, MiscConstants.CANIVORE_NAME);
                 gyro.getConfigurator().apply(new Pigeon2Configuration());
                 gyro.setYaw(0);
-                limelight = NetworkTableInstance.getDefault().getTable(MiscConstants.LIMELIGHT_NAME);
 
                 swerve = new Swerve(gyro);
                 arm = new Arm();
@@ -82,22 +75,29 @@ public class RobotContainer {
 
                 arm.setDefaultCommand(
                                 new TeleopArm(arm,
-                                                () -> armController.getRawAxis(ArmControls.LIFT_ARM_AXIS)));
+                                                () -> armController.getRawAxis(ArmControls.LIFT_ARM_AXIS),
+                                                () -> armController.getRawButton(ArmControls.ZERO_ARM_POSITION),
+                                                () -> armController.getRawButton(ArmControls.STOW_ARM),
+                                                () -> armController.getRawButton(ArmControls.GO_TO_AMP_POSITION),
+                                                (double value) -> armController.setRumble(RumbleType.kBothRumble, value)));
                 intake.setDefaultCommand(
                                 new TeleopIntake(intake,
                                                 () -> armController.getRawAxis(
-                                                                ArmControls.INTAKE) > ControllerConstants.TRIGGER_PULL_THRESHOLD,
+                                                                ArmControls.INTAKE) >= ControllerConstants.TRIGGER_PULL_THRESHOLD,
                                                 () -> armController.getRawAxis(
                                                                 ArmControls.SHOOT) >= ControllerConstants.TRIGGER_PULL_THRESHOLD,
                                                 shooter::readyToShoot,
-                                                () -> gyro.getYaw().getValue()));
+                                                () -> gyro.getYaw().getValue(),
+                                                () -> armController.getRawButton(ArmControls.OUTAKE_WITH_INTAKE),
+                                                () -> armController.getRawButton(ArmControls.TURBO_SHOOT)));
                 shooter.setDefaultCommand(
                                 new TeleopShooter(shooter,
-                                                () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST)));
+                                                () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST),
+                                                () -> armController.getRawButton(ArmControls.TURBO_SHOOT)));
 
                 configureButtonBindings();
                 NamedCommands.registerCommand("ShootingSequence",
-                                new ShootingSequence(swerve, arm, shooter, intake, limelight));
+                                new ShootingSequence(swerve, arm, shooter, intake));
                 NamedCommands.registerCommand("IntakeNoteSequence", new IntakeNoteSequence(arm, swerve, intake));
                 NamedCommands.registerCommand("Deposit", new Deposit(shooter, intake));
 
@@ -116,10 +116,6 @@ public class RobotContainer {
         private void configureButtonBindings() {
                 /* Driver Buttons */
                 zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
-                alignToAmp.whileTrue(new AlignToAmp(limelight, swerve,
-                                () -> -driverController.getRawAxis(ChassisControls.STRAFE_AXIS),
-                                (double amount) -> driverController.setRumble(RumbleType.kBothRumble, amount)));
-
         }
 
         /**

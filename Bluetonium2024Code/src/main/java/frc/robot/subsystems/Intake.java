@@ -7,12 +7,12 @@ import frc.robot.constants.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
     private CANSparkFlex mainIntakeMotor;
-
+    private double previousCurrent = 0;
     public Intake() {
         mainIntakeMotor = new CANSparkFlex(IntakeConstants.INTAKE_MOTOR_ID,
                 MotorType.kBrushless);
         mainIntakeMotor.restoreFactoryDefaults();
-        mainIntakeMotor.setInverted(true);
+        mainIntakeMotor.setInverted(false);
 
         mainIntakeMotor.setSmartCurrentLimit(IntakeConstants.INTAKE_CURRENT_LIMIT);
         mainIntakeMotor.setIdleMode(IntakeConstants.INTAKE_IDLE_MODE);
@@ -30,18 +30,23 @@ public class Intake extends SubsystemBase {
      * @param active if the motor should be spinning or not
      */
     public void turnOnIntake() {
-        mainIntakeMotor.set(0.25);
+        mainIntakeMotor.set(0.5);
+    }
+    //haha idiot
+    public double getOutputCurrentDifference() {
+        double difference = mainIntakeMotor.getOutputCurrent() - previousCurrent;
+        previousCurrent = mainIntakeMotor.getOutputCurrent();
+        return difference;
     }
 
+    public void reverseIntake() {
+        mainIntakeMotor.set(-1);
+    }
     public void turnOffIntake() {
         mainIntakeMotor.set(0);
     }
 
     public void shoot() {
         mainIntakeMotor.set(0.5);
-    }
-
-    @Override
-    public void periodic() {
     }
 }
