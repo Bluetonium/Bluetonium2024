@@ -3,9 +3,11 @@
   "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
-    "Pos3 2 note auto",
+    "pos1 amp close note",
     "Pos1 2 note auto",
     "Pos2 2 note auto",
+    "Pos3 2 note auto",
+    "pos1 amp",
     "the best auton"
   ],
   "autoFolders": [],

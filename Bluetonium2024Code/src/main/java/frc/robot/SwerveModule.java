@@ -13,10 +13,10 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.math.Conversions;
-import frc.lib.util.SwerveModuleConstants;
-import frc.robot.constants.Constants;
 import frc.robot.constants.NeoVortexSwerveConstants;
+import frc.robot.constants.SwerveModuleConstants;
 import frc.robot.constants.Constants.MiscConstants;
+import frc.robot.constants.Constants.SwerveConstants;
 
 public class SwerveModule {
     public final int moduleNumber;
@@ -44,8 +44,8 @@ public class SwerveModule {
         angleEncoder.getConfigurator().apply(config);
 
         angleMotor = new CANSparkFlex(moduleConstants.angleMotorID, MotorType.kBrushless);
-        angleMotor.setIdleMode(Constants.Swerve.ANGLE_IDLE_MODE);
-        angleMotor.setSmartCurrentLimit(Constants.Swerve.ANGLE_CURRENT_LIMIT);
+        angleMotor.setIdleMode(SwerveConstants.ANGLE_IDLE_MODE);
+        angleMotor.setSmartCurrentLimit(SwerveConstants.ANGLE_CURRENT_LIMIT);
         angleMotor.setInverted(NeoVortexSwerveConstants.ANGLE_MOTOR_INVERT);
 
         angleMotorController = angleMotor.getPIDController();
@@ -54,28 +54,28 @@ public class SwerveModule {
         angleMotorController.setD(NeoVortexSwerveConstants.ANGLE_KD);
 
         angleMotorEncoder = angleMotor.getEncoder();
-        angleMotorEncoder.setPositionConversionFactor(1 / Constants.Swerve.ANGLE_GEAR_RATIO);
-        angleMotorEncoder.setVelocityConversionFactor(1 / Constants.Swerve.ANGLE_GEAR_RATIO);
+        angleMotorEncoder.setPositionConversionFactor(1 / SwerveConstants.ANGLE_GEAR_RATIO);
+        angleMotorEncoder.setVelocityConversionFactor(1 / SwerveConstants.ANGLE_GEAR_RATIO);
 
         resetToAbsolute();
 
         /* Drive Motor Config */
         driveMotor = new CANSparkFlex(moduleConstants.driveMotorID, MotorType.kBrushless);
-        driveMotor.setIdleMode(Constants.Swerve.DRIVE_IDLE_MODE);
-        driveMotor.setSmartCurrentLimit(Constants.Swerve.DRIVE_CURRENT_LIMIT);
-        driveMotor.setOpenLoopRampRate(Constants.Swerve.OPEN_LOOP_RAMP);
-        driveMotor.setClosedLoopRampRate(Constants.Swerve.CLOSED_LOOP_RAMP);
+        driveMotor.setIdleMode(SwerveConstants.DRIVE_IDLE_MODE);
+        driveMotor.setSmartCurrentLimit(SwerveConstants.DRIVE_CURRENT_LIMIT);
+        driveMotor.setOpenLoopRampRate(SwerveConstants.OPEN_LOOP_RAMP);
+        driveMotor.setClosedLoopRampRate(SwerveConstants.CLOSED_LOOP_RAMP);
         driveMotor.setInverted(NeoVortexSwerveConstants.DRIVE_MOTOR_INVERT);
 
         driveMotorController = driveMotor.getPIDController();
-        driveMotorController.setP(Constants.Swerve.DRIVE_KP);
-        driveMotorController.setI(Constants.Swerve.DRIVE_KI);
-        driveMotorController.setD(Constants.Swerve.DRIVE_PD);
-        driveMotorController.setFF(Constants.Swerve.DRIVE_FF);
+        driveMotorController.setP(SwerveConstants.DRIVE_KP);
+        driveMotorController.setI(SwerveConstants.DRIVE_KI);
+        driveMotorController.setD(SwerveConstants.DRIVE_PD);
+        driveMotorController.setFF(SwerveConstants.DRIVE_FF);
 
         driveMotorEncoder = driveMotor.getEncoder();
-        driveMotorEncoder.setPositionConversionFactor(1 / Constants.Swerve.DRIVE_GEAR_RATIO);
-        driveMotorEncoder.setVelocityConversionFactor(1 / Constants.Swerve.DRIVE_GEAR_RATIO);
+        driveMotorEncoder.setPositionConversionFactor(1 / SwerveConstants.DRIVE_GEAR_RATIO);
+        driveMotorEncoder.setVelocityConversionFactor(1 / SwerveConstants.DRIVE_GEAR_RATIO);
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
@@ -108,12 +108,11 @@ public class SwerveModule {
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
         if (isOpenLoop) {
-            double speed = (desiredState.speedMetersPerSecond / Constants.Swerve.MAX_SPEED);
-            driveMotorController.setReference(speed, ControlType.kDutyCycle);
+            double speed = (desiredState.speedMetersPerSecond / SwerveConstants.MAX_SPEED);
+            driveMotor.set(speed);// TODO check to see if this works better than the garbage i was doing before
         } else {
             double velocity = Conversions.mpsToRpm(desiredState.speedMetersPerSecond,
                     NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE);
-
             SmartDashboard.putNumber("Module " + moduleNumber + " desired velocity", desiredState.speedMetersPerSecond);
             driveMotorController.setReference(velocity, ControlType.kVelocity);
         }

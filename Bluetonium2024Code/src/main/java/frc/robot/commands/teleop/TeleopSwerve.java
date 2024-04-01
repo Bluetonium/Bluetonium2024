@@ -1,6 +1,7 @@
 package frc.robot.commands.teleop;
 
 import frc.robot.constants.Constants;
+import frc.robot.constants.Constants.SwerveConstants;
 import frc.robot.subsystems.Swerve;
 import java.util.function.DoubleSupplier;
 
@@ -36,9 +37,9 @@ public class TeleopSwerve extends Command {
 
                 /* Drive */
                 swerve.drive(
-                                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.MAX_SPEED),
-                                rotationVal * Constants.Swerve.MAX_ANGULAR_VELOCITY,
-                                false,
+                                new Translation2d(translationVal, strafeVal).times(SwerveConstants.MAX_SPEED),
+                                rotationVal * SwerveConstants.MAX_ANGULAR_VELOCITY,
+                                true,
                                 true);
 
         }

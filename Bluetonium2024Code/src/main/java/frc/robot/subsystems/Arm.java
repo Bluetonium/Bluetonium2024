@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkBase.ControlType;
-import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -9,13 +8,13 @@ import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.constants.Constants;
 import frc.robot.constants.Constants.ArmConstants;
 import frc.robot.constants.Constants.AutonConstants;
 
 public class Arm extends SubsystemBase {
     private CANSparkMax armMotor; // right Arm
     private RelativeEncoder armEncoder;
+    private boolean isZeroed = false;
 
     private SparkPIDController armController;
 
@@ -25,7 +24,7 @@ public class Arm extends SubsystemBase {
         armMotor = new CANSparkMax(ArmConstants.ARM_MOTOR_ID,
                 MotorType.kBrushless);
         armMotor.setSmartCurrentLimit(ArmConstants.ARM_CURRENT_LIMIT);
-        armMotor.setIdleMode(IdleMode.kCoast);
+        armMotor.setIdleMode(ArmConstants.ARM_IDLE_MODE);
         armMotor.setInverted(false);
 
         armEncoder = armMotor.getEncoder();
@@ -46,9 +45,6 @@ public class Arm extends SubsystemBase {
         armMotor.set(speed);
     }
 
-    public void switchToBreak() {
-        armMotor.setIdleMode(IdleMode.kBrake);
-    }
 
     /**
      * 
@@ -58,12 +54,6 @@ public class Arm extends SubsystemBase {
         armController.setReference(angle, ControlType.kPosition);
     }
 
-    /**
-     * Sets the arm position to the idle state for movement
-     */
-    public void setIdlePosition() {
-        armController.setReference(Constants.ArmConstants.ARM_IDLE_POSITION, ControlType.kPosition);
-    }
 
     /**
      * 
@@ -71,6 +61,15 @@ public class Arm extends SubsystemBase {
      */
     public double getArmAngle() {
         return armEncoder.getPosition();
+    }
+
+    public void zeroArm() {
+        isZeroed = true;
+        armEncoder.setPosition(0);
+    }
+
+    public boolean isArmZeroed() {
+        return isZeroed;
     }
 
     /**

@@ -2,7 +2,16 @@
 
 
 ## TODO 
-* too much
+* create an auto alignment feature for amp
+* create an auto alignment feature for notes - need to see notes on feild
+* refine shooting procedure
+* create multiple piplines on limelight meant to track only 1 tag each
+* do better calibration of the limelight
+* create an auto route that can score amp
+* convert to using feild orientated driving with a button to switch mid match
+* PID tune the shooter
+* add trapizodal motion profile to intake shooting to prevent hard and destructive stops
+
 
 ## ISSUES
 * nothing known
