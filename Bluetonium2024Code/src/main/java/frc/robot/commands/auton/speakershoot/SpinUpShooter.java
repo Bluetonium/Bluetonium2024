@@ -18,7 +18,7 @@ public class SpinUpShooter extends Command {
 
     @Override
     public boolean isFinished() {
-        return shooter.readyToShoot();
+        return shooter.readyToShoot(true);
     }
 
     @Override

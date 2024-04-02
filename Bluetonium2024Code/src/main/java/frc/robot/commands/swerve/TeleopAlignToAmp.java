@@ -1,4 +1,4 @@
-package frc.robot.commands.teleop;
+package frc.robot.commands.swerve;
 
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;
@@ -8,7 +8,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Swerve;
 
-public class AlignToAmp extends Command {
+public class TeleopAlignToAmp extends Command {
     private Swerve swerve;
     private DoubleSupplier robotYaw;
     private DoubleSupplier driveAxis;
@@ -17,7 +17,7 @@ public class AlignToAmp extends Command {
 
     private static final double KP = 0.2;
 
-    public AlignToAmp(Swerve swerve, DoubleSupplier robotYaw, DoubleSupplier driveAxis, NetworkTable limelight) {
+    public TeleopAlignToAmp(Swerve swerve, DoubleSupplier robotYaw, DoubleSupplier driveAxis, NetworkTable limelight) {
         addRequirements(swerve);
         this.swerve = swerve;
         this.robotYaw = robotYaw;

@@ -48,16 +48,14 @@ public final class Constants {
 
     public static final class ArmControls {
         public static final int LIFT_ARM_AXIS = XboxController.Axis.kLeftY.value;
-
-        public static final int REV_SHOOTER_FAST = XboxController.Button.kY.value;
         public static final int SHOOT = XboxController.Axis.kRightTrigger.value;
         public static final int INTAKE = XboxController.Axis.kLeftTrigger.value;
-        public static final int OUTAKE_WITH_INTAKE = XboxController.Button.kLeftBumper.value;
-        public static final int TURBO_SHOOT = XboxController.Button.kRightBumper.value;
-        // TODO make it so turbo is not require but well thats a mechanical issue
+        public static final int REV_SHOOTER_FAST = XboxController.Button.kY.value;
 
-        public static final int ZERO_ARM_POSITION = XboxController.Button.kX.value; // TODO make this not a dogshit
-                                                                                    // control scheme
+        public static final int OUTAKE_WITH_INTAKE = XboxController.Button.kLeftBumper.value;
+
+        public static final int ZERO_ARM_POSITION = XboxController.Button.kX.value;
+        // TODO make this not a dogshit control scheme
         public static final int STOW_ARM = XboxController.Button.kA.value;
         public static final int GO_TO_AMP_POSITION = XboxController.Button.kB.value;
 
@@ -92,9 +90,9 @@ public final class Constants {
         public static final int SHOOTER_CURRENT_LIMIT = 30;
         public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kBrake;
         public static final int MIN_SHOOTING_VELOCITY = 5000;
-        public static final int DESIRED_SHOOTING_VELOCITY = 6200;
+        public static final int AMP_SHOOTING_VELOCITY = 1000;
 
-        public static final double SHOOTER_KP = 0;
+        public static final double SHOOTER_KP = 0;// TODO maybe pid tune this
         public static final double SHOOTER_KI = 0;
         public static final double SHOOTER_PD = 0;
         public static final double SHOOTER_FF = 0;

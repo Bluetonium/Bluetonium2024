@@ -5,7 +5,6 @@ import com.revrobotics.CANSparkFlex;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants.ShooterConstants;
 
@@ -42,14 +41,16 @@ public class Shooter extends SubsystemBase {
         shooterMotor.stopMotor();
     }
 
-    public boolean readyToShoot() {
-        return shooterEncoder.getVelocity() >= ShooterConstants.MIN_SHOOTING_VELOCITY;
+    public boolean readyToShoot(boolean speaker) {
+        if (speaker) {
+            return shooterEncoder.getVelocity() >= ShooterConstants.MIN_SHOOTING_VELOCITY;
+        } else {
+            return shooterEncoder.getVelocity() >= ShooterConstants.AMP_SHOOTING_VELOCITY;
+        }
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putBoolean("Shooter Up to Speed", readyToShoot());
-
         if (state) {
             shooterMotor.set(rateLimiter.calculate(1));
         } else {
