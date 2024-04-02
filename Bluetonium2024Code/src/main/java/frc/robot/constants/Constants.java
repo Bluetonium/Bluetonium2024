@@ -25,6 +25,8 @@ public final class Constants {
         public static final int CENTER_SPEAKER_PIPELINE = 1;
         public static final int LOCALIZATION_PIPELINE = 2;
 
+        public static final int BEAM_BREAK_PORT = 0;
+
         private MiscConstants() {
         }
     }
@@ -51,7 +53,7 @@ public final class Constants {
         public static final int INTAKE = XboxController.Axis.kLeftTrigger.value;
         public static final int OUTAKE_WITH_INTAKE = XboxController.Button.kLeftBumper.value;
         public static final int TURBO_SHOOT = XboxController.Button.kRightBumper.value;
-        // TODO make it so turbo is not require
+        // TODO make it so turbo is not require but well thats a mechanical issue
 
         public static final int ZERO_ARM_POSITION = XboxController.Button.kX.value; // TODO make this not a dogshit
                                                                                     // control scheme
@@ -65,6 +67,7 @@ public final class Constants {
     public static final class ChassisControls {
         public static final int ZERO_GYRO_BUTTON = PS4Controller.Button.kTriangle.value;
         public static final int ALIGN_TO_AMP_BUTTON = PS4Controller.Button.kSquare.value;
+        public static final int DRIVE_ROBOT_RELATIVE = PS4Controller.Button.kCircle.value;
 
         public static final int TRANSLATION_AXIS = PS4Controller.Axis.kLeftY.value;
         public static final int STRAFE_AXIS = PS4Controller.Axis.kLeftX.value;
@@ -86,7 +89,7 @@ public final class Constants {
     public static final class ShooterConstants {
         public static final int SHOOT_MOTOR_ID = 14;
         public static final int SHOOTER_CURRENT_LIMIT = 30;
-        public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kCoast;
+        public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kBrake;
         public static final int MIN_SHOOTING_VELOCITY = 5000;
         public static final int DESIRED_SHOOTING_VELOCITY = 6200;
 

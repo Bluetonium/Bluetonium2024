@@ -24,9 +24,11 @@ public class TeleopShooter extends Command {
     @Override
     public void execute() {
         if (turboTimer.hasElapsed(0.1)) {
-                turboTimer.restart();
+            turboTimer.restart();
         }
-        shooter.setState(shooterButton.getAsBoolean() || (turboButton.getAsBoolean()&&turboTimer.hasElapsed(0.05)&&!turboTimer.hasElapsed(0.1)));
+
+        shooter.setState(shooterButton.getAsBoolean()
+                || (turboButton.getAsBoolean() && turboTimer.hasElapsed(0.05) && !turboTimer.hasElapsed(0.1)));
     }
 
     @Override

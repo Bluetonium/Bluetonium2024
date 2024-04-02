@@ -11,7 +11,6 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.math.Conversions;
 import frc.robot.constants.NeoVortexSwerveConstants;
 import frc.robot.constants.SwerveModuleConstants;
@@ -109,11 +108,10 @@ public class SwerveModule {
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
         if (isOpenLoop) {
             double speed = (desiredState.speedMetersPerSecond / SwerveConstants.MAX_SPEED);
-            driveMotor.set(speed);// TODO check to see if this works better than the garbage i was doing before
+            driveMotor.set(speed);
         } else {
             double velocity = Conversions.mpsToRpm(desiredState.speedMetersPerSecond,
                     NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE);
-            SmartDashboard.putNumber("Module " + moduleNumber + " desired velocity", desiredState.speedMetersPerSecond);
             driveMotorController.setReference(velocity, ControlType.kVelocity);
         }
     }

@@ -12,6 +12,7 @@ import frc.robot.constants.Constants.ArmConstants;
 import frc.robot.constants.Constants.AutonConstants;
 
 public class Arm extends SubsystemBase {
+
     private CANSparkMax armMotor; // right Arm
     private RelativeEncoder armEncoder;
     private boolean isZeroed = false;
@@ -32,6 +33,7 @@ public class Arm extends SubsystemBase {
         armController.setP(ArmConstants.ARM_KP);
         armController.setI(ArmConstants.ARM_KI);
         armController.setD(ArmConstants.ARM_KD);
+
     }
 
     /**
