@@ -33,7 +33,7 @@ public class AlignToAmp extends Command {
         }
         controllerRumble.accept(0);
         double xOffset = limelight.getEntry("tx").getDouble(100) * KP;
-        double rotationOffset = Math.abs(90 - robotYaw.getAsDouble()) * KP;
+        double rotationOffset = 90 - Math.abs(robotYaw.getAsDouble()) * KP;
         // TODO check this logic
 
         swerve.driveRobotReleative(new ChassisSpeeds(xOffset, driveAxis.getAsDouble() * 2, rotationOffset));

@@ -4,6 +4,9 @@ import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -41,6 +44,8 @@ public class RobotContainer {
 
         /* Chassis driver Buttons */
         private final JoystickButton zeroGyro = new JoystickButton(driverController, ChassisControls.ZERO_GYRO_BUTTON);
+        private final JoystickButton alignWithAmp = new JoystickButton(driverController,
+                        ChassisControls.ALIGN_TO_AMP_BUTTON);
 
         /* Subsystems */
         private final Swerve swerve;
@@ -51,6 +56,7 @@ public class RobotContainer {
         /* Other Stuff */
         private SendableChooser<Command> autoChooser; // there it is lol
         private Pigeon2 gyro;
+        private NetworkTable limelight;
 
         /**
          * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -59,6 +65,8 @@ public class RobotContainer {
                 gyro = new Pigeon2(MiscConstants.PIGEON_ID, MiscConstants.CANIVORE_NAME);
                 gyro.getConfigurator().apply(new Pigeon2Configuration());
                 gyro.setYaw(0);
+
+                limelight = NetworkTableInstance.getDefault().getTable(MiscConstants.LIMELIGHT_NAME);
 
                 swerve = new Swerve(gyro);
                 arm = new Arm();
@@ -107,8 +115,17 @@ public class RobotContainer {
         }
 
         private void configureButtonBindings() {
+
+                /*
+                 * TODO consider putting more stuff here such as
+                 * intake command
+                 * shooting command 
+                 *
+                 */
                 /* Driver Buttons */
                 zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
+                alignWithAmp.whileTrue(new AlignToAmp(swerve, () -> gyro.getYaw().getValue(),
+                                () -> driverController.getRawAxis(ChassisControls.TRANSLATION_AXIS), limelight));
         }
 
         public Command getAutonomousCommand() {

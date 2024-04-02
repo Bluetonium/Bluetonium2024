@@ -6,13 +6,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Swerve;
 
-public class IntakeNote extends Command {
+public class IntakeNote extends Command {// TODO fix a lot of this
     private Timer timeoutTimer;
     private Intake intake;
     private Swerve swerve;
 
     private static final double TIMEOUT = 3;
-    private double resistanceDifference = 0;
     private static final ChassisSpeeds SLOW_DRIVE_FORWARD = new ChassisSpeeds(0, 0.3, 0);
 
     public IntakeNote(Intake intake, Swerve swerve) {
@@ -41,8 +40,7 @@ public class IntakeNote extends Command {
     // hasNote()
     @Override
     public boolean isFinished() {
-        return timeoutTimer.hasElapsed(0.25) && resistanceDifference > 1; // TODO figure out what threshold to have it
-                                                                          // at
+        return intake.isNoteInIntake();
     }
 
     @Override

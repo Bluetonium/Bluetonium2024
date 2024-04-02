@@ -21,6 +21,7 @@ public final class Constants {
         public static final int PIGEON_ID = 14;
         public static final String CANIVORE_NAME = "CANTivore";
 
+        public static final String LIMELIGHT_NAME = "limelight";
         public static final int AMP_PIPELINE = 0;
         public static final int CENTER_SPEAKER_PIPELINE = 1;
         public static final int LOCALIZATION_PIPELINE = 2;

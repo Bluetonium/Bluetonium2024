@@ -12,7 +12,9 @@ public class Intake extends SubsystemBase {
     private CANSparkFlex mainIntakeMotor;
     private DigitalInput beamBreak;
 
-    public Intake() {
+    public Intake() {// TODO ask the builders to add 2 beam breaks to see if note in and also center
+                     // the
+                     // note
         mainIntakeMotor = new CANSparkFlex(IntakeConstants.INTAKE_MOTOR_ID,
                 MotorType.kBrushless);
         mainIntakeMotor.restoreFactoryDefaults();
