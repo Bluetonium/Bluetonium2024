@@ -19,7 +19,8 @@ public class TeleopArm extends Command {
     private BooleanSupplier ampPosition;
     private DoubleConsumer controllerRumble;
 
-    public TeleopArm(Arm arm, DoubleSupplier moveArmAxis, BooleanSupplier zeroArm, BooleanSupplier stowArm, BooleanSupplier ampPosition, DoubleConsumer controllerRumble) {
+    public TeleopArm(Arm arm, DoubleSupplier moveArmAxis, BooleanSupplier zeroArm, BooleanSupplier stowArm,
+            BooleanSupplier ampPosition, DoubleConsumer controllerRumble) {
         addRequirements(arm);
         this.arm = arm;
         this.moveArmAxis = moveArmAxis;
@@ -31,27 +32,32 @@ public class TeleopArm extends Command {
 
     @Override
     public void execute() {
-        if(zeroArm.getAsBoolean()) {
+        if (zeroArm.getAsBoolean()) {
             arm.zeroArm();
         }
 
-        if(stowArm.getAsBoolean()) {
-            if(arm.isArmZeroed()) {
-            arm.setArmAngle(0);
+        if (stowArm.getAsBoolean()) {
+            if (arm.isZeroed()) {
+                arm.setArmAngle(0);
+                controllerRumble.accept(0);
             } else {
                 controllerRumble.accept(1);
             }
         } else if (ampPosition.getAsBoolean()) {
-            if(arm.isArmZeroed()) {
-            arm.setArmAngle(ArmConstants.AMP_SCORING_POSOTION);
+            if (arm.isZeroed()) {
+                arm.setArmAngle(ArmConstants.AMP_SCORING_POSOTION);
+                controllerRumble.accept(0);
             } else {
                 controllerRumble.accept(1);
             }
+        } else {
+            controllerRumble.accept(0);
         }
+
         double armSpeed = MathUtil.applyDeadband(moveArmAxis.getAsDouble() / 2,
                 Constants.ControllerConstants.STICK_DEADBAND);
-        if(armSpeed != 0) {
-        arm.setArmSpeed(armSpeed);
+        if (armSpeed != 0) {
+            arm.setArmSpeed(armSpeed);
         }
 
     }

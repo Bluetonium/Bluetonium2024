@@ -15,10 +15,7 @@ public class Arm extends SubsystemBase {
     private CANSparkMax armMotor; // right Arm
     private RelativeEncoder armEncoder;
     private boolean isZeroed = false;
-
     private SparkPIDController armController;
-
-    CANSparkMax followerArmMotor; // left Arm
 
     public Arm() {
         armMotor = new CANSparkMax(ArmConstants.ARM_MOTOR_ID,
@@ -45,7 +42,6 @@ public class Arm extends SubsystemBase {
         armMotor.set(speed);
     }
 
-
     /**
      * 
      * @param angle Rotate to have the arm go in Rotation2d
@@ -53,7 +49,6 @@ public class Arm extends SubsystemBase {
     public void setArmAngle(double angle) {
         armController.setReference(angle, ControlType.kPosition);
     }
-
 
     /**
      * 
@@ -68,7 +63,7 @@ public class Arm extends SubsystemBase {
         armEncoder.setPosition(0);
     }
 
-    public boolean isArmZeroed() {
+    public boolean isZeroed() {
         return isZeroed;
     }
 

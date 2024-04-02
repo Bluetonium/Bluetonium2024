@@ -18,7 +18,6 @@ public final class Constants {
     }
 
     public static final class MiscConstants {
-        public static final int PROXIMITY_SENSOR_PORT = 1;
         public static final int PIGEON_ID = 14;
         public static final String CANIVORE_NAME = "CANTivore";
 
@@ -52,10 +51,12 @@ public final class Constants {
         public static final int INTAKE = XboxController.Axis.kLeftTrigger.value;
         public static final int OUTAKE_WITH_INTAKE = XboxController.Button.kLeftBumper.value;
         public static final int TURBO_SHOOT = XboxController.Button.kRightBumper.value;
+        // TODO make it so turbo is not require
 
-        public static final int ZERO_ARM_POSITION = XboxController.Button.kX.value; //TODO make this not a dogshit control scheme
+        public static final int ZERO_ARM_POSITION = XboxController.Button.kX.value; // TODO make this not a dogshit
+                                                                                    // control scheme
         public static final int STOW_ARM = XboxController.Button.kA.value;
-        public static final int GO_TO_AMP_POSITION= XboxController.Button.kB.value;
+        public static final int GO_TO_AMP_POSITION = XboxController.Button.kB.value;
 
         private ArmControls() {
         }
@@ -75,9 +76,8 @@ public final class Constants {
 
     public static final class IntakeConstants {
         public static final int INTAKE_MOTOR_ID = 15;
-        public static final int INTAKE_CURRENT_LIMIT = 55;
+        public static final int INTAKE_CURRENT_LIMIT = 30;
         public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kBrake;
-        
 
         private IntakeConstants() {
         }
@@ -85,7 +85,7 @@ public final class Constants {
 
     public static final class ShooterConstants {
         public static final int SHOOT_MOTOR_ID = 14;
-        public static final int SHOOTER_CURRENT_LIMIT = 55;
+        public static final int SHOOTER_CURRENT_LIMIT = 30;
         public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kCoast;
         public static final int MIN_SHOOTING_VELOCITY = 5000;
         public static final int DESIRED_SHOOTING_VELOCITY = 6200;

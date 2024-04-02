@@ -27,7 +27,7 @@ public class Shooter extends SubsystemBase {
      * 
      * @param speed turns the shoot
      */
-    public void setState(boolean state) {
+    public void setState(boolean state) { // TODO make it use a slew rate limiter at least for slowing down
         if (state) {
             mainShooterMotor.set(1);
         } else {

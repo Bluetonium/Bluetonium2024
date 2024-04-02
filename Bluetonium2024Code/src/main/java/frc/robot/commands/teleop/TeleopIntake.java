@@ -13,15 +13,12 @@ public class TeleopIntake extends Command {
     private BooleanSupplier intakeButton;
     private BooleanSupplier shootButton;
     private Timer shootOverrideTimer;
-    private Timer intakeTimer;
-    private Timer turboTimer;
     private BooleanSupplier shooterReady;
     private DoubleSupplier robotYaw;
-    private boolean previousIntakeState = false;
     private BooleanSupplier outakeWithIntake;
-    private BooleanSupplier turboButton;
+
     public TeleopIntake(Intake intake, BooleanSupplier intakeButton, BooleanSupplier shootButton,
-            BooleanSupplier shooterReady, DoubleSupplier robotYaw, BooleanSupplier outakeWithIntakeButton, BooleanSupplier turboButton) {
+            BooleanSupplier shooterReady, DoubleSupplier robotYaw, BooleanSupplier outakeWithIntakeButton) {
         addRequirements(intake);
         this.intake = intake;
         this.intakeButton = intakeButton;
@@ -29,47 +26,33 @@ public class TeleopIntake extends Command {
         this.shooterReady = shooterReady;
         this.robotYaw = robotYaw;
         this.outakeWithIntake = outakeWithIntakeButton;
-        this.turboButton = turboButton;
         shootOverrideTimer = new Timer();
-        intakeTimer = new Timer();
-        intakeTimer.start();
-        turboTimer = new Timer();
-        intakeTimer.start();
 
     }
 
     @Override
-    public void execute() {
-        //if (turboButton.getAsBoolean()) {
-        //    if (turboTimer.hasElapsed(0.1)) {
-        //        turboTimer.restart();
-        //        intake.turnOffIntake();
-        //    } else if (turboTimer.hasElapsed(0.05)) {
-        //        intake.shoot();
-        //    }
-        //} else 
+    public void execute() {// TODO make the logic here easier to understand
         if (intakeButton.getAsBoolean()) {
-            if (!previousIntakeState) {
-                intakeTimer.restart();
-            }
             intake.turnOnIntake();
         } else if (shootButton.getAsBoolean()) {
-            double value = ((Math.abs(robotYaw.getAsDouble()) + 90) % 180);
-            boolean ampInView = 180 - ((Math.abs(robotYaw.getAsDouble()) + 90) % 180) < 45 || value < 45;
-            if (shooterReady.getAsBoolean() || ampInView) {
+            if (shooterReady.getAsBoolean() || robotFacingAmp()) {
                 intake.shoot();
             } else {
-                shootOverrideTimer.start();
+                shootOverrideTimer.start();// TODO get rid of this and perhaps use smartdash board to determine override
                 if (checkAndStopTimer(shootOverrideTimer, ControllerConstants.OVERRIDE_TIME)) {
                     intake.shoot();
                 }
             }
-        }  else if (outakeWithIntake.getAsBoolean()) {
+        } else if (outakeWithIntake.getAsBoolean()) {
             intake.reverseIntake();
-        }else {
+        } else {
             intake.turnOffIntake();
         }
-        previousIntakeState = intakeButton.getAsBoolean();
+    }
+
+    private boolean robotFacingAmp() {
+        double value = ((Math.abs(robotYaw.getAsDouble()) + 90) % 180);
+        return 180 - value < 45 || value < 45;
     }
 
     @Override

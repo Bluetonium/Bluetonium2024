@@ -27,7 +27,6 @@ public class IntakeNote extends Command {
             intake.turnOffIntake();
             swerve.stopAllMotion();
         } else {
-            resistanceDifference = intake.getOutputCurrentDifference();
 
             intake.turnOnIntake();
             swerve.driveRobotReleative(SLOW_DRIVE_FORWARD);
@@ -36,14 +35,14 @@ public class IntakeNote extends Command {
 
     @Override
     public void initialize() {
-        resistanceDifference = intake.getOutputCurrentDifference();
         timeoutTimer.start();
     }
 
     // hasNote()
     @Override
     public boolean isFinished() {
-        return timeoutTimer.hasElapsed(0.25)&&resistanceDifference>1; //TODO figure out what threshold to have it at
+        return timeoutTimer.hasElapsed(0.25) && resistanceDifference > 1; // TODO figure out what threshold to have it
+                                                                          // at
     }
 
     @Override

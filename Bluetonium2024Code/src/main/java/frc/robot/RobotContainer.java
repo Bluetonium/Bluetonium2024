@@ -4,7 +4,6 @@ import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -79,7 +78,8 @@ public class RobotContainer {
                                                 () -> armController.getRawButton(ArmControls.ZERO_ARM_POSITION),
                                                 () -> armController.getRawButton(ArmControls.STOW_ARM),
                                                 () -> armController.getRawButton(ArmControls.GO_TO_AMP_POSITION),
-                                                (double value) -> armController.setRumble(RumbleType.kBothRumble, value)));
+                                                (double value) -> armController.setRumble(RumbleType.kBothRumble,
+                                                                value)));
                 intake.setDefaultCommand(
                                 new TeleopIntake(intake,
                                                 () -> armController.getRawAxis(
@@ -88,8 +88,7 @@ public class RobotContainer {
                                                                 ArmControls.SHOOT) >= ControllerConstants.TRIGGER_PULL_THRESHOLD,
                                                 shooter::readyToShoot,
                                                 () -> gyro.getYaw().getValue(),
-                                                () -> armController.getRawButton(ArmControls.OUTAKE_WITH_INTAKE),
-                                                () -> armController.getRawButton(ArmControls.TURBO_SHOOT)));
+                                                () -> armController.getRawButton(ArmControls.OUTAKE_WITH_INTAKE)));
                 shooter.setDefaultCommand(
                                 new TeleopShooter(shooter,
                                                 () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST),
@@ -105,24 +104,11 @@ public class RobotContainer {
                 SmartDashboard.putData("Auto Chooser", autoChooser);
         }
 
-        /**
-         * Use this method to define your button->command mappings. Buttons can be
-         * created by
-         * instantiating a {@link GenericHID} or one of its subclasses ({@link
-         * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-         * it to a {@link
-         * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-         */
         private void configureButtonBindings() {
                 /* Driver Buttons */
                 zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
         }
 
-        /**
-         * Use this to pass the autonomous command to the main {@link Robot} class.
-         *
-         * @return the command to run in autonomous
-         */
         public Command getAutonomousCommand() {
                 return autoChooser.getSelected();
         }
