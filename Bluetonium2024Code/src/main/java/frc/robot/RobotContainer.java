@@ -83,7 +83,7 @@ public class RobotContainer {
                 swerve = new Swerve(gyro);
                 arm = new Arm();
                 intake = new Intake();
-                shooter = new Shooter();
+                shooter = new Shooter(() -> gyro.getYaw().getValue());
 
                 swerve.setDefaultCommand(
                                 new TeleopSwerve(
@@ -122,13 +122,6 @@ public class RobotContainer {
         }
 
         private void configureButtonBindings() {
-
-                /*
-                 * TODO consider putting more stuff here such as
-                 * intake command
-                 * shooting command
-                 *
-                 */
                 /* Chassis Driver Buttons */
                 zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
                 alignWithAmp.whileTrue(new TeleopAlignToAmp(swerve, () -> gyro.getYaw().getValue(),
@@ -137,7 +130,7 @@ public class RobotContainer {
                 /* Arm Driver Buttons */
                 intakeNote.whileTrue(new IntakeNote(intake));
                 outakeWithIntake.whileTrue(new OutakeWithIntake(intake));
-                shootNote.whileTrue(new ShootNote(intake, shooter, () -> gyro.getYaw().getValue()));
+                shootNote.whileTrue(new ShootNote(intake, shooter));
 
         }
 }

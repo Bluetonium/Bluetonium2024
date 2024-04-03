@@ -10,12 +10,6 @@ import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 
 public final class Constants {
-    public static final class AutonConstants {
-        public static final double ALIGNMENT_TOLERACE = 0.05;// in percent error
-
-        private AutonConstants() {
-        }
-    }
 
     public static final class MiscConstants {
         public static final int PIGEON_ID = 14;
@@ -89,13 +83,8 @@ public final class Constants {
         public static final int SHOOT_MOTOR_ID = 14;
         public static final int SHOOTER_CURRENT_LIMIT = 30;
         public static final IdleMode SHOOTER_IDLE_MODE = IdleMode.kBrake;
-        public static final int MIN_SHOOTING_VELOCITY = 5000;
+        public static final int SPEAKER_SHOOTING_VELOCITY = 5000;
         public static final int AMP_SHOOTING_VELOCITY = 1000;
-
-        public static final double SHOOTER_KP = 0;// TODO maybe pid tune this
-        public static final double SHOOTER_KI = 0;
-        public static final double SHOOTER_PD = 0;
-        public static final double SHOOTER_FF = 0;
 
         private ShooterConstants() {
         }
@@ -105,10 +94,12 @@ public final class Constants {
         public static final int ARM_MOTOR_ID = 13;
         public static final int ARM_CURRENT_LIMIT = 40;
         public static final IdleMode ARM_IDLE_MODE = IdleMode.kBrake;
-        public static final double MAX_ARM_VELOCITY = 20;// RPM
         public static final double ARM_GEAR_RATIO = 4096 / 14.0;
 
-        public static final double AMP_SCORING_POSOTION = 0.2;
+        public static final double ALIGNMENT_TOLERACE = 0.1;// in rotations
+
+        public static final double AMP_SCORING_POSITION = 0.2;// TODO set this up
+        public static final double SPEAKER_SCORING_POSITION = 0.2;// TODO set this up
 
         public static final double ARM_KP = 0.1;
         public static final double ARM_KI = 0;

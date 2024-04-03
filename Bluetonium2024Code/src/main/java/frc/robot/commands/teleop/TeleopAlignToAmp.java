@@ -33,7 +33,7 @@ public class TeleopAlignToAmp extends Command {
         }
         controllerRumble.accept(0);
         double xOffset = limelight.getEntry("tx").getDouble(100) * KP;
-        double rotationOffset = 90 - Math.abs(robotYaw.getAsDouble()) * KP;
+        double rotationOffset = 90 - Math.abs(robotYaw.getAsDouble() % 360) * KP;
         // TODO check this logic
 
         swerve.driveRobotReleative(new ChassisSpeeds(xOffset, driveAxis.getAsDouble() * 2, rotationOffset));

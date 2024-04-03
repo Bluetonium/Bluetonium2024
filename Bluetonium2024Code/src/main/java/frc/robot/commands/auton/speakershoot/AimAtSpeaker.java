@@ -3,9 +3,8 @@ package frc.robot.commands.auton.speakershoot;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
 
-public class AimAtSpeaker extends Command {// This isnt work rewrite all of it
+public class AimAtSpeaker extends Command {
     private Arm arm;
-    private double desiredAngle = Double.MAX_VALUE;
 
     public AimAtSpeaker(Arm arm) {
         addRequirements(arm);
@@ -13,18 +12,12 @@ public class AimAtSpeaker extends Command {// This isnt work rewrite all of it
     }
 
     @Override
-    public void execute() {
-     //do nothing
+    public void initialize() {
+        arm.setSpeakerPosition();
     }
 
     @Override
     public boolean isFinished() {
-        return arm.isAtAngle(desiredAngle);
+        return arm.isInPosition();
     }
-
-    @Override
-    public void end(boolean interrupted) {
-        arm.setArmSpeed(0);
-    }
-
 }

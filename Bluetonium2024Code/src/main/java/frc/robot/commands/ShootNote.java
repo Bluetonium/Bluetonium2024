@@ -1,7 +1,5 @@
 package frc.robot.commands;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
@@ -10,15 +8,12 @@ import frc.robot.subsystems.Shooter;
 public class ShootNote extends Command {
     private Intake intake;
     private Shooter shooter;
-    private DoubleSupplier robotYaw;
     private Timer waitAfterShoot;
 
-    public ShootNote(Intake intake, Shooter shooter, DoubleSupplier robotYaw) {
+    public ShootNote(Intake intake, Shooter shooter) {
         addRequirements(intake, shooter);
         this.intake = intake;
         this.shooter = shooter;
-        this.robotYaw = robotYaw;
-
         waitAfterShoot = new Timer();
     }
 
@@ -29,7 +24,7 @@ public class ShootNote extends Command {
 
     @Override
     public void execute() {
-        if (shooter.readyToShoot(!robotFacingAmp())) {
+        if (shooter.readyToShoot()) {
             intake.shoot();
         }
     }
@@ -46,10 +41,5 @@ public class ShootNote extends Command {
     public void end(boolean interrupted) {
         shooter.setState(false);
         intake.turnOffIntake();
-    }
-
-    private boolean robotFacingAmp() {
-        double value = ((Math.abs(robotYaw.getAsDouble()) + 90) % 180);
-        return 180 - value < 45 || value < 45;
     }
 }

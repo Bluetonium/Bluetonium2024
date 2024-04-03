@@ -7,7 +7,6 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.Constants;
-import frc.robot.constants.Constants.ArmConstants;
 import frc.robot.subsystems.Arm;
 
 public class TeleopArm extends Command {
@@ -15,17 +14,17 @@ public class TeleopArm extends Command {
     private Arm arm;
     private DoubleSupplier moveArmAxis;
     private BooleanSupplier zeroArm;
-    private BooleanSupplier stowArm;
+    private BooleanSupplier idlePosition;
     private BooleanSupplier ampPosition;
     private DoubleConsumer controllerRumble;
 
-    public TeleopArm(Arm arm, DoubleSupplier moveArmAxis, BooleanSupplier zeroArm, BooleanSupplier stowArm,
+    public TeleopArm(Arm arm, DoubleSupplier moveArmAxis, BooleanSupplier zeroArm, BooleanSupplier idlePosition,
             BooleanSupplier ampPosition, DoubleConsumer controllerRumble) {
         addRequirements(arm);
         this.arm = arm;
         this.moveArmAxis = moveArmAxis;
         this.zeroArm = zeroArm;
-        this.stowArm = stowArm;
+        this.idlePosition = idlePosition;
         this.ampPosition = ampPosition;
         this.controllerRumble = controllerRumble;
     }
@@ -36,16 +35,16 @@ public class TeleopArm extends Command {
             arm.zeroArm();
         }
 
-        if (stowArm.getAsBoolean()) {
+        if (idlePosition.getAsBoolean()) {
             if (arm.isZeroed()) {
-                arm.setArmAngle(0);
+                arm.setIdlePosition();
                 controllerRumble.accept(0);
             } else {
                 controllerRumble.accept(1);
             }
         } else if (ampPosition.getAsBoolean()) {
             if (arm.isZeroed()) {
-                arm.setArmAngle(ArmConstants.AMP_SCORING_POSOTION);
+                arm.setAmpPosition();
                 controllerRumble.accept(0);
             } else {
                 controllerRumble.accept(1);
