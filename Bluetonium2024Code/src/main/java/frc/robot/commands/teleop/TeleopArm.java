@@ -1,4 +1,4 @@
-package frc.robot.commands.arm;
+package frc.robot.commands.teleop;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleConsumer;

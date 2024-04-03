@@ -1,4 +1,4 @@
-package frc.robot.commands.shooter;
+package frc.robot.commands.teleop;
 
 import java.util.function.BooleanSupplier;
 
