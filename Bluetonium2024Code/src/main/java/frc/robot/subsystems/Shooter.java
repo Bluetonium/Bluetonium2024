@@ -1,11 +1,12 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import java.util.function.DoubleSupplier;
+
 import com.revrobotics.CANSparkFlex;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants.ShooterConstants;
 
@@ -15,7 +16,9 @@ public class Shooter extends SubsystemBase {
     private SlewRateLimiter rateLimiter;
     private boolean state;
 
-    public Shooter() {
+    private DoubleSupplier robotYaw;
+
+    public Shooter(DoubleSupplier robotYaw) {
         shooterMotor = new CANSparkFlex(ShooterConstants.SHOOT_MOTOR_ID,
                 MotorType.kBrushless);
         shooterMotor.restoreFactoryDefaults();
@@ -24,9 +27,11 @@ public class Shooter extends SubsystemBase {
         shooterMotor.setInverted(false);
 
         shooterEncoder = shooterMotor.getEncoder();
+        // TODO add the pid stuff here and pid tune it
 
         rateLimiter = new SlewRateLimiter(1);
         state = false;
+        this.robotYaw = robotYaw;
     }
 
     /**
@@ -37,19 +42,8 @@ public class Shooter extends SubsystemBase {
         this.state = state;
     }
 
-    public void stopAllMotion() {
-        state = false;
-        shooterMotor.stopMotor();
-    }
-
-    public boolean readyToShoot() {
-        return shooterEncoder.getVelocity() >= ShooterConstants.MIN_SHOOTING_VELOCITY;
-    }
-
     @Override
     public void periodic() {
-        SmartDashboard.putBoolean("Shooter Up to Speed", readyToShoot());
-
         if (state) {
             shooterMotor.set(rateLimiter.calculate(1));
         } else {
@@ -57,4 +51,21 @@ public class Shooter extends SubsystemBase {
         }
     }
 
+    public void stopAllMotion() {
+        state = false;
+        shooterMotor.stopMotor();
+    }
+
+    public boolean readyToShoot() {// just have this do the yaw stuff
+        if (robotFacingAmp()) {
+            return shooterEncoder.getVelocity() > ShooterConstants.AMP_SHOOTING_VELOCITY;
+        } else {
+            return shooterEncoder.getVelocity() > ShooterConstants.SPEAKER_SHOOTING_VELOCITY;
+        }
+    }
+
+    private boolean robotFacingAmp() {
+        double value = ((Math.abs(robotYaw.getAsDouble()) + 90) % 180);
+        return 180 - value < 45 || value < 45;
+    }
 }

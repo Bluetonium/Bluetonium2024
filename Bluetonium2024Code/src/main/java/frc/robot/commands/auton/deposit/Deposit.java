@@ -17,8 +17,6 @@ public class Deposit extends Command {
         this.intake = intake;
 
         timer = new Timer();
-        
-
     }
 
     @Override
@@ -30,13 +28,15 @@ public class Deposit extends Command {
     @Override
     public boolean isFinished() {
         return timer.hasElapsed(1.5); // better way but for now is good
+        // remeber to start the timer, id porbably start it once the intake doesnt
+        // detect a note anymore
     }
 
     @Override
     public void end(boolean interupted) {
         if (interupted) {
             shooter.setState(false);
-            intake.turnOffIntake();
+            intake.turnOffIntake();// only turn it off if the command is intrupted rather than always?
         }
     }
 }

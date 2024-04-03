@@ -15,14 +15,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.lib.TriggerButton;
+import frc.robot.commands.IntakeNote;
+import frc.robot.commands.OutakeWithIntake;
+import frc.robot.commands.ShootNote;
 import frc.robot.commands.auton.deposit.Deposit;
 import frc.robot.commands.auton.intake.IntakeNoteSequence;
 import frc.robot.commands.auton.speakershoot.*;
-import frc.robot.commands.teleop.*;
+import frc.robot.commands.teleop.TeleopAlignToAmp;
+import frc.robot.commands.teleop.TeleopArm;
+import frc.robot.commands.teleop.TeleopShooter;
+import frc.robot.commands.teleop.TeleopSwerve;
 import frc.robot.constants.Constants;
 import frc.robot.constants.Constants.ArmControls;
 import frc.robot.constants.Constants.ChassisControls;
-import frc.robot.constants.Constants.ControllerConstants;
 import frc.robot.constants.Constants.MiscConstants;
 import frc.robot.subsystems.*;
 
@@ -42,10 +48,16 @@ public class RobotContainer {
         private final XboxController armController = new XboxController(
                         Constants.ControllerConstants.ARM_CONTROLLER_PORT);
 
-        /* Chassis driver Buttons */
+        /* Chassis Driver Buttons */
         private final JoystickButton zeroGyro = new JoystickButton(driverController, ChassisControls.ZERO_GYRO_BUTTON);
         private final JoystickButton alignWithAmp = new JoystickButton(driverController,
                         ChassisControls.ALIGN_TO_AMP_BUTTON);
+
+        /* Arm Driver Buttons */
+        private final TriggerButton intakeNote = new TriggerButton(armController, ArmControls.INTAKE);
+        private final TriggerButton shootNote = new TriggerButton(armController, ArmControls.SHOOT);
+        private final JoystickButton outakeWithIntake = new JoystickButton(armController,
+                        ArmControls.OUTAKE_WITH_INTAKE);
 
         /* Subsystems */
         private final Swerve swerve;
@@ -71,7 +83,7 @@ public class RobotContainer {
                 swerve = new Swerve(gyro);
                 arm = new Arm();
                 intake = new Intake();
-                shooter = new Shooter();
+                shooter = new Shooter(() -> gyro.getYaw().getValue());
 
                 swerve.setDefaultCommand(
                                 new TeleopSwerve(
@@ -90,19 +102,9 @@ public class RobotContainer {
                                                 () -> armController.getRawButton(ArmControls.GO_TO_AMP_POSITION),
                                                 (double value) -> armController.setRumble(RumbleType.kBothRumble,
                                                                 value)));
-                intake.setDefaultCommand(
-                                new TeleopIntake(intake,
-                                                () -> armController.getRawAxis(
-                                                                ArmControls.INTAKE) >= ControllerConstants.TRIGGER_PULL_THRESHOLD,
-                                                () -> armController.getRawAxis(
-                                                                ArmControls.SHOOT) >= ControllerConstants.TRIGGER_PULL_THRESHOLD,
-                                                shooter::readyToShoot,
-                                                () -> gyro.getYaw().getValue(),
-                                                () -> armController.getRawButton(ArmControls.OUTAKE_WITH_INTAKE)));
                 shooter.setDefaultCommand(
                                 new TeleopShooter(shooter,
-                                                () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST),
-                                                () -> armController.getRawButton(ArmControls.TURBO_SHOOT)));
+                                                () -> armController.getRawButton(ArmControls.REV_SHOOTER_FAST)));
 
                 configureButtonBindings();
                 NamedCommands.registerCommand("ShootingSequence",
@@ -114,21 +116,21 @@ public class RobotContainer {
                 SmartDashboard.putData("Auto Chooser", autoChooser);
         }
 
-        private void configureButtonBindings() {
+        public Command getAutonomousCommand() {
 
-                /*
-                 * TODO consider putting more stuff here such as
-                 * intake command
-                 * shooting command 
-                 *
-                 */
-                /* Driver Buttons */
-                zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
-                alignWithAmp.whileTrue(new AlignToAmp(swerve, () -> gyro.getYaw().getValue(),
-                                () -> driverController.getRawAxis(ChassisControls.TRANSLATION_AXIS), limelight));
+                return autoChooser.getSelected();
         }
 
-        public Command getAutonomousCommand() {
-                return autoChooser.getSelected();
+        private void configureButtonBindings() {
+                /* Chassis Driver Buttons */
+                zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
+                alignWithAmp.whileTrue(new TeleopAlignToAmp(swerve, () -> gyro.getYaw().getValue(),
+                                () -> driverController.getRawAxis(ChassisControls.TRANSLATION_AXIS), limelight));
+
+                /* Arm Driver Buttons */
+                intakeNote.whileTrue(new IntakeNote(intake));
+                outakeWithIntake.whileTrue(new OutakeWithIntake(intake));
+                shootNote.whileTrue(new ShootNote(intake, shooter));
+
         }
 }

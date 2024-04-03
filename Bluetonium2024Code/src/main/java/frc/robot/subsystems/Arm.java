@@ -6,13 +6,11 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants.ArmConstants;
-import frc.robot.constants.Constants.AutonConstants;
 
 public class Arm extends SubsystemBase {
-
+    private double desiredAngle = 0;
     private CANSparkMax armMotor; // right Arm
     private RelativeEncoder armEncoder;
     private boolean isZeroed = false;
@@ -49,15 +47,27 @@ public class Arm extends SubsystemBase {
      * @param angle Rotate to have the arm go in Rotation2d
      */
     public void setArmAngle(double angle) {
-        armController.setReference(angle, ControlType.kPosition);
+        desiredAngle = angle;
+        armController.setReference(desiredAngle, ControlType.kPosition);
     }
 
-    /**
-     * 
-     * @return Returns the arm position as a Rotation2d
-     */
-    public double getArmAngle() {
-        return armEncoder.getPosition();
+    public void setAmpPosition() {
+        desiredAngle = ArmConstants.AMP_SCORING_POSITION;
+        armController.setReference(desiredAngle, ControlType.kPosition);
+    }
+
+    public void setSpeakerPosition() {
+        desiredAngle = ArmConstants.SPEAKER_SCORING_POSITION;
+        armController.setReference(desiredAngle, ControlType.kPosition);
+    }
+
+    public void setIdlePosition() {
+        desiredAngle = 0;
+        armController.setReference(desiredAngle, ControlType.kPosition);
+    }
+
+    public boolean isInPosition() {
+        return Math.abs(armEncoder.getPosition() - desiredAngle) < 1;
     }
 
     public void zeroArm() {
@@ -74,14 +84,5 @@ public class Arm extends SubsystemBase {
      */
     public void stopAllMotion() {
         armMotor.stopMotor();
-    }
-
-    @Override
-    public void periodic() {
-        SmartDashboard.putNumber("Arm angle", getArmAngle());
-    }
-
-    public boolean isAtAngle(double angle) {
-        return Math.abs((angle - getArmAngle()) / angle) <= AutonConstants.ALIGNMENT_TOLERACE;
     }
 }
