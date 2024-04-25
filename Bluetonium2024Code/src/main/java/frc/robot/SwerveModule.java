@@ -116,6 +116,10 @@ public class SwerveModule {
         }
     }
 
+    public double getDriveAmps() {
+        return driveMotor.getOutputCurrent();
+    }
+
     public void stopAllMotion() {
         angleMotor.stopMotor();
         driveMotor.stopMotor();

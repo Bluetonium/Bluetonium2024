@@ -100,11 +100,12 @@ public final class Constants {
 
         public static final double AMP_SCORING_POSITION = 0.2;// TODO set this up
         public static final double SPEAKER_SCORING_POSITION = 0.2;// TODO set this up
+        public static final double ARM_SPEED = 0.1; // TODO: change this value; it is far too high for the PID
 
-        public static final double ARM_KP = 0.1;
+        public static final double ARM_KP = 0.9;
         public static final double ARM_KI = 0;
-        public static final double ARM_KD = 0;
-        public static final double ARM_FF = 0.01;
+        public static final double ARM_KD = 0.0002;
+        public static final double ARM_FF = 0.0005;
 
         private ArmConstants() {
         }

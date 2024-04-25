@@ -90,7 +90,7 @@ public class RobotContainer {
                                                 swerve,
                                                 () -> -driverController.getRawAxis(ChassisControls.TRANSLATION_AXIS),
                                                 () -> -driverController.getRawAxis(ChassisControls.STRAFE_AXIS),
-                                                () -> -driverController.getRawAxis(ChassisControls.ROTATION_AXIS),
+                                                () -> -driverController.getRawAxis(4),
                                                 () -> driverController
                                                                 .getRawButton(ChassisControls.DRIVE_ROBOT_RELATIVE)));
 

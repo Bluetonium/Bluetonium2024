@@ -6,10 +6,12 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
+
     private double desiredAngle = 0;
     private CANSparkMax armMotor; // right Arm
     private RelativeEncoder armEncoder;
@@ -31,6 +33,7 @@ public class Arm extends SubsystemBase {
         armController.setP(ArmConstants.ARM_KP);
         armController.setI(ArmConstants.ARM_KI);
         armController.setD(ArmConstants.ARM_KD);
+        armController.setFF(ArmConstants.ARM_FF);
 
     }
 
@@ -39,7 +42,8 @@ public class Arm extends SubsystemBase {
      * @param speed Speed of the arm in a [-1,1] range
      */
     public void setArmSpeed(double speed) {
-        armMotor.set(speed);
+        desiredAngle += speed * ArmConstants.ARM_SPEED;
+        armController.setReference(desiredAngle, ControlType.kPosition);
     }
 
     /**
@@ -84,5 +88,12 @@ public class Arm extends SubsystemBase {
      */
     public void stopAllMotion() {
         armMotor.stopMotor();
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("fuckin angle dude ", desiredAngle);
+        SmartDashboard.putNumber("angle i guess ", armEncoder.getPosition());
+
     }
 }

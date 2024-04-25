@@ -100,6 +100,8 @@ public class Swerve extends SubsystemBase {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, SwerveConstants.MAX_SPEED);
 
         for (SwerveModule mod : mSwerveMods) {
+            SmartDashboard.putNumber("Module " + mod.moduleNumber + " desired velocity",
+                    desiredStates[mod.moduleNumber].speedMetersPerSecond);
             mod.setDesiredState(desiredStates[mod.moduleNumber], isOpenLoop);
         }
     }
@@ -203,6 +205,7 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " amps", mod.getDriveAmps());
         }
     }
 }
