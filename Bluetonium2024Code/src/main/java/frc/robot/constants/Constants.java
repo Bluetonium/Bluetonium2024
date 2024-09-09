@@ -40,7 +40,6 @@ public final class Constants {
         /* Front Left Module - Module 0 */
         public static final class Mod0 {
             public static final int DRIVE_MOTOR_ID = 2;
-
             public static final int ANGLE_MOTOR_ID = 3;
             public static final int CAN_CODER_ID = 4;
             public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.123046875);
@@ -119,7 +118,7 @@ public final class Constants {
         /* Swerve Current Limiting */
         public static final int ANGLE_CURRENT_LIMIT = 40;
 
-        public static final int DRIVE_CURRENT_LIMIT = 65;
+        public static final int DRIVE_CURRENT_LIMIT = 75;
         /*
          * These values are used by the drive to ramp in open loop and closed loop
          * driving.
