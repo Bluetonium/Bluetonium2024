@@ -114,7 +114,8 @@ public class SwerveModule {
                     NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE);
 
             SmartDashboard.putNumber("Module " + moduleNumber + " desired velocity", desiredState.speedMetersPerSecond);
-            driveMotorController.setReference(velocity, ControlType.kVelocity);
+            driveMotorController.setReference(velocity, ControlType.kVoltage);
+
         }
     }
 

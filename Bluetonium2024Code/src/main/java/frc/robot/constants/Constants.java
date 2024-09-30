@@ -42,7 +42,7 @@ public final class Constants {
             public static final int DRIVE_MOTOR_ID = 2;
             public static final int ANGLE_MOTOR_ID = 3;
             public static final int CAN_CODER_ID = 4;
-            public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.123046875);
+            public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.109375);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID,
                     CAN_CODER_ID, angleOffset);
@@ -57,7 +57,7 @@ public final class Constants {
 
             public static final int ANGLE_MOTOR_ID = 6;
             public static final int CAN_CODER_ID = 7;
-            public static final Rotation2d angleOffset = Rotation2d.fromRotations(-0.4189453125);
+            public static final Rotation2d angleOffset = Rotation2d.fromRotations(-0.110107421875);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID,
                     CAN_CODER_ID, angleOffset);
@@ -72,7 +72,7 @@ public final class Constants {
 
             public static final int ANGLE_MOTOR_ID = 9;
             public static final int CAN_CODER_ID = 10;
-            public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.268310546875);
+            public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.27392578125);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID,
                     CAN_CODER_ID, angleOffset);
