@@ -51,9 +51,6 @@ public class SwerveModule {
         angleMotorController.setP(NeoVortexSwerveConstants.ANGLE_KP);
         angleMotorController.setI(NeoVortexSwerveConstants.ANGLE_KI);
         angleMotorController.setD(NeoVortexSwerveConstants.ANGLE_KD);
-        angleMotorController.setPositionPIDWrappingEnabled(true);
-        angleMotorController.setPositionPIDWrappingMaxInput(1);// TODO check this fix for wrapping
-        angleMotorController.setPositionPIDWrappingMinInput(0);
 
         angleMotorEncoder = angleMotor.getEncoder();
         angleMotorEncoder.setPositionConversionFactor(1 / Constants.Swerve.ANGLE_GEAR_RATIO);
