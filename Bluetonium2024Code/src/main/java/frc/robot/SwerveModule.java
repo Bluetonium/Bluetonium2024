@@ -5,7 +5,10 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.AbsoluteEncoder;
+
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -22,7 +25,7 @@ public class SwerveModule {
     private Rotation2d angleOffset;
 
     private CANSparkFlex angleMotor;
-    private final RelativeEncoder angleMotorEncoder;
+    private final AbsoluteEncoder angleMotorEncoder;
     private SparkPIDController angleMotorController;
 
     private CANSparkFlex driveMotor;
@@ -48,11 +51,18 @@ public class SwerveModule {
         angleMotor.setInverted(NeoVortexSwerveConstants.ANGLE_MOTOR_INVERT);
 
         angleMotorController = angleMotor.getPIDController();
+
         angleMotorController.setP(NeoVortexSwerveConstants.ANGLE_KP);
         angleMotorController.setI(NeoVortexSwerveConstants.ANGLE_KI);
         angleMotorController.setD(NeoVortexSwerveConstants.ANGLE_KD);
 
-        angleMotorEncoder = angleMotor.getEncoder();
+        // dawg what is this
+
+        angleMotorController.setPositionPIDWrappingEnabled(true);
+        angleMotorController.setPositionPIDWrappingMinInput(0);
+        angleMotorController.setPositionPIDWrappingMaxInput(1);
+
+        angleMotorEncoder = angleMotor.getAbsoluteEncoder(Type.kDutyCycle);
         angleMotorEncoder.setPositionConversionFactor(1 / Constants.Swerve.ANGLE_GEAR_RATIO);
         angleMotorEncoder.setVelocityConversionFactor(1 / Constants.Swerve.ANGLE_GEAR_RATIO);
 
@@ -88,8 +98,9 @@ public class SwerveModule {
     }
 
     public void resetToAbsolute() {
-        double absolutePosition = getCANcoder().getRotations() - angleOffset.getRotations();
-        angleMotorEncoder.setPosition(absolutePosition);
+        double absolutePosition = getCANcoder().getRotations() -
+                angleOffset.getRotations();
+        angleMotorEncoder.setZeroOffset(absolutePosition);
     }
 
     public SwerveModuleState getState() {
