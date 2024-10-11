@@ -30,6 +30,7 @@ public final class Constants {
         public static final int TRANSLATION_AXIS = XboxController.Axis.kLeftY.value;
         public static final int STRAFE_AXIS = XboxController.Axis.kLeftX.value;
         public static final int ROTATION_AXIS = XboxController.Axis.kRightX.value;
+        public static final int ROBOT_RELATIVE = XboxController.Button.kLeftBumper.value;
 
         private ChassisControls() {
         }

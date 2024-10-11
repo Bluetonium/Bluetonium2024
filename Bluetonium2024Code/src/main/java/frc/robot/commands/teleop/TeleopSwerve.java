@@ -2,11 +2,12 @@ package frc.robot.commands.teleop;
 
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Swerve;
+
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class TeleopSwerve extends Command {
@@ -14,15 +15,16 @@ public class TeleopSwerve extends Command {
         private DoubleSupplier translationSup;
         private DoubleSupplier strafeSup;
         private DoubleSupplier rotationSup;
+        private BooleanSupplier fieldRelative;
 
         public TeleopSwerve(Swerve swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup,
-                        DoubleSupplier rotationSup) {
-                this.swerve = swerve;
+                        DoubleSupplier rotationSup, BooleanSupplier fieldRelative) {
                 addRequirements(swerve);
-
+                this.swerve = swerve;
                 this.translationSup = translationSup;
                 this.strafeSup = strafeSup;
                 this.rotationSup = rotationSup;
+                this.fieldRelative = fieldRelative;
         }
 
         @Override
@@ -34,15 +36,11 @@ public class TeleopSwerve extends Command {
                                 Constants.ControllerConstants.STICK_DEADBAND);
                 double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(),
                                 Constants.ControllerConstants.STICK_DEADBAND);
-
-                SmartDashboard.putNumber("Translation ", translationSup.getAsDouble());
-                SmartDashboard.putNumber("Translation2 ", translationVal);
-                SmartDashboard.updateValues();
                 /* Drive */
                 swerve.drive(
                                 new Translation2d(translationVal, strafeVal).times(Constants.Swerve.MAX_SPEED),
                                 rotationVal * Constants.Swerve.MAX_ANGULAR_VELOCITY,
-                                false,
+                                fieldRelative.getAsBoolean(),
                                 true);
 
         }

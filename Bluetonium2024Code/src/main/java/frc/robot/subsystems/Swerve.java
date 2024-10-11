@@ -9,6 +9,9 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveModule;
@@ -18,6 +21,12 @@ public class Swerve extends SubsystemBase {
     private SwerveDriveOdometry swerveOdometry;
     private SwerveModule[] mSwerveMods;
     private Pigeon2 gyro;
+
+    private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    private final NetworkTable moduleStats = inst.getTable("Swerve");
+
+    StructArrayPublisher<SwerveModuleState> publisher = moduleStats
+            .getStructArrayTopic("MyStates", SwerveModuleState.struct).publish();
 
     public Swerve(Pigeon2 gyro) {
         this.gyro = gyro;
@@ -177,6 +186,8 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic() {
         swerveOdometry.update(getGyroYaw(), getModulePositions());
+
+        publisher.set(getModuleStates());
 
         for (SwerveModule mod : mSwerveMods) {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
