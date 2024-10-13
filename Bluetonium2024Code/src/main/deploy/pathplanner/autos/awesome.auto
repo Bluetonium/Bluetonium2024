@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.5019828816011472,
-      "y": 4.074536376606877
+      "x": 3.455206847360913,
+      "y": 2.2752211126961477
     },
-    "rotation": 0
+    "rotation": 90.50702906091477
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Example Path"
+            "pathName": "dont eat plaeas"
           }
         }
       ]
