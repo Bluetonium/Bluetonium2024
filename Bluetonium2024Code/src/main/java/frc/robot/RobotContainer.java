@@ -60,7 +60,8 @@ public class RobotContainer {
                                                 () -> -driverController.getRawAxis(ChassisControls.TRANSLATION_AXIS),
                                                 () -> -driverController.getRawAxis(ChassisControls.STRAFE_AXIS),
                                                 () -> -driverController.getRawAxis(ChassisControls.ROTATION_AXIS),
-                                                () -> !driverController.getRawButton(ChassisControls.ROBOT_RELATIVE)));
+                                                () -> !driverController.getRawButton(ChassisControls.ROBOT_RELATIVE),
+                                                () -> driverController.getRawAxis(ChassisControls.FAST_MODE)));
 
                 configureButtonBindings();
         }
