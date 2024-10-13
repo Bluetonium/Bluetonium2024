@@ -4,6 +4,7 @@ import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -12,6 +13,8 @@ import frc.robot.constants.Constants;
 import frc.robot.constants.Constants.ChassisControls;
 import frc.robot.constants.Constants.MiscConstants;
 import frc.robot.subsystems.*;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -23,6 +26,8 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+        //private final SendableChooser<Command> autoChooser;
+        
         /* Controllers */
         private final XboxController driverController = new XboxController(
                         Constants.ControllerConstants.DRIVER_CONTROLLER_PORT);
@@ -40,6 +45,9 @@ public class RobotContainer {
          * The container for the robot. Contains subsystems, OI devices, and commands.
          */
         public RobotContainer() {
+
+                //autoChooser = AutoBuilder.buildAutoChooser();
+
                 gyro = new Pigeon2(MiscConstants.PIGEON_ID);
                 gyro.getConfigurator().apply(new Pigeon2Configuration());
                 gyro.setYaw(0);
@@ -77,6 +85,6 @@ public class RobotContainer {
          * @return the command to run in autonomous
          */
         public Command getAutonomousCommand() {
-                return null;
+                return new PathPlannerAuto("Example Auto");
         }
 }
