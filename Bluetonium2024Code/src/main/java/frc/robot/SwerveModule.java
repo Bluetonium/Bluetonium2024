@@ -47,6 +47,8 @@ public class SwerveModule {
         angleMotor.setIdleMode(Constants.Swerve.ANGLE_IDLE_MODE);
         angleMotor.setSmartCurrentLimit(Constants.Swerve.ANGLE_CURRENT_LIMIT);
         angleMotor.setInverted(NeoVortexSwerveConstants.ANGLE_MOTOR_INVERT);
+        angleMotor.setOpenLoopRampRate(0);
+        angleMotor.setClosedLoopRampRate(0);
 
         angleMotorController = angleMotor.getPIDController();
 
@@ -82,6 +84,9 @@ public class SwerveModule {
         driveMotorEncoder = driveMotor.getEncoder();
         driveMotorEncoder.setPositionConversionFactor(1 / Constants.Swerve.DRIVE_GEAR_RATIO);
         driveMotorEncoder.setVelocityConversionFactor(1 / Constants.Swerve.DRIVE_GEAR_RATIO);
+
+        driveMotor.burnFlash();
+        angleMotor.burnFlash();
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
