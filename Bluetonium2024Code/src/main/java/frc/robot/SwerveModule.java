@@ -3,18 +3,16 @@ package frc.robot;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.AbsoluteEncoder;
 
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.math.Conversions;
 import frc.robot.constants.Constants;
 import frc.robot.constants.NeoVortexSwerveConstants;
@@ -25,7 +23,7 @@ public class SwerveModule {
     private Rotation2d angleOffset;
 
     private CANSparkFlex angleMotor;
-    private final AbsoluteEncoder angleMotorEncoder;
+    private final RelativeEncoder angleMotorEncoder;
     private SparkPIDController angleMotorController;
 
     private CANSparkFlex driveMotor;
@@ -55,17 +53,16 @@ public class SwerveModule {
         angleMotorController.setP(NeoVortexSwerveConstants.ANGLE_KP);
         angleMotorController.setI(NeoVortexSwerveConstants.ANGLE_KI);
         angleMotorController.setD(NeoVortexSwerveConstants.ANGLE_KD);
-
         // dawg what is this
+
+        angleMotorEncoder = angleMotor.getEncoder();
+        angleMotorEncoder.setPositionConversionFactor(1 / Constants.Swerve.ANGLE_GEAR_RATIO);
+        angleMotorEncoder.setVelocityConversionFactor(1 / Constants.Swerve.ANGLE_GEAR_RATIO);
 
         angleMotorController.setPositionPIDWrappingEnabled(true);
         angleMotorController.setPositionPIDWrappingMinInput(0);
         angleMotorController.setPositionPIDWrappingMaxInput(1);
-
-        angleMotorEncoder = angleMotor.getAbsoluteEncoder(Type.kDutyCycle);
-        angleMotorEncoder.setPositionConversionFactor(1 / Constants.Swerve.ANGLE_GEAR_RATIO);
-        angleMotorEncoder.setVelocityConversionFactor(1 / Constants.Swerve.ANGLE_GEAR_RATIO);
-
+        angleMotorController.setFeedbackDevice(angleMotorEncoder);
         resetToAbsolute();
 
         /* Drive Motor Config */
@@ -89,7 +86,7 @@ public class SwerveModule {
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
         desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
-        angleMotorController.setReference(desiredState.angle.getRotations(), ControlType.kPosition);
+        angleMotorController.setReference(desiredState.angle.getRotations(), CANSparkBase.ControlType.kPosition);
         setSpeed(desiredState, isOpenLoop);
     }
 
@@ -100,13 +97,15 @@ public class SwerveModule {
     public void resetToAbsolute() {
         double absolutePosition = getCANcoder().getRotations() -
                 angleOffset.getRotations();
-        angleMotorEncoder.setZeroOffset(absolutePosition);
+        angleMotorEncoder.setPosition(absolutePosition);
     }
 
     public SwerveModuleState getState() {
+
         return new SwerveModuleState(
                 Conversions.rpmToMps(driveMotorEncoder.getVelocity(), NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE),
                 Rotation2d.fromRotations(angleMotorEncoder.getPosition()));
+
     }
 
     public SwerveModulePosition getPosition() {
@@ -123,9 +122,7 @@ public class SwerveModule {
         } else {
             double velocity = Conversions.mpsToRpm(desiredState.speedMetersPerSecond,
                     NeoVortexSwerveConstants.WHEEL_CIRCUMFERENCE);
-
-            SmartDashboard.putNumber("Module " + moduleNumber + " desired velocity", desiredState.speedMetersPerSecond);
-            driveMotorController.setReference(velocity, ControlType.kVoltage);
+            driveMotorController.setReference(velocity, ControlType.kVelocity);
 
         }
     }
