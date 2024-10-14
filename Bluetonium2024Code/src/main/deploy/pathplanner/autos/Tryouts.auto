@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.49435096153846186,
+      "y": 4.0097355769230765
+    },
+    "rotation": -90.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ForwardCycle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BackwardsCycle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ForwardCycle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ScoreSimulation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BackwardsCycle"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
