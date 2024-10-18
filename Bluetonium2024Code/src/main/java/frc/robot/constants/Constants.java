@@ -127,7 +127,7 @@ public final class Constants {
          * driving.
          * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc
          */
-        public static final double OPEN_LOOP_RAMP = 0.25;
+        public static final double OPEN_LOOP_RAMP = 0.1;
         public static final double CLOSED_LOOP_RAMP = 0.0;
         /* Drive Motor PID Values */
         public static final double DRIVE_KP = 5.5e-4; // TO: This must be tuned to specific robot
