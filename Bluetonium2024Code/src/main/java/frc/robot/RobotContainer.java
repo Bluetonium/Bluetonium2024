@@ -12,6 +12,7 @@ import frc.robot.constants.Constants;
 import frc.robot.constants.Constants.ChassisControls;
 import frc.robot.constants.Constants.MiscConstants;
 import frc.robot.subsystems.*;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -23,6 +24,7 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
         /* Controllers */
         private final XboxController driverController = new XboxController(
                         Constants.ControllerConstants.DRIVER_CONTROLLER_PORT);
@@ -40,6 +42,7 @@ public class RobotContainer {
          * The container for the robot. Contains subsystems, OI devices, and commands.
          */
         public RobotContainer() {
+
                 gyro = new Pigeon2(MiscConstants.PIGEON_ID);
                 gyro.getConfigurator().apply(new Pigeon2Configuration());
                 gyro.setYaw(0);
@@ -52,7 +55,8 @@ public class RobotContainer {
                                                 () -> -driverController.getRawAxis(ChassisControls.TRANSLATION_AXIS),
                                                 () -> -driverController.getRawAxis(ChassisControls.STRAFE_AXIS),
                                                 () -> -driverController.getRawAxis(ChassisControls.ROTATION_AXIS),
-                                                () -> !driverController.getRawButton(ChassisControls.ROBOT_RELATIVE)));
+                                                () -> !driverController.getRawButton(ChassisControls.ROBOT_RELATIVE),
+                                                () -> driverController.getRawAxis(ChassisControls.FAST_MODE)));
 
                 configureButtonBindings();
         }
@@ -77,6 +81,6 @@ public class RobotContainer {
          * @return the command to run in autonomous
          */
         public Command getAutonomousCommand() {
-                return null;
+                return new PathPlannerAuto("Tryouts");
         }
 }
