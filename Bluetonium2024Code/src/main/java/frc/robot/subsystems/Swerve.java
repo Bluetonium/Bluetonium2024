@@ -1,6 +1,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.ReplanningConfig;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -12,7 +16,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveModule;
 import frc.robot.constants.Constants;
@@ -25,8 +30,14 @@ public class Swerve extends SubsystemBase {
     private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
     private final NetworkTable moduleStats = inst.getTable("Swerve");
 
-    StructArrayPublisher<SwerveModuleState> publisher = moduleStats
-            .getStructArrayTopic("MyStates", SwerveModuleState.struct).publish();
+    StructArrayPublisher<SwerveModuleState> swervePublisher = moduleStats
+            .getStructArrayTopic("SwerveStates", SwerveModuleState.struct).publish();
+
+    StructArrayPublisher<SwerveModuleState> swerveDesiredPublisher = moduleStats
+            .getStructArrayTopic("SwerveDesiredStates", SwerveModuleState.struct).publish();
+
+    StructPublisher<Pose2d> odometryPublisher = moduleStats.getStructTopic("RobotLocations", Pose2d.struct)
+            .publish();
 
     public Swerve(Pigeon2 gyro) {
         this.gyro = gyro;
@@ -38,6 +49,18 @@ public class Swerve extends SubsystemBase {
         };
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
+
+        HolonomicPathFollowerConfig config = new HolonomicPathFollowerConfig(4, 1, new ReplanningConfig());
+
+        AutoBuilder.configureHolonomic(this::getPose, this::setPose, this::getRobotRelativeSpeeds,
+                this::driveRobotReleative, config, () -> {
+
+                    var alliance = DriverStation.getAlliance();
+                    if (alliance.isPresent()) {
+                        return alliance.get() == DriverStation.Alliance.Red;
+                    }
+                    return false;
+                }, this);
     }
 
     /**
@@ -76,6 +99,7 @@ public class Swerve extends SubsystemBase {
      */
     public void driveRobotReleative(ChassisSpeeds chassisSpeeds) {
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
+
         setModuleStates(swerveModuleStates, false);
     }
 
@@ -90,6 +114,7 @@ public class Swerve extends SubsystemBase {
         for (SwerveModule mod : mSwerveMods) {
             mod.setDesiredState(desiredStates[mod.moduleNumber], isOpenLoop);
         }
+        swerveDesiredPublisher.set(desiredStates);
     }
 
     /**
@@ -186,13 +211,7 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic() {
         swerveOdometry.update(getGyroYaw(), getModulePositions());
-
-        publisher.set(getModuleStates());
-
-        for (SwerveModule mod : mSwerveMods) {
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
-        }
+        swervePublisher.set(getModuleStates());
+        odometryPublisher.set(getPose());
     }
 }
