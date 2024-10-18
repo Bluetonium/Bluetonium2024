@@ -117,6 +117,7 @@ public final class Constants {
         public static final double DRIVE_GEAR_RATIO = NeoVortexSwerveConstants.CHOSEN_RATIO;
 
         public static final double ANGLE_GEAR_RATIO = NeoVortexSwerveConstants.ANGLE_GEAR_RATIO;
+
         /* Swerve Current Limiting */
         public static final int ANGLE_CURRENT_LIMIT = 40;
 
@@ -126,25 +127,25 @@ public final class Constants {
          * driving.
          * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc
          */
-        public static final double OPEN_LOOP_RAMP = 0.25;
+        public static final double OPEN_LOOP_RAMP = 0.1;
         public static final double CLOSED_LOOP_RAMP = 0.0;
         /* Drive Motor PID Values */
-        public static final double DRIVE_KP = 2e-4; // TO: This must be tuned to specific robot
+        public static final double DRIVE_KP = 5.5e-4; // TO: This must be tuned to specific robot
 
         public static final double DRIVE_KI = 0.0;
         public static final double DRIVE_PD = 0.0;
 
-        public static final double DRIVE_FF = 0.00015;
+        public static final double DRIVE_FF = 0.0008;
         /* Swerve Profiling Values */
         /** Meters per Second */
 
         public static final double MAX_SPEED = 5;
 
         /** Radians per Second */
-        public static final double MAX_ANGULAR_VELOCITY = 5.0;
+        public static final double MAX_ANGULAR_VELOCITY = 8.0;
 
         /* Idle Modes */
-        public static final IdleMode ANGLE_IDLE_MODE = IdleMode.kCoast;
+        public static final IdleMode ANGLE_IDLE_MODE = IdleMode.kBrake;
 
         public static final IdleMode DRIVE_IDLE_MODE = IdleMode.kBrake;
 

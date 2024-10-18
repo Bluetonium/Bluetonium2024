@@ -16,6 +16,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveModule;
@@ -29,8 +30,14 @@ public class Swerve extends SubsystemBase {
     private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
     private final NetworkTable moduleStats = inst.getTable("Swerve");
 
-    StructArrayPublisher<SwerveModuleState> publisher = moduleStats
-            .getStructArrayTopic("MyStates", SwerveModuleState.struct).publish();
+    StructArrayPublisher<SwerveModuleState> swervePublisher = moduleStats
+            .getStructArrayTopic("SwerveStates", SwerveModuleState.struct).publish();
+
+    StructArrayPublisher<SwerveModuleState> swerveDesiredPublisher = moduleStats
+            .getStructArrayTopic("SwerveDesiredStates", SwerveModuleState.struct).publish();
+
+    StructPublisher<Pose2d> odometryPublisher = moduleStats.getStructTopic("RobotLocations", Pose2d.struct)
+            .publish();
 
     public Swerve(Pigeon2 gyro) {
         this.gyro = gyro;
@@ -92,6 +99,7 @@ public class Swerve extends SubsystemBase {
      */
     public void driveRobotReleative(ChassisSpeeds chassisSpeeds) {
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
+
         setModuleStates(swerveModuleStates, false);
     }
 
@@ -106,6 +114,7 @@ public class Swerve extends SubsystemBase {
         for (SwerveModule mod : mSwerveMods) {
             mod.setDesiredState(desiredStates[mod.moduleNumber], isOpenLoop);
         }
+        swerveDesiredPublisher.set(desiredStates);
     }
 
     /**
@@ -202,8 +211,7 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic() {
         swerveOdometry.update(getGyroYaw(), getModulePositions());
-
-        publisher.set(getModuleStates());
-
+        swervePublisher.set(getModuleStates());
+        odometryPublisher.set(getPose());
     }
 }
