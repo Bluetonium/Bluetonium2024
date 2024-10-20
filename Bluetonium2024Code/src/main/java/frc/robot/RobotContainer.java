@@ -1,7 +1,5 @@
 package frc.robot;
 
-import com.ctre.phoenix6.configs.Pigeon2Configuration;
-import com.ctre.phoenix6.hardware.Pigeon2;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -10,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.teleop.*;
 import frc.robot.constants.Constants;
 import frc.robot.constants.Constants.ChassisControls;
-import frc.robot.constants.Constants.MiscConstants;
+
 import frc.robot.subsystems.*;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -35,19 +33,12 @@ public class RobotContainer {
         /* Subsystems */
         private final Swerve swerve;
 
-        /* Other Stuff */
-        private Pigeon2 gyro;
-
         /**
          * The container for the robot. Contains subsystems, OI devices, and commands.
          */
         public RobotContainer() {
 
-                gyro = new Pigeon2(MiscConstants.PIGEON_ID);
-                gyro.getConfigurator().apply(new Pigeon2Configuration());
-                gyro.setYaw(0);
-
-                swerve = new Swerve(gyro);
+                swerve = new Swerve();
 
                 swerve.setDefaultCommand(
                                 new TeleopSwerve(

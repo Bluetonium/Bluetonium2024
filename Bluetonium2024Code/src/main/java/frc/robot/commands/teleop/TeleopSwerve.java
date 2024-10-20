@@ -8,6 +8,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class TeleopSwerve extends Command {
@@ -17,7 +18,9 @@ public class TeleopSwerve extends Command {
         private DoubleSupplier rotationSup;
         private BooleanSupplier fieldRelative;
         private DoubleSupplier fastMode;
-        private double speedModifier; // higher value = slower :)
+
+        private double maxVelocity;
+        private double maxAngularVelocity;
 
         public TeleopSwerve(Swerve swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup,
                         DoubleSupplier rotationSup, BooleanSupplier fieldRelative, DoubleSupplier fastMode) {
@@ -28,11 +31,15 @@ public class TeleopSwerve extends Command {
                 this.rotationSup = rotationSup;
                 this.fieldRelative = fieldRelative;
                 this.fastMode = fastMode;
+
+                maxVelocity = swerve.getMaxVelocity();
+                maxAngularVelocity = swerve.getMaxAngularVelocity();
         }
 
         @Override
         public void execute() {
                 /* Get Values, Deadband */
+                double speedModifier;
                 if (fastMode.getAsDouble() > 0.7) {
                         speedModifier = 1.0;
                 } else {
@@ -47,15 +54,15 @@ public class TeleopSwerve extends Command {
                 /* Drive */
 
                 swerve.drive(
-                                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.MAX_SPEED),
-                                rotationVal * Constants.Swerve.MAX_ANGULAR_VELOCITY,
+                                new Translation2d(translationVal, strafeVal).times(maxVelocity),
+                                rotationVal * maxAngularVelocity,
                                 fieldRelative.getAsBoolean(),
-                                true);
+                                false);
 
         }
 
         @Override
         public void end(boolean interrupted) {
-                swerve.stopAllMotion();
+                swerve.driveRobotReleative(new ChassisSpeeds(0, 0, 0));
         }
 }
