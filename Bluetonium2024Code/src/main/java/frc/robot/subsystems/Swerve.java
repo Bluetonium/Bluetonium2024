@@ -39,6 +39,8 @@ public class Swerve extends SubsystemBase {
     StructPublisher<Pose2d> odometryPublisher = moduleStats.getStructTopic("RobotLocations", Pose2d.struct)
             .publish();
 
+    StructPublisher<Rotation2d> headingPublisher = moduleStats.getStructTopic("RobotHeading", Rotation2d.struct).publish();
+
     public Swerve(Pigeon2 gyro) {
         this.gyro = gyro;
         mSwerveMods = new SwerveModule[] {
@@ -213,5 +215,6 @@ public class Swerve extends SubsystemBase {
         swerveOdometry.update(getGyroYaw(), getModulePositions());
         swervePublisher.set(getModuleStates());
         odometryPublisher.set(getPose());
+        headingPublisher.set(getGyroYaw());
     }
 }
