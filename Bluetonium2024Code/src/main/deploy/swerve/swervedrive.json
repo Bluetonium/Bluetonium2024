@@ -1,6 +1,4 @@
 {
-  "maxSpeed": 17.6,
-  "optimalVoltage": 12,
   "imu": {
     "type": "pigeon2",
     "id": 14,
