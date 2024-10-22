@@ -6,15 +6,18 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.StructArrayPublisher;
-import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.Constants.AutonConstants;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import swervelib.parser.SwerveParser;
 import swervelib.SwerveDrive;
 import edu.wpi.first.math.util.Units;
@@ -22,18 +25,6 @@ import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class Swerve extends SubsystemBase {
-
-    private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    private final NetworkTable moduleStats = inst.getTable("Swerve");
-
-    StructArrayPublisher<SwerveModuleState> swervePublisher = moduleStats
-            .getStructArrayTopic("SwerveStates", SwerveModuleState.struct).publish();
-
-    StructArrayPublisher<SwerveModuleState> swerveDesiredPublisher = moduleStats
-            .getStructArrayTopic("SwerveDesiredStates", SwerveModuleState.struct).publish();
-
-    StructPublisher<Pose2d> odometryPublisher = moduleStats.getStructTopic("RobotLocations", Pose2d.struct)
-            .publish();
 
     double maximumSpeed = Units.feetToMeters(17.6);
     File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
@@ -47,6 +38,21 @@ public class Swerve extends SubsystemBase {
         }
 
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
+        setupPathPlanner();
+    }
+
+    public void setupPathPlanner() {
+        AutoBuilder.configureHolonomic(
+                this::getPose,
+                this::setPose,
+                this::getRobotRelativeSpeeds,
+                this::driveRobotReleative,
+                AutonConstants.PATHPLANNER_CONFIG,
+                () -> {
+                    Optional<Alliance> alliance = DriverStation.getAlliance();
+                    return alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red;
+                },
+                this);
     }
 
     /**
@@ -125,14 +131,6 @@ public class Swerve extends SubsystemBase {
     }
 
     /**
-     * 
-     * @param heading Sets the current heading of the robot
-     */
-    public void setHeading(Rotation2d heading) {
-        swerveDrive.resetOdometry(new Pose2d(getPose().getTranslation(), heading));
-    }
-
-    /**
      * Zeroes the robots heading
      */
     public void zeroHeading() {
@@ -147,9 +145,4 @@ public class Swerve extends SubsystemBase {
         return swerveDrive.getYaw();
     }
 
-    @Override
-    public void periodic() {
-        swervePublisher.set(getModuleStates());
-        odometryPublisher.set(getPose());
-    }
 }
