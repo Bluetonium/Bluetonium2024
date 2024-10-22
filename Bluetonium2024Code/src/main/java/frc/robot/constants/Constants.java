@@ -1,12 +1,25 @@
 package frc.robot.constants;
 
 import edu.wpi.first.wpilibj.XboxController;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 
 public final class Constants {
-    public static final class MiscConstants {
-        public static final int PIGEON_ID = 14;
 
-        private MiscConstants() {
+    public static final class AutonConstants {
+        public static final PIDConstants TRANSLATION_PID = new PIDConstants(0.7, 0, 0);
+        public static final PIDConstants ANGLE_PID = new PIDConstants(0.4, 0, 0.01);
+
+        public static final HolonomicPathFollowerConfig PATHPLANNER_CONFIG = new HolonomicPathFollowerConfig(
+                TRANSLATION_PID,
+                ANGLE_PID,
+                4.5,
+                16.6170,
+                new ReplanningConfig());
+
+        private AutonConstants() {
+
         }
     }
 
