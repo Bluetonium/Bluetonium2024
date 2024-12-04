@@ -31,7 +31,7 @@ public class RobotContainer {
 
         /* Chassis driver Buttons */
         private final JoystickButton zeroGyro = new JoystickButton(driverController, ChassisControls.ZERO_GYRO_BUTTON);
-
+        private final JoystickButton align = new JoystickButton(driverController, ChassisControls.ALIGN_TO_TAG_BUTTON);
         /* Subsystems */
         private final Swerve swerve;
 
@@ -72,7 +72,8 @@ public class RobotContainer {
         private void configureButtonBindings() {
                 /* Driver Buttons */
                 zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
-
+                align.whileTrue(new AlignToTag(swerve,
+                                () -> -driverController.getRawAxis(ChassisControls.TRANSLATION_AXIS)));
         }
 
         /**
