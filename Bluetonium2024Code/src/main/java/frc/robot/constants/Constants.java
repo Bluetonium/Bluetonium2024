@@ -26,6 +26,7 @@ public final class Constants {
 
     public static final class ChassisControls {
         public static final int ZERO_GYRO_BUTTON = XboxController.Button.kA.value;
+        public static final int ALIGN_TO_TAG_BUTTON = XboxController.Button.kY.value;
 
         public static final int TRANSLATION_AXIS = XboxController.Axis.kLeftY.value;
         public static final int STRAFE_AXIS = XboxController.Axis.kLeftX.value;
