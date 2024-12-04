@@ -34,6 +34,8 @@ public class RobotContainer {
         private final JoystickButton align = new JoystickButton(driverController, ChassisControls.ALIGN_TO_TAG_BUTTON);
         /* Subsystems */
         private final Swerve swerve;
+        private final Limelight limelight;
+
 
         /* Other Stuff */
         private Pigeon2 gyro;
@@ -48,6 +50,7 @@ public class RobotContainer {
                 gyro.setYaw(0);
 
                 swerve = new Swerve(gyro);
+                limelight = new Limelight("limelight"); //ayes
 
                 swerve.setDefaultCommand(
                                 new TeleopSwerve(
@@ -72,7 +75,7 @@ public class RobotContainer {
         private void configureButtonBindings() {
                 /* Driver Buttons */
                 zeroGyro.onTrue(new InstantCommand(swerve::zeroHeading));
-                align.whileTrue(new AlignToTag(swerve,
+                align.whileTrue(new AlignToTag(limelight, swerve,
                                 () -> -driverController.getRawAxis(ChassisControls.TRANSLATION_AXIS)));
         }
 
