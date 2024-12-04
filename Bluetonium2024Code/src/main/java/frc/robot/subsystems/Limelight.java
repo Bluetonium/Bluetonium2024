@@ -19,11 +19,12 @@ public class Limelight extends SubsystemBase
         ta = table.getEntry("ta");
     }
 
-    public double getTx() {
-        return tx.getDouble(0.0);
-    }
     public void setPipeline(double pipeline) {
         table.getEntry("pipeline").setDouble(pipeline);
+    }
+
+    public double getTx() {
+        return tx.getDouble(0.0);
     }
 
     public double getTy() {
