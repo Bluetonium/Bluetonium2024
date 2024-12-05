@@ -36,7 +36,6 @@ public class RobotContainer {
         private final Swerve swerve;
         private final Limelight limelight;
 
-
         /* Other Stuff */
         private Pigeon2 gyro;
 
@@ -50,7 +49,7 @@ public class RobotContainer {
                 gyro.setYaw(0);
 
                 swerve = new Swerve(gyro);
-                limelight = new Limelight("limelight"); //ayes
+                limelight = new Limelight("limelight"); // ayes
 
                 swerve.setDefaultCommand(
                                 new TeleopSwerve(

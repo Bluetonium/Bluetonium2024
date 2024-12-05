@@ -2,41 +2,55 @@ package frc.robot.commands.teleop;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.constants.Constants.ControllerConstants;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
 
-public class AlignToTag extends Command {
-    private DoubleSupplier translationAxis;
-    private Swerve swerve;
-    private Limelight limelight;
+public class AlignToTag extends PIDCommand {
+    private PIDController pid;
+
+    private static final double P = 0.2;
+    private static final double I = 0;
+    private static final double D = 0.02;
+
     public AlignToTag(Limelight limelight, Swerve swerve, DoubleSupplier translationAxis) {
-        addRequirements(swerve);
-        this.translationAxis = translationAxis;
-        this.swerve = swerve;
-        this.limelight = limelight;
+        super(new PIDController(P, I, D), limelight::getTx, 0.0,
+                output -> swerve.drive(
+                        new Translation2d(MathUtil.applyDeadband(translationAxis.getAsDouble(),
+                                ControllerConstants.STICK_DEADBAND), -output),
+                        0, false,
+                        true),
+                swerve);
+
+        pid = getController();
+        pid.setTolerance(3);
+        /*
+         * SmartDashboard.putNumber("alignmentSpeed", 0.2);
+         * SmartDashboard.putNumber("errorRange", 1);
+         * 
+         * SmartDashboard.putNumber("P", 0.3);
+         * SmartDashboard.putNumber("I", 2000.0);
+         * SmartDashboard.putNumber("D", 0.0);
+         * 
+         * SmartDashboard.updateValues();
+         */
     }
 
-    @Override
-    public void execute() {
-        double error = limelight.getTx();
-        double speed = SmartDashboard.getNumber("alignmentSpeed", 0.2);
-        double errorRange = SmartDashboard.getNumber("errorRange", 5);
-        double strafeSpeed = (Math.abs(error) > errorRange && limelight.validTargetExists()) ? speed : 0;
-
-        swerve.drive(new Translation2d(translationAxis.getAsDouble(), strafeSpeed), 0, false, true);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        swerve.stopAllMotion();
-    }
-
+    /*
+     * @Override
+     * public void execute() {
+     * double p = SmartDashboard.getNumber("P", 0.0);
+     * double i = SmartDashboard.getNumber("I", 0.0);
+     * double d = SmartDashboard.getNumber("D", 0.0);
+     * 
+     * pid.setPID(p, i, d);
+     * 
+     * super.execute();
+     * 
+     * }
+     */
 }
